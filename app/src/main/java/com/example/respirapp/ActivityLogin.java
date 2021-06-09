@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Clases.cAPI;
+import Clases.cParametros;
 
 public class ActivityLogin extends Activity {
 
@@ -25,7 +26,7 @@ public class ActivityLogin extends Activity {
     private EditText inPassword;
     private Button btnSubmit;
     private Button btnRegistrarse;
-    public ProgressBar mProgressBar;
+    public static ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +93,9 @@ public class ActivityLogin extends Activity {
                     Map<String, String> parameters = new HashMap<>();
                     //parameters.put("password", inPassword.getText().toString());
                     //parameters.put("email", inUser.getText().toString());
-                    parameters.put("password", "abcd1234");
+                    parameters.put("password", "abcd123");
                     parameters.put("email", "nhornos@alumno.unlam.edu.ar");
-                    String params = cAPI.ParameterStringBuilder.getParamsString(parameters);
+                    String params = cParametros.getParamsString(parameters);
                     try{
                         AsyncTask<String, String, JSONObject> loginAsyncTask = new cAPI(ActivityLogin.this, getApplicationContext(), mProgressBar);
                         //cAPI.mutex.acquire();

@@ -8,10 +8,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.respirapp.ActivityLogin;
 import com.example.respirapp.ActivityMain;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -28,35 +30,19 @@ import java.util.concurrent.Semaphore;
 
 
 public class cAPI extends AsyncTask<String, String, JSONObject> {
+    //public static Semaphore mutex = new Semaphore(1);
+    private int estado;
+    private JSONObject json;
+
+    private String metodo;
     private Activity activity;
     private Context context;
     private ProgressBar bar;
-    public static int estado;
-    public static JSONObject json;
-    public static Semaphore mutex = new Semaphore(1);
 
     public cAPI(Activity activity, Context context, ProgressBar progressBar){
         this.activity = activity;
         this.context = context;
         this.bar = progressBar;
-    }
-
-//    @Override
-//    protected void onPreExecute() {
-//        this.bar.setVisibility(View.VISIBLE);
-//    }
-
-    @Override
-    protected void onPostExecute(JSONObject jsonObject) {
-        //cAPI.mutex.release();
-        if (bar.isShown()) {
-            bar.setVisibility(View.GONE);
-        }
-        if(estado != 400){
-            Intent intent = new Intent(this.activity, ActivityMain.class);
-            this.activity.startActivity(intent);
-            //this.activity.finish();
-        }
     }
 
     @Override
@@ -68,7 +54,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         json = new JSONObject();
 
         String verbo = strings[0];
-        String metodo = strings[1];
+        this.metodo = strings[1];
         String params = strings[2];
 
         try
@@ -126,27 +112,42 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         }
     }
 
-    public static class ParameterStringBuilder {
-        public static String getParamsString(Map<String, String> params) {
-            StringBuilder result = new StringBuilder();
-
-            try{
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-                    result.append("=");
-                    result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-                    result.append("&");
-                }
-            } catch (UnsupportedEncodingException e) {
-                Log.i("getParamsString()", e.getMessage());
-            }
-
-            String resultString = result.toString();
-            return resultString.length() > 0
-                    ? resultString.substring(0, resultString.length() - 1)
-                    : resultString;
+    @Override
+    protected void onPostExecute(JSONObject jsonObject) {
+        //TODO agregar validaciones de error de conexión
+        try {
+            switchBetweenMethods(this.metodo);
+        } catch (JSONException e) {
+            Log.i("onPostExecute", e.getMessage());
         }
     }
+
+    private void switchBetweenMethods(String method) throws JSONException {
+        switch (method){
+            case "login":
+                login();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void login() throws JSONException {
+        if (bar.isShown()) {
+            bar.setVisibility(View.GONE);
+        }
+
+        if(estado != 400) {
+            cObjetos.oUsuario.token = this.json.getString("token");
+            cObjetos.oUsuario.tokenRefresh = this.json.getString("token_refresh");
+            Intent intent = new Intent(this.activity, ActivityMain.class);
+            this.activity.startActivity(intent);
+        }
+        else
+            Toast.makeText(this.context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
+    }
+
+
 }
 
 
