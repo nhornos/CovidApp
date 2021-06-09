@@ -1,2 +1,2 @@
 # CovidApp
-App ejercicios de respiración
+app mobile de ejercicios de respiracion
