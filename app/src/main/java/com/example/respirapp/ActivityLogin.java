@@ -1,7 +1,6 @@
 package com.example.respirapp;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Clases.cAPI;
+import Clases.cObjetos;
 import Clases.cParametros;
 
 public class ActivityLogin extends Activity {
@@ -37,7 +37,6 @@ public class ActivityLogin extends Activity {
 
         // Defino los botones
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
-        mProgressBar = (ProgressBar) findViewById(R.id.progress_loader);
 
         btnSubmit.setOnClickListener(botonesListeners);
         btnRegistrarse = (Button) findViewById(R.id.btnRegistro);
@@ -46,6 +45,9 @@ public class ActivityLogin extends Activity {
         // Defino los campos de ingreso de datos
         inUser = (EditText) findViewById(R.id.inUserLogin);
         inPassword = (EditText) findViewById(R.id.inPassLogin);
+
+        //Defino barra de cargando
+        mProgressBar = (ProgressBar) findViewById(R.id.progressLoaderLogin);
     }
 
     @Override
@@ -90,20 +92,27 @@ public class ActivityLogin extends Activity {
                     mProgressBar.setVisibility(View.VISIBLE);
                     Log.i("El texto", "Se detectó boton de submit");
 
+                    String email = inUser.getText().toString();
+                    String password = inPassword.getText().toString();
+
+                    //Generamos los parametros para el AsyncTask
                     Map<String, String> parameters = new HashMap<>();
-                    //parameters.put("password", inPassword.getText().toString());
-                    //parameters.put("email", inUser.getText().toString());
-                    parameters.put("password", "abcd1234");
+                    //parameters.put("email", email);
+                    parameters.put("password", password);
                     parameters.put("email", "nhornos@alumno.unlam.edu.ar");
+//                    parameters.put("password", "abcd1234");
                     String params = cParametros.getParamsString(parameters);
-                    try{
-                        AsyncTask<String, String, JSONObject> loginAsyncTask = new cAPI(ActivityLogin.this, getApplicationContext(), mProgressBar);
-                        //cAPI.mutex.acquire();
-                        loginAsyncTask.execute("POST","login", params);
-                        //cAPI.mutex.acquire();
-                    } catch (Exception e) {
-                        Log.i("RespuestaAPIRest", e.getMessage());
-                    }
+
+                    //password=abcd1234&email=nhornos%40alumno.unlam.edu.ar
+
+                    //Guardamos el email del usuario que intenta loguearse
+                    cObjetos.oUsuario.setEmail(email);
+
+                    AsyncTask<String, String, JSONObject> loginAsyncTask = new cAPI(ActivityLogin.this, getApplicationContext(), mProgressBar);
+                    //cAPI.mutex.acquire();
+//                        loginAsyncTask.execute("POST","login", params);
+                    loginAsyncTask.execute("POST","login", params);
+                    //cAPI.mutex.acquire();
 //                    if(cAPI.estado == 400){
 //                        Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrectos", Toast.LENGTH_LONG);
 //                    }
@@ -111,6 +120,7 @@ public class ActivityLogin extends Activity {
                     break;
                 case R.id.btnRegistro:
                     Log.i("El texto", "Se detectó boton de registro");
+                    Log.i("Datos Usuario:", "email:" + cObjetos.oUsuario.getEmail() + "\nToken: " + cObjetos.oUsuario.getToken() + "\nToken Refresh: " + cObjetos.oUsuario.getTokenRefresh());
                     intent=new Intent(ActivityLogin.this, ActivityRegister.class);
                     //se regresa a la activity de Login
                     startActivity(intent);

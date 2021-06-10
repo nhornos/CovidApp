@@ -1,7 +1,6 @@
 package Clases;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.respirapp.ActivityLogin;
 import com.example.respirapp.ActivityMain;
 
 import org.json.JSONException;
@@ -20,13 +18,11 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Semaphore;
 
 
 public class cAPI extends AsyncTask<String, String, JSONObject> {
@@ -38,6 +34,8 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
     private Activity activity;
     private Context context;
     private ProgressBar bar;
+
+    private String params;
 
     public cAPI(Activity activity, Context context, ProgressBar progressBar){
         this.activity = activity;
@@ -55,11 +53,11 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
         String verbo = strings[0];
         this.metodo = strings[1];
-        String params = strings[2];
+        this.params = strings[2];
 
         try
         {
-            Log.i("Dentro del thread", json.toString());
+            Log.i("Dentro del thread", this.params);
             URI uri = new URI("http://so-unlam.net.ar/api/api/" + metodo);
             URL url = new URL(uri.toURL().toString());
 
@@ -76,7 +74,10 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
             conn.setDoOutput(true);
             DataOutputStream outPutStream = new DataOutputStream(conn.getOutputStream());
-            outPutStream.writeBytes(params);
+
+            //Conversion del map de parametros a string:
+            outPutStream.writeBytes(this.params);
+
             outPutStream.flush();
             outPutStream.close();
 
@@ -98,6 +99,8 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             }
             in.close();
             conn.disconnect();
+
+            Log.i("Resultado conexion:", content.toString());
 
             json = new JSONObject(content.toString());
 
@@ -127,24 +130,53 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             case "login":
                 login();
                 break;
+            case "register":
+                register();
+                break;
             default:
                 break;
         }
     }
 
     private void login() throws JSONException {
-        if (bar.isShown()) {
-            bar.setVisibility(View.GONE);
-        }
+        hideBar();
 
-        if(estado != 400) {
-            cObjetos.oUsuario.token = this.json.getString("token");
-            cObjetos.oUsuario.tokenRefresh = this.json.getString("token_refresh");
+        if(this.json.getBoolean("success")) {
+            String token = this.json.getString("token");
+            String tokenRefresh = this.json.getString("token_refresh");
+
+            cObjetos.oUsuario.setToken(token);
+            cObjetos.oUsuario.setTokenRefresh(tokenRefresh);
+
+            Log.i("Datos param:", this.params);
+
             Intent intent = new Intent(this.activity, ActivityMain.class);
             this.activity.startActivity(intent);
         }
-        else
+        else {
             Toast.makeText(this.context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void register() throws JSONException {
+        hideBar();
+
+        if(this.json.getBoolean("success")) {
+            String token = this.json.getString("token");
+            String tokenRefresh = this.json.getString("token_refresh");
+            cObjetos.oUsuario.setToken(token);
+            cObjetos.oUsuario.setTokenRefresh(tokenRefresh);
+            Intent intent = new Intent(this.activity, ActivityMain.class);
+            this.activity.startActivity(intent);
+        }else {
+            Toast.makeText(this.context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void hideBar(){
+        if (bar.isShown()) {
+            bar.setVisibility(View.GONE);
+        }
     }
 
 
