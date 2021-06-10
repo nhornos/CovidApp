@@ -35,7 +35,7 @@ public class ActivityRegister extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register);
+        setContentView(R.layout.activity_register);
 
         Log.i("El texto", "Entro a registro");
 
@@ -66,15 +66,20 @@ public class ActivityRegister extends AppCompatActivity {
                 case R.id.btnRegistrarse:
                     mProgressBar.setVisibility(View.VISIBLE);
                     Log.i("El texto", "Se detectó boton de registrarse");
-                    //Aca hacer el registro y volver al login
+                    //Aca hacer el registro y volver al ActivityLogin
 
                     Map<String, String> parameters = new HashMap<>();
                     parameters.put("env", "TEST");
-                    parameters.put("name", inName.getText().toString());
-                    parameters.put("lastname", inLastName.getText().toString());
-                    parameters.put("dni", inDNI.getText().toString());
-                    parameters.put("email", inUser.getText().toString());
-                    parameters.put("password", inPassword.getText().toString());
+//                    parameters.put("name", inName.getText().toString());
+//                    parameters.put("lastname", inLastName.getText().toString());
+//                    parameters.put("dni", inDNI.getText().toString());
+//                    parameters.put("email", inUser.getText().toString());
+//                    parameters.put("password", inPassword.getText().toString());
+                    parameters.put("name", "Nicolas");
+                    parameters.put("lastname", "Hornos");
+                    parameters.put("dni", "36076620");
+                    parameters.put("email", "nhornos@alumno.unlam.edu.ar");
+                    parameters.put("password", "abcd1234");
                     parameters.put("commission", "2900");
                     parameters.put("group", "9");
                     String params = cParametros.getParamsString(parameters);
@@ -88,9 +93,8 @@ public class ActivityRegister extends AppCompatActivity {
                     break;
                 case R.id.btnBackRegister:
                     Log.i("El texto", "Se detectó boton de back");
-                    intent=new Intent(ActivityRegister.this, ActivityLogin.class);
                     //se regresa a la activity de Login
-                    startActivity(intent);
+                    finish();
                     break;
                 default:
                     Toast.makeText(getApplicationContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();

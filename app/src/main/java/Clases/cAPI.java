@@ -9,7 +9,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.respirapp.ActivityMain;
+import com.example.respirapp.ActivityMenu;
+import com.example.respirapp.activity_menu_2;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,8 +22,6 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class cAPI extends AsyncTask<String, String, JSONObject> {
@@ -150,7 +149,8 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
             Log.i("Datos param:", this.params);
 
-            Intent intent = new Intent(this.activity, ActivityMain.class);
+//            Intent intent = new Intent(this.activity, ActivityMenu.class);
+            Intent intent = new Intent(this.activity, activity_menu_2.class);
             this.activity.startActivity(intent);
         }
         else {
@@ -166,8 +166,10 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             String tokenRefresh = this.json.getString("token_refresh");
             cObjetos.oUsuario.setToken(token);
             cObjetos.oUsuario.setTokenRefresh(tokenRefresh);
-            Intent intent = new Intent(this.activity, ActivityMain.class);
+//            Intent intent = new Intent(this.activity, ActivityMenu.class);
+            Intent intent = new Intent(this.activity, activity_menu_2.class);
             this.activity.startActivity(intent);
+            this.activity.finish();
         }else {
             Toast.makeText(this.context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
         }

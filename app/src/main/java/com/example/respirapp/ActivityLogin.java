@@ -31,9 +31,9 @@ public class ActivityLogin extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.activity_login);
 
-        Log.i("El texto", "Entro a login");
+        Log.i("El texto", "Entro a ActivityLogin");
 
         // Defino los botones
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
@@ -98,9 +98,9 @@ public class ActivityLogin extends Activity {
                     //Generamos los parametros para el AsyncTask
                     Map<String, String> parameters = new HashMap<>();
                     //parameters.put("email", email);
-                    parameters.put("password", password);
+//                    parameters.put("password", password);
                     parameters.put("email", "nhornos@alumno.unlam.edu.ar");
-//                    parameters.put("password", "abcd1234");
+                    parameters.put("password", "abcd1234");
                     String params = cParametros.getParamsString(parameters);
 
                     //password=abcd1234&email=nhornos%40alumno.unlam.edu.ar
