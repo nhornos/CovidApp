@@ -93,7 +93,7 @@ public class ActivityLogin extends Activity {
                     Map<String, String> parameters = new HashMap<>();
                     //parameters.put("password", inPassword.getText().toString());
                     //parameters.put("email", inUser.getText().toString());
-                    parameters.put("password", "abcd123");
+                    parameters.put("password", "abcd1234");
                     parameters.put("email", "nhornos@alumno.unlam.edu.ar");
                     String params = cParametros.getParamsString(parameters);
                     try{
