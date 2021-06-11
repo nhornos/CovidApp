@@ -101,7 +101,7 @@ public class ToolsFragment extends Fragment {
 //                        intent = new Intent(getContext(), ActivityLogin.class);
 //
 //                        startActivity(intent);
-                        getActivity().finish();
+
                     } else{
 //                        Toast.makeText(ActivityPatternCreation.this, "El patron es muy corto!", Toast.LENGTH_LONG).show();
                         Toast.makeText(ToolsFragment.this.getContext(), "El patron es muy corto!", Toast.LENGTH_LONG).show();
