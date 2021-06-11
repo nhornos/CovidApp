@@ -64,36 +64,11 @@ public class ActivityRegister extends AppCompatActivity {
             //Se determina que componente genero un evento
             switch (v.getId()) {
                 case R.id.btnRegistrarse:
-                    mProgressBar.setVisibility(View.VISIBLE);
                     Log.i("El texto", "Se detectó boton de registrarse");
-                    //Aca hacer el registro y volver al ActivityLogin
-
-                    Map<String, String> parameters = new HashMap<>();
-                    parameters.put("env", "TEST");
-//                    parameters.put("name", inName.getText().toString());
-//                    parameters.put("lastname", inLastName.getText().toString());
-//                    parameters.put("dni", inDNI.getText().toString());
-//                    parameters.put("email", inUser.getText().toString());
-//                    parameters.put("password", inPassword.getText().toString());
-                    parameters.put("name", "Nicolas");
-                    parameters.put("lastname", "Hornos");
-                    parameters.put("dni", "36076620");
-                    parameters.put("email", "nhornos@alumno.unlam.edu.ar");
-                    parameters.put("password", "abcd1234");
-                    parameters.put("commission", "2900");
-                    parameters.put("group", "9");
-                    String params = cParametros.getParamsString(parameters);
-
-                    //Guardamos el email del usuario que intenta loguearse
-                    cObjetos.oUsuario.setEmail(inUser.getText().toString());
-
-                    AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(ActivityRegister.this, getApplicationContext(), mProgressBar);
-
-                    registerAsyncTask.execute("POST","register",params);
+                    realizarRegistro();
                     break;
                 case R.id.btnBackRegister:
                     Log.i("El texto", "Se detectó boton de back");
-                    //se regresa a la activity de Login
                     finish();
                     break;
                 default:
@@ -102,4 +77,31 @@ public class ActivityRegister extends AppCompatActivity {
 
         }
     };
+
+    private void realizarRegistro() {
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("env", "TEST");
+//        parameters.put("name", inName.getText().toString());
+//        parameters.put("lastname", inLastName.getText().toString());
+//        parameters.put("dni", inDNI.getText().toString());
+//        parameters.put("email", inUser.getText().toString());
+//        parameters.put("password", inPassword.getText().toString());
+        parameters.put("name", "Nicolas");
+        parameters.put("lastname", "Hornos");
+        parameters.put("dni", "36076620");
+        parameters.put("email", "nhornos@alumno.unlam.edu.ar");
+        parameters.put("password", "abcd1234");
+        parameters.put("commission", "2900");
+        parameters.put("group", "9");
+        String params = cParametros.getParamsString(parameters);
+
+        //Guardamos el email del usuario que intenta registrarse
+//        cObjetos.oUsuario.setEmail(inUser.getText().toString());
+        cObjetos.oUsuario.setEmail("nhornos@alumno.unlam.edu.ar");
+
+        AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(ActivityRegister.this, getApplicationContext(), mProgressBar);
+        registerAsyncTask.execute("POST","register",params);
+    }
 }

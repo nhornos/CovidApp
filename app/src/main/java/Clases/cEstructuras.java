@@ -1,5 +1,7 @@
 package Clases;
 
+import android.util.Log;
+
 public class cEstructuras {
 
     public static class cUsuario{
@@ -44,6 +46,10 @@ public class cEstructuras {
             setEmail(email);
             setToken(token);
             setTokenRefresh(tokenRefresh);
+        }
+
+        public void printDataUsuario(){
+            Log.i("Data user:", "DNI:" + dni + "\nemail:" + email + "\ntoken:" + token);
         }
     }
 }

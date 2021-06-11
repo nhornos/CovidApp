@@ -83,46 +83,15 @@ public class ActivityLogin extends Activity {
     private final View.OnClickListener botonesListeners = new View.OnClickListener() {
 
         public void onClick(View v) {
-            Intent intent;
-
             //Se determina que componente genero un evento
             switch (v.getId()) {
-                //Si se ocurrio un evento en el boton OK
                 case R.id.btnSubmit:
-                    mProgressBar.setVisibility(View.VISIBLE);
                     Log.i("El texto", "Se detectó boton de submit");
-
-                    String email = inUser.getText().toString();
-                    String password = inPassword.getText().toString();
-
-                    //Generamos los parametros para el AsyncTask
-                    Map<String, String> parameters = new HashMap<>();
-                    //parameters.put("email", email);
-//                    parameters.put("password", password);
-                    parameters.put("email", "nhornos@alumno.unlam.edu.ar");
-                    parameters.put("password", "abcd1234");
-                    String params = cParametros.getParamsString(parameters);
-
-                    //password=abcd1234&email=nhornos%40alumno.unlam.edu.ar
-
-                    //Guardamos el email del usuario que intenta loguearse
-                    cObjetos.oUsuario.setEmail(email);
-
-                    AsyncTask<String, String, JSONObject> loginAsyncTask = new cAPI(ActivityLogin.this, getApplicationContext(), mProgressBar);
-                    //cAPI.mutex.acquire();
-//                        loginAsyncTask.execute("POST","login", params);
-                    loginAsyncTask.execute("POST","login", params);
-                    //cAPI.mutex.acquire();
-//                    if(cAPI.estado == 400){
-//                        Toast.makeText(getApplicationContext(), "Usuario o contraseña incorrectos", Toast.LENGTH_LONG);
-//                    }
-
+                    realizarLogin();
                     break;
                 case R.id.btnRegistro:
                     Log.i("El texto", "Se detectó boton de registro");
-                    Log.i("Datos Usuario:", "email:" + cObjetos.oUsuario.getEmail() + "\nToken: " + cObjetos.oUsuario.getToken() + "\nToken Refresh: " + cObjetos.oUsuario.getTokenRefresh());
-                    intent=new Intent(ActivityLogin.this, ActivityRegister.class);
-                    //se regresa a la activity de Login
+                    Intent intent=new Intent(ActivityLogin.this, ActivityRegister.class);
                     startActivity(intent);
                     break;
                 default:
@@ -132,4 +101,27 @@ public class ActivityLogin extends Activity {
 
         }
     };
+
+    private void realizarLogin() {
+        mProgressBar.setVisibility(View.VISIBLE);
+
+//        String email = inUser.getText().toString();
+        String email = "nhornos@alumno.unlam.edu.ar";
+//        String password = inPassword.getText().toString();
+        String password = "abcd1234";
+
+        //Generamos los parametros para el AsyncTask
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("email", email);
+        parameters.put("password", password);
+        String params = cParametros.getParamsString(parameters);
+
+        //Guardamos el email del usuario que intenta loguearse
+        cObjetos.oUsuario.setEmail(email);
+
+        AsyncTask<String, String, JSONObject> loginAsyncTask = new cAPI(ActivityLogin.this, getApplicationContext(), mProgressBar);
+        //cAPI.mutex.acquire();
+        loginAsyncTask.execute("POST","login", params);
+        //cAPI.mutex.acquire();
+    }
 }

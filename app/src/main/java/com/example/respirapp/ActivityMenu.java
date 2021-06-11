@@ -6,6 +6,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import Clases.cObjetos;
+
 import static android.app.PendingIntent.getActivity;
 
 public class ActivityMenu extends Activity {
@@ -20,6 +22,8 @@ public class ActivityMenu extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        cObjetos.oUsuario.printDataUsuario();
 
 //            AsyncTask.execute(new Runnable() {
 //                @Override

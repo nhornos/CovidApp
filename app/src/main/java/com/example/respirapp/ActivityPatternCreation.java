@@ -62,22 +62,11 @@ public class ActivityPatternCreation extends Activity {
     private final View.OnClickListener botonesListeners = new View.OnClickListener() {
 
         public void onClick(View v) {
-            Intent intent;
-
             //Se determina que componente genero un evento
             switch (v.getId()) {
                 //Si se ocurrio un evento en el boton Registrar Patron
                 case R.id.btnSetearPatron:
-                    if(final_pattern.length() > 3){
-                        Paper.book().write(save_pattern_key, final_pattern);
-                        Toast.makeText(ActivityPatternCreation.this, "Patron guardado!", Toast.LENGTH_SHORT).show();
-                        intent = new Intent(ActivityPatternCreation.this, ActivityLogin.class);
-                        startActivity(intent);
-                        ActivityPatternCreation.this.finish();
-                    } else{
-                        Toast.makeText(ActivityPatternCreation.this, "El patron es muy corto!", Toast.LENGTH_LONG).show();
-                        mPatternLockView.clearPattern();
-                    }
+                    guardarPatron();
                     break;
                 default:
                     Toast.makeText(getApplicationContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
@@ -86,5 +75,18 @@ public class ActivityPatternCreation extends Activity {
 
         }
     };
+
+    private void guardarPatron() {
+        if(final_pattern.length() > 3){
+            Paper.book().write(save_pattern_key, final_pattern);
+            Toast.makeText(ActivityPatternCreation.this, "Patron guardado!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ActivityPatternCreation.this, ActivityLogin.class);
+            startActivity(intent);
+            ActivityPatternCreation.this.finish();
+        } else{
+            Toast.makeText(ActivityPatternCreation.this, "El patron es muy corto!", Toast.LENGTH_LONG).show();
+            mPatternLockView.clearPattern();
+        }
+    }
 
 }

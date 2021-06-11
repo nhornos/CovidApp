@@ -33,17 +33,14 @@ public class ActivityPatternValidation extends Activity {
 
         //Seteo el view del patron
         mPatternLockView = (PatternLockView)findViewById(R.id.pattern_lock_validation);
+        mPatternLockView.addPatternLockListener(patronListener);
 
         Log.i("Pattron:","On create");
 
         //Inicializamos el paper donde guardamos el patron
         Paper.init(this);
         actualizarPassPatron();
-//        Paper.delete(save_pattern_key);
 
-
-
-        mPatternLockView.addPatternLockListener(patronListener);
 
     }
 
@@ -95,6 +92,7 @@ public class ActivityPatternValidation extends Activity {
         public void onComplete(List<PatternLockView.Dot> pattern) {
             Log.i("Pattron:","On complete");
             patternEntered = PatternLockUtils.patternToString(mPatternLockView,pattern);
+            Log.i("Pattron:",save_pattern);
             if(patternEntered.equals(save_pattern)){
                 Toast.makeText(ActivityPatternValidation.this, "Password Correcta!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ActivityPatternValidation.this, ActivityLogin.class);
