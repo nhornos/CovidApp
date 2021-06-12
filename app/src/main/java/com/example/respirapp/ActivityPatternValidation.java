@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 

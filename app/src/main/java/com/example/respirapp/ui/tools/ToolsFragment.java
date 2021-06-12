@@ -12,8 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.ui.AppBarConfiguration;
 
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
@@ -21,6 +24,7 @@ import com.andrognito.patternlockview.utils.PatternLockUtils;
 import com.example.respirapp.ActivityLogin;
 import com.example.respirapp.ActivityPatternCreation;
 import com.example.respirapp.R;
+import com.example.respirapp.ui.home.HomeFragment;
 
 import java.util.List;
 
@@ -102,8 +106,13 @@ public class ToolsFragment extends Fragment {
 //
 //                        startActivity(intent);
 
+//                        Fragment fragment = new HomeFragment();
+//                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                        fragmentTransaction.replace(R.id.container, fragment);
+//                        fragmentTransaction.addToBackStack(null);
+//                        fragmentTransaction.commit();
                     } else{
-//                        Toast.makeText(ActivityPatternCreation.this, "El patron es muy corto!", Toast.LENGTH_LONG).show();
                         Toast.makeText(ToolsFragment.this.getContext(), "El patron es muy corto!", Toast.LENGTH_LONG).show();
                     }
                     mPatternLockView.clearPattern();

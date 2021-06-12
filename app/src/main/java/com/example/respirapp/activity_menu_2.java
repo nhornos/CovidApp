@@ -20,12 +20,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.TextView;
 
 import Clases.cObjetos;
 
 public class activity_menu_2 extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private TextView navEmail;
+    private TextView navTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,13 @@ public class activity_menu_2 extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        //Inicializo los textos del navigation
+        View headerView = navigationView.getHeaderView(0);
+        navEmail = (TextView) headerView.findViewById(R.id.textViewEmailNav);
+        navEmail.setText(cObjetos.oUsuario.getEmail());
+        navTitle = (TextView) headerView.findViewById(R.id.textViewTitleNav);
+        navTitle.setText("RespirApp");
     }
 
     @Override
