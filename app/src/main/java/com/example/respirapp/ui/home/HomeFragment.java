@@ -1,6 +1,12 @@
 package com.example.respirapp.ui.home;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +20,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.respirapp.R;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
