@@ -1,5 +1,7 @@
 <resources>
-    <string name="env">TEST</string>
+    <string name="prod">PROD</string>
+    <string name="test">TEST</string>
+    <string name="env">@string/test</string>
     <string name="commission">2900</string>
     <string name="group">9</string>
 

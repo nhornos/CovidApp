@@ -50,8 +50,6 @@ public class ActivityLogin extends Activity {
         btnSubmit.setOnClickListener(botonesListeners);
         btnRegistrarse.setOnClickListener(botonesListeners);
 
-        cObjetos.oActivity = this;
-
         inUser.setText(cParametros.getCache("usuario_email"));
         inPassword.setText(cParametros.getCache("usuario_email"));
 
@@ -89,7 +87,6 @@ public class ActivityLogin extends Activity {
     protected void onResume()
     {
         super.onResume();
-        cObjetos.oActivity = this;
         cObjetos.oProgressBar = mProgressBar;
 //        iniSensores();
     }
@@ -139,7 +136,7 @@ public class ActivityLogin extends Activity {
 
         mProgressBar.setVisibility(View.VISIBLE);
         //cObjetos.oUsuario.loguear(inUser.getText().toString().trim(), inPassword.getText().toString().trim());
-        cObjetos.oUsuario.loguear("nhornos@alumno.unlam.edu.ar", "abcd1234");
+        cObjetos.oUsuario.loguear(this, getApplicationContext(), "nhornos@alumno.unlam.edu.ar", "abcd1234");
     }
 
     //Nuevas cosas agregadas para sensores:

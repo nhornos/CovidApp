@@ -1,5 +1,7 @@
 package Clases;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -75,7 +77,7 @@ public class cEstructuras {
             setTokenRefresh(tokenRefresh);
         }
 
-        public void registrar(int dni, String nombre, String apellido, String email, String password){
+        public void registrar(Activity activity, Context context, int dni, String nombre, String apellido, String email, String password){
             Map<String, String> parameters = new HashMap<>();
             parameters.put("env", cObjetos.oActivity.getApplicationContext().getString(R.string.env));
             parameters.put("name", nombre);
@@ -87,23 +89,40 @@ public class cEstructuras {
             parameters.put("group", cObjetos.oActivity.getApplicationContext().getString(R.string.group));
             String params = cParametros.getParamsString(parameters);
 
-            AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI();
+            AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context);
             registerAsyncTask.execute("POST","register",params);
         }
 
-        public void loguear(String email, String password){
+        public void loguear(Activity activity, Context context, String email, String password){
             Map<String, String> parameters = new HashMap<>();
             parameters.put("email", email);
             parameters.put("password", password);
             String params = cParametros.getParamsString(parameters);
 
             try {
-                AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI();
+                AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context);
                 registerAsyncTask.execute("POST","login",params);
             }catch (Exception e){
                 Log.i("LOGIN", e.getMessage());
             }
 
         }
+    }
+
+    public static class cEvento{
+        private int id;
+        private String typeEvent;
+        private String description;
+        private int dni;
+
+        //SETTERS
+        public void setId(int id) { this.id = id; }
+        public void setTypeEvent(String typeEvent) { this.typeEvent = typeEvent;  }
+        public void setDescription(String description) { this.description = description; }
+
+        //GETTERS
+        public int getId() { return this.id; }
+        public String getTypeEvent() { return this.typeEvent; }
+        public String getDescription() { return this.description; }
     }
 }

@@ -1,5 +1,6 @@
 package Clases;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -35,9 +36,15 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
     private String verbo;
     private String metodo;
     private String params;
+    private Activity activity;
     private Context context = cObjetos.oActivity.getApplicationContext();
 
     private boolean conexion = true;
+
+    public cAPI(Activity activity, Context context){
+        this.context = context;
+        this.activity = activity;
+    }
 
     @Override
     protected JSONObject doInBackground(String... strings) {
@@ -51,7 +58,8 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
         Log.i("Dentro del thread", this.params);
 
-        if(checkConectionFacu(context)){
+//        if(checkConectionFacu(context)){
+        if(checkConection(context)){
             try {
                 this.json = realizarPeticionServidor(verbo, metodo, params);
             } catch(Exception e)
@@ -139,6 +147,8 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             case "register":
                 register();
                 break;
+            case "event":
+                event();
             default:
                 break;
         }
@@ -160,8 +170,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
             Log.i("Datos param:", this.params);
 
-//            Intent intent = new Intent(this.activity, ActivityMenu.class);
-            Intent intent = new Intent(cObjetos.oActivity, activity_menu_2.class);
+            Intent intent = new Intent(this.activity, activity_menu_2.class);
             cObjetos.oActivity.startActivity(intent);
             cObjetos.oActivity.finish();
         }
@@ -183,12 +192,34 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             cParametros.addCache("usuario_token", token);
             cParametros.addCache("usuario_token_refresh", tokenRefresh);
             Toast.makeText(context, "Registro exitoso!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(cObjetos.oActivity, activity_menu_2.class);
+            Intent intent = new Intent(this.activity, activity_menu_2.class);
             cObjetos.oActivity.startActivity(intent);
             cObjetos.oActivity.finish();
         }else {
             Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void event() throws JSONException {
+        if(this.json.getBoolean("success")){
+            String environment = this.json.getString("env");
+            JSONObject event = this.json.getJSONObject("event");
+
+            //parameters.put("env", cObjetos.oActivity.getApplicationContext().getString(R.string.env));
+            if(environment == getString(R.string.PROD)){
+                cObjetos.oUsuario.setDni(event.getInt("dni"));
+
+                cObjetos.oEvento.setId(event.getInt("id"));
+            }
+            cObjetos.oEvento.setTypeEvent(event.getString("type_events"));
+            cObjetos.oEvento.setDescription(event.getString("description"));
+        }else{
+            Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
+        }
+        Toast.makeText(context, "Se registró en el servidor la accion", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(cObjetos.oActivity, activity_menu_2.class);
+        cObjetos.oActivity.startActivity(intent);
+        cObjetos.oActivity.finish();
     }
 
     private void hideBar(){
@@ -208,15 +239,15 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
                     return false;
 
                 if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)){
-                    Toast.makeText(context, "wifi", Toast.LENGTH_LONG).show();
+                    Log.i("checkConection", "Wifi detectado");
                     return true;
                 }
                 if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
-                    Toast.makeText(context, "ethernet", Toast.LENGTH_LONG).show();
+                    Log.i("checkConection", "Ethernet detectado");
                     return true;
                 }
                 if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                    Toast.makeText(context, "cellular", Toast.LENGTH_LONG).show();
+                    Log.i("checkConection", "Internet celular detectado");
                     return true;
                 }
 

@@ -48,7 +48,6 @@ public class ActivityRegister extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        cObjetos.oActivity = this;
         cObjetos.oProgressBar = mProgressBar;
         super.onResume();
     }
@@ -73,7 +72,7 @@ public class ActivityRegister extends AppCompatActivity {
     private void realizarRegistro() {
         mProgressBar.setVisibility(View.VISIBLE);
 
-        cObjetos.oUsuario.registrar(Integer.parseInt(inDNI.getText().toString()), inName.getText().toString(), inLastName.getText().toString(), inUser.getText().toString(), inPassword.getText().toString());
+        cObjetos.oUsuario.registrar(this, getApplicationContext(), Integer.parseInt(inDNI.getText().toString()), inName.getText().toString(), inLastName.getText().toString(), inUser.getText().toString(), inPassword.getText().toString());
         //cObjetos.oUsuario.registrar(36076620, "Nicolas", "Hornos", "nhornos@alumno.unlam.edu.ar", "abcd1234");
     }
 }
