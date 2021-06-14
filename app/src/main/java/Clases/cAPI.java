@@ -51,7 +51,6 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
         Log.i("Dentro del thread", this.params);
 
-        Log.i("Conexion facu: ", String.valueOf(checkConectionFacu(context)));
         if(checkConectionFacu(context)){
             try {
                 this.json = realizarPeticionServidor(verbo, metodo, params);
@@ -129,7 +128,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
     private void errorConnection() {
         hideBar();
-        Toast.makeText(cObjetos.oActivity.getApplicationContext(), "Error. No hay conexión a internet", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Error. No hay conexión a internet", Toast.LENGTH_LONG).show();
     }
 
     private void switchBetweenMethods(String method) throws JSONException {
@@ -167,7 +166,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             cObjetos.oActivity.finish();
         }
         else {
-            Toast.makeText(cObjetos.oActivity.getApplicationContext(), this.json.getString("msg"), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -183,12 +182,12 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             cParametros.addCache("usuario_password", cObjetos.oUsuario.getPassword());
             cParametros.addCache("usuario_token", token);
             cParametros.addCache("usuario_token_refresh", tokenRefresh);
-            Toast.makeText(cObjetos.oActivity.getApplicationContext(), "Registro exitoso!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Registro exitoso!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(cObjetos.oActivity, activity_menu_2.class);
             cObjetos.oActivity.startActivity(intent);
             cObjetos.oActivity.finish();
         }else {
-            Toast.makeText(cObjetos.oActivity.getApplicationContext(), this.json.getString("msg"), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
         }
     }
 
