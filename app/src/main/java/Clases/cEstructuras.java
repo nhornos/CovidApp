@@ -1,13 +1,8 @@
 package Clases;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ProgressBar;
 
-import com.example.respirapp.ActivityRegister;
 import com.example.respirapp.R;
 
 import org.json.JSONObject;

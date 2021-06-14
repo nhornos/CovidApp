@@ -2,23 +2,6 @@ package com.example.respirapp;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,17 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONObject;
-
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
 
-import Clases.cAPI;
 import Clases.cObjetos;
 import Clases.cParametros;
-
-import static androidx.core.content.ContextCompat.getSystemService;
 
 //public class ActivityLogin extends Activity implements SensorEventListener {
 public class ActivityLogin extends Activity {
@@ -132,7 +108,7 @@ public class ActivityLogin extends Activity {
                     }
                     if(inPassword.getText().toString().length() == 0 ){
                         txtMsg.setText("Ingrese su usuario y contraseña.");
-                        inUser.setError("Debe ingresar una contraseña válida");
+                        inPassword.setError("Debe ingresar una contraseña válida");
                         break;
                     }
                     loguear();

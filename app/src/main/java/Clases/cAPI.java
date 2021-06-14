@@ -1,9 +1,7 @@
 package Clases;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
@@ -11,10 +9,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.respirapp.ActivityMenu;
 import com.example.respirapp.activity_menu_2;
 
 import org.json.JSONException;
@@ -39,6 +35,9 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
     private String verbo;
     private String metodo;
     private String params;
+    private Context context = cObjetos.oActivity.getApplicationContext();
+
+    private boolean conexion = true;
 
     @Override
     protected JSONObject doInBackground(String... strings) {
@@ -51,16 +50,21 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         this.params = strings[2];
 
         Log.i("Dentro del thread", this.params);
-        try
-        {
-            this.json = realizarPeticionServidor(verbo, metodo, params);
-            return this.json;
+
+        Log.i("Conexion facu: ", String.valueOf(checkConectionFacu(context)));
+        if(checkConectionFacu(context)){
+            try {
+                this.json = realizarPeticionServidor(verbo, metodo, params);
+            } catch(Exception e)
+            {
+                Log.i("cAPI", e.getMessage());
+            }
         }
-        catch(Exception e)
-        {
-            Log.i("cAPI", e.getMessage());
+        else {
+            conexion = false;
             return null;
         }
+        return this.json;
     }
 
     private JSONObject realizarPeticionServidor(String verbo, String metodo, String params) throws URISyntaxException, IOException, JSONException {
@@ -113,12 +117,19 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
-        //TODO agregar validaciones de error de conexión
         try {
-            switchBetweenMethods(this.metodo);
+            if(!conexion)
+                errorConnection();
+            else
+                switchBetweenMethods(this.metodo);
         } catch (JSONException e) {
             Log.i("onPostExecute", e.getMessage());
         }
+    }
+
+    private void errorConnection() {
+        hideBar();
+        Toast.makeText(cObjetos.oActivity.getApplicationContext(), "Error. No hay conexión a internet", Toast.LENGTH_LONG).show();
     }
 
     private void switchBetweenMethods(String method) throws JSONException {

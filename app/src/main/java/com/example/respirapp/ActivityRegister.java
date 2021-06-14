@@ -1,9 +1,6 @@
 package com.example.respirapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,14 +9,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import org.json.JSONObject;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import Clases.cAPI;
 import Clases.cObjetos;
-import Clases.cParametros;
 
 public class ActivityRegister extends AppCompatActivity {
 
