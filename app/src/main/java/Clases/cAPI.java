@@ -3,7 +3,12 @@ package Clases;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -31,49 +36,30 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
     private int estado;
     private JSONObject json;
 
+    private String verbo;
     private String metodo;
-    private Activity activity;
-    private Context context;
-    private ProgressBar bar;
-
     private String params;
-
-    public cAPI(Activity activity, Context context, ProgressBar progressBar){
-        this.activity = activity;
-        this.context = context;
-        this.bar = progressBar;
-    }
 
     @Override
     protected JSONObject doInBackground(String... strings) {
 
 
-        json = new JSONObject();
+        this.json = new JSONObject();
 
-        String verbo = strings[0];
+        this.verbo = strings[0];
         this.metodo = strings[1];
         this.params = strings[2];
 
         Log.i("Dentro del thread", this.params);
         try
         {
-            json = realizarPeticionServidor(verbo, metodo, params);
-            return json;
+            this.json = realizarPeticionServidor(verbo, metodo, params);
+            return this.json;
         }
         catch(Exception e)
         {
             Log.i("cAPI", e.getMessage());
             return null;
-        }
-    }
-
-    @Override
-    protected void onPostExecute(JSONObject jsonObject) {
-        //TODO agregar validaciones de error de conexión
-        try {
-            switchBetweenMethods(this.metodo);
-        } catch (JSONException e) {
-            Log.i("onPostExecute", e.getMessage());
         }
     }
 
@@ -125,6 +111,16 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         return new JSONObject(content.toString());
     }
 
+    @Override
+    protected void onPostExecute(JSONObject jsonObject) {
+        //TODO agregar validaciones de error de conexión
+        try {
+            switchBetweenMethods(this.metodo);
+        } catch (JSONException e) {
+            Log.i("onPostExecute", e.getMessage());
+        }
+    }
+
     private void switchBetweenMethods(String method) throws JSONException {
         switch (method){
             case "login":
@@ -147,41 +143,89 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
             cObjetos.oUsuario.setToken(token);
             cObjetos.oUsuario.setTokenRefresh(tokenRefresh);
+            cParametros.addCache("usuario_email", cObjetos.oUsuario.getEmail());
+            cParametros.addCache("usuario_password", cObjetos.oUsuario.getPassword());
+            cParametros.addCache("usuario_token", token);
+            cParametros.addCache("usuario_token_refresh", tokenRefresh);
 
             Log.i("Datos param:", this.params);
 
 //            Intent intent = new Intent(this.activity, ActivityMenu.class);
-            Intent intent = new Intent(this.activity, activity_menu_2.class);
-            this.activity.startActivity(intent);
+            Intent intent = new Intent(cObjetos.oActivity, activity_menu_2.class);
+            cObjetos.oActivity.startActivity(intent);
+            cObjetos.oActivity.finish();
         }
         else {
-            Toast.makeText(this.context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
+            Toast.makeText(cObjetos.oActivity.getApplicationContext(), this.json.getString("msg"), Toast.LENGTH_LONG).show();
         }
     }
 
     private void register() throws JSONException {
         hideBar();
 
-        if(this.json.getBoolean("success")) {
+        if(this.estado == 200) {
             String token = this.json.getString("token");
             String tokenRefresh = this.json.getString("token_refresh");
             cObjetos.oUsuario.setToken(token);
             cObjetos.oUsuario.setTokenRefresh(tokenRefresh);
-//            Intent intent = new Intent(this.activity, ActivityMenu.class);
-            Toast.makeText(this.context, "Registro exitoso!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this.activity, activity_menu_2.class);
-//            Intent intent = new Intent(this.activity, ActivityMenu.class);
-            this.activity.startActivity(intent);
-            this.activity.finish();
+            cParametros.addCache("usuario_email", cObjetos.oUsuario.getEmail());
+            cParametros.addCache("usuario_password", cObjetos.oUsuario.getPassword());
+            cParametros.addCache("usuario_token", token);
+            cParametros.addCache("usuario_token_refresh", tokenRefresh);
+            Toast.makeText(cObjetos.oActivity.getApplicationContext(), "Registro exitoso!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(cObjetos.oActivity, activity_menu_2.class);
+            cObjetos.oActivity.startActivity(intent);
+            cObjetos.oActivity.finish();
         }else {
-            Toast.makeText(this.context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
+            Toast.makeText(cObjetos.oActivity.getApplicationContext(), this.json.getString("msg"), Toast.LENGTH_LONG).show();
         }
     }
 
     private void hideBar(){
-        if (bar.isShown()) {
-            bar.setVisibility(View.GONE);
+        if (cObjetos.oProgressBar.isShown()) {
+            cObjetos.oProgressBar.setVisibility(View.GONE);
         }
+    }
+
+    public static boolean checkConection(Context context){
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            // For 29 api or above
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
+
+                if(capabilities == null)
+                    return false;
+
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)){
+                    Toast.makeText(context, "wifi", Toast.LENGTH_LONG).show();
+                    return true;
+                }
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Toast.makeText(context, "ethernet", Toast.LENGTH_LONG).show();
+                    return true;
+                }
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Toast.makeText(context, "cellular", Toast.LENGTH_LONG).show();
+                    return true;
+                }
+
+                return false;
+            }
+            // For below 29 api
+            else {
+                if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting()) {
+                    return true;
+                }
+            }
+            return false;
+    }
+
+    public static boolean checkConectionFacu(Context context) {
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
 

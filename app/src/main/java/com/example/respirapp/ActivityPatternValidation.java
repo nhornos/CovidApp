@@ -71,7 +71,7 @@ public class ActivityPatternValidation extends Activity {
             //Voy al activity de la creación del patrón
             Intent intent = new Intent(ActivityPatternValidation.this, ActivityPatternCreation.class);
             startActivity(intent);
-            this.finish();
+            finish();
         }
     }
 
@@ -95,12 +95,13 @@ public class ActivityPatternValidation extends Activity {
             patternEntered = PatternLockUtils.patternToString(mPatternLockView,pattern);
             Log.i("Pattron:",save_pattern);
             if(patternEntered.equals(save_pattern)){
-                Toast.makeText(ActivityPatternValidation.this, "Password Correcta!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ActivityPatternValidation.this, "Password Correcta!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ActivityPatternValidation.this, ActivityLogin.class);
                 startActivity(intent);
-                ActivityPatternValidation.this.finish();
+                finish();
             }else{
-                Toast.makeText(ActivityPatternValidation.this, "Password Incorrecta!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ActivityPatternValidation.this, "Password Incorrecta!", Toast.LENGTH_SHORT).show();
+                return;
             }
             mPatternLockView.clearPattern();
 

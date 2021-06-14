@@ -82,7 +82,7 @@ public class ActivityPatternCreation extends Activity {
             Toast.makeText(ActivityPatternCreation.this, "Patron guardado!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(ActivityPatternCreation.this, ActivityLogin.class);
             startActivity(intent);
-            ActivityPatternCreation.this.finish();
+            finish();
         } else{
             Toast.makeText(ActivityPatternCreation.this, "El patron es muy corto!", Toast.LENGTH_LONG).show();
             mPatternLockView.clearPattern();

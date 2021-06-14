@@ -1,6 +1,7 @@
 package com.example.respirapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,8 +24,6 @@ public class ActivityMenu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        cObjetos.oUsuario.printDataUsuario();
-
 //            AsyncTask.execute(new Runnable() {
 //                @Override
 //                public void run() {
@@ -44,33 +43,15 @@ public class ActivityMenu extends Activity {
     }
 
     @Override
-    protected void onStop()
-    {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-    }
-
-    @Override
-    protected void onRestart()
-    {
-        super.onRestart();
-    }
-
-    @Override
     protected void onResume()
     {
+        cObjetos.oActivity = this;
         super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 
 }

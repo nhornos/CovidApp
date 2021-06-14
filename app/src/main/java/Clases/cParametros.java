@@ -1,5 +1,7 @@
 package Clases;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
@@ -26,4 +28,28 @@ public class cParametros {
                     ? resultString.substring(0, resultString.length() - 1)
                     : resultString;
         }
+
+        public static void clearCache()
+        {
+            SharedPreferences prefs = cObjetos.oActivity.getApplicationContext().getSharedPreferences("RespirApp", Context.MODE_PRIVATE);
+            SharedPreferences.Editor prefEditor = prefs.edit();
+            prefEditor.clear();
+            prefEditor.commit();
+        }
+
+        public static void addCache(String key, String value)
+        {
+            SharedPreferences prefs = cObjetos.oActivity.getApplicationContext().getSharedPreferences("RespirApp", Context.MODE_PRIVATE);
+            SharedPreferences.Editor prefEditor = prefs.edit();
+            prefEditor.clear();
+            prefEditor.putString(key, value);
+            prefEditor.commit();
+        }
+
+        public static String getCache(String key)
+        {
+            SharedPreferences prefs = cObjetos.oActivity.getApplicationContext().getSharedPreferences("RespirApp", Context.MODE_PRIVATE);
+            return prefs.getString(key, "");
+        }
+
 }

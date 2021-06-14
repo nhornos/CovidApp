@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -38,14 +40,16 @@ import Clases.cParametros;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
-public class ActivityLogin extends Activity implements SensorEventListener {
+//public class ActivityLogin extends Activity implements SensorEventListener {
+public class ActivityLogin extends Activity {
 
     private EditText inUser;
     private EditText inPassword;
     private Button btnSubmit;
     private Button btnRegistrarse;
+    private TextView txtMsg;
     public static ProgressBar mProgressBar;
-    private SensorManager mSensorManager;
+//    private SensorManager mSensorManager;
 
     DecimalFormat dosdecimales = new DecimalFormat("###.###");
 
@@ -54,24 +58,30 @@ public class ActivityLogin extends Activity implements SensorEventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Log.i("El texto", "Entro a ActivityLogin");
+        btnSubmit = (Button)findViewById(R.id.btnSubmit);
+        btnRegistrarse = (Button)findViewById(R.id.btnRegistro);
 
-        // Defino los botones
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        inUser = (EditText)findViewById(R.id.inUserLogin);
+        inPassword = (EditText)findViewById(R.id.inPassLogin);
 
-        btnSubmit.setOnClickListener(botonesListeners);
-        btnRegistrarse = (Button) findViewById(R.id.btnRegistro);
-        btnRegistrarse.setOnClickListener(botonesListeners);
+        txtMsg = (TextView)findViewById(R.id.lbl_msg);
 
-        // Defino los campos de ingreso de datos
-        inUser = (EditText) findViewById(R.id.inUserLogin);
-        inPassword = (EditText) findViewById(R.id.inPassLogin);
-
-        //Defino barra de cargando
         mProgressBar = (ProgressBar) findViewById(R.id.progressLoaderLogin);
 
         // Accedemos al servicio de sensores
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+//        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+        btnSubmit.setOnClickListener(botonesListeners);
+        btnRegistrarse.setOnClickListener(botonesListeners);
+
+        cObjetos.oActivity = this;
+
+        inUser.setText(cParametros.getCache("usuario_email"));
+        inPassword.setText(cParametros.getCache("usuario_email"));
+
+        loguear();
+
+        //Toast.makeText(this, String.valueOf(Build.VERSION.SDK_INT), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -90,7 +100,7 @@ public class ActivityLogin extends Activity implements SensorEventListener {
     protected void onPause()
     {
         super.onPause();
-        pararSensores();
+//        pararSensores();
     }
 
     @Override
@@ -103,7 +113,9 @@ public class ActivityLogin extends Activity implements SensorEventListener {
     protected void onResume()
     {
         super.onResume();
-        iniSensores();
+        cObjetos.oActivity = this;
+        cObjetos.oProgressBar = mProgressBar;
+//        iniSensores();
     }
 
     private final View.OnClickListener botonesListeners = new View.OnClickListener() {
@@ -113,12 +125,26 @@ public class ActivityLogin extends Activity implements SensorEventListener {
             switch (v.getId()) {
                 case R.id.btnSubmit:
                     Log.i("El texto", "Se detectó boton de submit");
-                    realizarLogin();
+                    if(inUser.getText().toString().length() == 0){
+                        txtMsg.setText("Ingrese su usuario y contraseña.");
+                        inUser.setError("Debe ingresar un usuario válido");
+                        break;
+                    }
+                    if(inPassword.getText().toString().length() == 0 ){
+                        txtMsg.setText("Ingrese su usuario y contraseña.");
+                        inUser.setError("Debe ingresar una contraseña válida");
+                        break;
+                    }
+                    loguear();
                     break;
                 case R.id.btnRegistro:
                     Log.i("El texto", "Se detectó boton de registro");
                     Intent intent=new Intent(ActivityLogin.this, ActivityRegister.class);
                     startActivity(intent);
+//                    if(cAPI.checkConection(getApplicationContext()))
+//                        Toast.makeText(getApplicationContext(), "Conectado", Toast.LENGTH_LONG).show();
+//                    else
+//                        Toast.makeText(getApplicationContext(), "Desconectado", Toast.LENGTH_LONG).show();
                     break;
                 default:
                     Toast.makeText(getApplicationContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
@@ -128,57 +154,46 @@ public class ActivityLogin extends Activity implements SensorEventListener {
         }
     };
 
-    private void realizarLogin() {
+    private void loguear() {
+
+        if(inUser.getText().toString().length() == 0 || inPassword.getText().toString().length() == 0 ){
+            txtMsg.setText("Ingrese su usuario y contraseña.");
+            return;
+        }
+
         mProgressBar.setVisibility(View.VISIBLE);
-
-//        String email = inUser.getText().toString();
-        String email = "nhornos@alumno.unlam.edu.ar";
-//        String password = inPassword.getText().toString();
-        String password = "abcd1234";
-
-        //Generamos los parametros para el AsyncTask
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("email", email);
-        parameters.put("password", password);
-        String params = cParametros.getParamsString(parameters);
-
-        //Guardamos el email del usuario que intenta loguearse
-        cObjetos.oUsuario.setEmail(email);
-
-        AsyncTask<String, String, JSONObject> loginAsyncTask = new cAPI(ActivityLogin.this, getApplicationContext(), mProgressBar);
-        //cAPI.mutex.acquire();
-        loginAsyncTask.execute("POST","login", params);
-        //cAPI.mutex.acquire();
+        //cObjetos.oUsuario.loguear(inUser.getText().toString().trim(), inPassword.getText().toString().trim());
+        cObjetos.oUsuario.loguear("nhornos@alumno.unlam.edu.ar", "abcd1234");
     }
 
     //Nuevas cosas agregadas para sensores:
-
-    protected void iniSensores(){
-        mSensorManager.registerListener((SensorEventListener) this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-    }
-    protected void pararSensores(){
-        mSensorManager.unregisterListener((SensorEventListener) this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
-    }
-
-    // Metodo que escucha el cambio de sensibilidad de los sensores
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy)
-    {
-
-    }
+//
+//    protected void iniSensores(){
+//        mSensorManager.registerListener((SensorEventListener) this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+//    }
+//    protected void pararSensores(){
+//        mSensorManager.unregisterListener((SensorEventListener) this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
+//    }
+//
+//    // Metodo que escucha el cambio de sensibilidad de los sensores
+//    @Override
+//    public void onAccuracyChanged(Sensor sensor, int accuracy)
+//    {
+//
+//    }
 
     // Metodo que escucha el cambio de los sensores
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        Log.i("Sensor:", event.sensor.getName());
-        Log.i("Tipo:", String.valueOf(event.sensor.getType()));
-        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            String txt = "Acelerometro:\n";
-            txt += "x: " + dosdecimales.format(event.values[0]) + " m/seg2 \n";
-            txt += "y: " + dosdecimales.format(event.values[1]) + " m/seg2 \n";
-            txt += "z: " + dosdecimales.format(event.values[2]) + " m/seg2 \n";
-            Log.i("Datos acelerometro:", txt);
-        }
-
-    }
+//    @Override
+//    public void onSensorChanged(SensorEvent event) {
+//        Log.i("Sensor:", event.sensor.getName());
+//        Log.i("Tipo:", String.valueOf(event.sensor.getType()));
+//        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+//            String txt = "Acelerometro:\n";
+//            txt += "x: " + dosdecimales.format(event.values[0]) + " m/seg2 \n";
+//            txt += "y: " + dosdecimales.format(event.values[1]) + " m/seg2 \n";
+//            txt += "z: " + dosdecimales.format(event.values[2]) + " m/seg2 \n";
+//            Log.i("Datos acelerometro:", txt);
+//        }
+//
+//    }
 }

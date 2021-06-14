@@ -1,4 +1,8 @@
 <resources>
+    <string name="env">TEST</string>
+    <string name="commission">2900</string>
+    <string name="group">9</string>
+
     <string name="app_name">RespirApp</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_menu_2">activity_menu_2</string>
