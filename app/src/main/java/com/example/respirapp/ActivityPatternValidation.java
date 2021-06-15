@@ -99,7 +99,7 @@ public class ActivityPatternValidation extends Activity {
                 startActivity(intent);
                 finish();
             }else{
-                //Toast.makeText(ActivityPatternValidation.this, "Password Incorrecta!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityPatternValidation.this, "Password Incorrecta!", Toast.LENGTH_SHORT).show();
             }
             mPatternLockView.clearPattern();
 

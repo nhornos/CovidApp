@@ -99,12 +99,27 @@ public class cEstructuras {
             parameters.put("password", password);
             String params = cParametros.getParamsString(parameters);
 
-            try {
+//            try {
                 AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context);
                 registerAsyncTask.execute("POST","login",params);
-            }catch (Exception e){
-                Log.i("LOGIN", e.getMessage());
-            }
+//            }catch (Exception e){
+//                Log.i("LOGIN", e.getMessage());
+//            }
+
+        }
+        public void registrarEvento(String environment, String method, String description){
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put("env", environment);
+            parameters.put("type_events", method);
+            parameters.put("description", "Descripción");
+            String params = cParametros.getParamsString(parameters);
+
+//            try {
+                AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI();
+                registerAsyncTask.execute("POST","event",params);
+//            }catch (Exception e){
+//                Log.i("EVENT", e.getMessage());
+//            }
 
         }
     }

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.respirapp.R;
 import com.example.respirapp.activity_menu_2;
 
 import org.json.JSONException;
@@ -26,6 +27,8 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class cAPI extends AsyncTask<String, String, JSONObject> {
@@ -37,9 +40,13 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
     private String metodo;
     private String params;
     private Activity activity;
-    private Context context = cObjetos.oActivity.getApplicationContext();
+    private Context context;
 
     private boolean conexion = true;
+
+    public cAPI(){
+        //Constructor para el RegisterEvent.
+    }
 
     public cAPI(Activity activity, Context context){
         this.context = context;
@@ -61,7 +68,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 //        if(checkConectionFacu(context)){
         if(checkConection(context)){
             try {
-                this.json = realizarPeticionServidor(verbo, metodo, params);
+                this.json = realizarPeticionServidor();
             } catch(Exception e)
             {
                 Log.i("cAPI", e.getMessage());
@@ -74,18 +81,18 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         return this.json;
     }
 
-    private JSONObject realizarPeticionServidor(String verbo, String metodo, String params) throws URISyntaxException, IOException, JSONException {
-        URI uri = new URI("http://so-unlam.net.ar/api/api/" + metodo);
+    private JSONObject realizarPeticionServidor() throws URISyntaxException, IOException, JSONException {
+        URI uri = new URI("http://so-unlam.net.ar/api/api/" + this.metodo);
         URL url = new URL(uri.toURL().toString());
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        if(verbo == "GET")
+        if(this.verbo == "GET")
             conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
         else
             conn.setRequestProperty("Accept", "application/json; charset=utf-8");
 
-        conn.setRequestMethod(verbo); //GET o POST
+        conn.setRequestMethod(this.verbo); //GET o POST
         conn.setConnectTimeout(5000);
         conn.setReadTimeout(5000);
 
@@ -98,10 +105,10 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         outPutStream.flush();
         outPutStream.close();
 
-        estado = conn.getResponseCode();
+        this.estado = conn.getResponseCode();
         Reader streamReader = null;
 
-        if (estado == 400) {
+        if (this.estado == 400) {
             streamReader = new InputStreamReader(conn.getErrorStream());
         } else {
             streamReader = new InputStreamReader(conn.getInputStream());
@@ -143,14 +150,27 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         switch (method){
             case "login":
                 login();
+                registerEvent(method);
                 break;
             case "register":
                 register();
+                registerEvent(method);
                 break;
             case "event":
                 event();
             default:
                 break;
+        }
+    }
+
+    private void registerEvent(String method) throws JSONException {
+        if(this.json.getBoolean("success")){
+            String environment = this.json.getString("env");
+            //TODO Poner aca la descripción que se le manda al event.
+            String description = "Descripcion";
+
+            cObjetos.oUsuario.registrarEvento(environment, method, description);
+
         }
     }
 
@@ -205,21 +225,17 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             String environment = this.json.getString("env");
             JSONObject event = this.json.getJSONObject("event");
 
-            //parameters.put("env", cObjetos.oActivity.getApplicationContext().getString(R.string.env));
-            if(environment == getString(R.string.PROD)){
+            String prod = cObjetos.oActivity.getApplicationContext().getString(R.string.prod);
+            if(environment == prod){
                 cObjetos.oUsuario.setDni(event.getInt("dni"));
-
                 cObjetos.oEvento.setId(event.getInt("id"));
             }
             cObjetos.oEvento.setTypeEvent(event.getString("type_events"));
             cObjetos.oEvento.setDescription(event.getString("description"));
+            Toast.makeText(context, "Se registró en el servidor la accion", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(context, "Se registró en el servidor la accion", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(cObjetos.oActivity, activity_menu_2.class);
-        cObjetos.oActivity.startActivity(intent);
-        cObjetos.oActivity.finish();
     }
 
     private void hideBar(){
