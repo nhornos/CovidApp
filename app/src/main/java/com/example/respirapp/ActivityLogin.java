@@ -50,10 +50,10 @@ public class ActivityLogin extends Activity {
         btnSubmit.setOnClickListener(botonesListeners);
         btnRegistrarse.setOnClickListener(botonesListeners);
 
-        inUser.setText(cParametros.getCache("usuario_email"));
-        inPassword.setText(cParametros.getCache("usuario_email"));
+        inUser.setText(cParametros.getCache(this.getApplicationContext(), "usuario_email"));
+        inPassword.setText(cParametros.getCache(this.getApplicationContext(), "usuario_password"));
 
-        loguear();
+//        loguear();
 
         //Toast.makeText(this, String.valueOf(Build.VERSION.SDK_INT), Toast.LENGTH_LONG).show();
     }
@@ -135,8 +135,8 @@ public class ActivityLogin extends Activity {
         }
 
         mProgressBar.setVisibility(View.VISIBLE);
-        //cObjetos.oUsuario.loguear(inUser.getText().toString().trim(), inPassword.getText().toString().trim());
-        cObjetos.oUsuario.loguear(this, getApplicationContext(), "nhornos@alumno.unlam.edu.ar", "abcd1234");
+        cObjetos.oUsuario.loguear(this, this.getApplicationContext(), inUser.getText().toString().trim(), inPassword.getText().toString().trim());
+//        cObjetos.oUsuario.loguear(this, getApplicationContext(), "nhornos@alumno.unlam.edu.ar", "abcd1234");
     }
 
     //Nuevas cosas agregadas para sensores:

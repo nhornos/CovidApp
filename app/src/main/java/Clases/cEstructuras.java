@@ -57,8 +57,8 @@ public class cEstructuras {
         public void setApellido(String apellido){
             this.apellido = apellido;
         }
-        public void setPassword(String email){
-            this.email = email;
+        public void setPassword(String password){
+            this.password = password;
         }
         public void setToken(String token) {
             this.token = token;
@@ -79,14 +79,14 @@ public class cEstructuras {
 
         public void registrar(Activity activity, Context context, int dni, String nombre, String apellido, String email, String password){
             Map<String, String> parameters = new HashMap<>();
-            parameters.put("env", cObjetos.oActivity.getApplicationContext().getString(R.string.env));
+            parameters.put("env", context.getString(R.string.env));
             parameters.put("name", nombre);
             parameters.put("lastname", apellido);
             parameters.put("dni", String.valueOf(dni));
             parameters.put("email", email);
             parameters.put("password", password);
-            parameters.put("commission", cObjetos.oActivity.getApplicationContext().getString(R.string.commission));
-            parameters.put("group", cObjetos.oActivity.getApplicationContext().getString(R.string.group));
+            parameters.put("commission", context.getString(R.string.commission));
+            parameters.put("group", context.getString(R.string.group));
             String params = cParametros.getParamsString(parameters);
 
             AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context);
@@ -94,6 +94,10 @@ public class cEstructuras {
         }
 
         public void loguear(Activity activity, Context context, String email, String password){
+            //Guardo los datos en la estructura de usuario
+            cObjetos.oUsuario.setEmail(email);
+            cObjetos.oUsuario.setPassword(password);
+
             Map<String, String> parameters = new HashMap<>();
             parameters.put("email", email);
             parameters.put("password", password);
@@ -107,7 +111,7 @@ public class cEstructuras {
 //            }
 
         }
-        public void registrarEvento(String environment, String method, String description){
+        public void registrarEvento(Activity activity, Context context, String environment, String method, String description){
             Map<String, String> parameters = new HashMap<>();
             parameters.put("env", environment);
             parameters.put("type_events", method);
@@ -115,7 +119,7 @@ public class cEstructuras {
             String params = cParametros.getParamsString(parameters);
 
 //            try {
-                AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI();
+                AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context);
                 registerAsyncTask.execute("POST","event",params);
 //            }catch (Exception e){
 //                Log.i("EVENT", e.getMessage());

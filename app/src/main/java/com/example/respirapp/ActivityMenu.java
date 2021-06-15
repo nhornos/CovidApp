@@ -42,7 +42,6 @@ public class ActivityMenu extends Activity {
     @Override
     protected void onResume()
     {
-        cObjetos.oActivity = this;
         super.onResume();
     }
 

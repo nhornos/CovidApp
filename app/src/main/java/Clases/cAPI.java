@@ -44,10 +44,6 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
     private boolean conexion = true;
 
-    public cAPI(){
-        //Constructor para el RegisterEvent.
-    }
-
     public cAPI(Activity activity, Context context){
         this.context = context;
         this.activity = activity;
@@ -66,7 +62,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         Log.i("Dentro del thread", this.params);
 
 //        if(checkConectionFacu(context)){
-        if(checkConection(context)){
+        if(checkConection(this.context)){
             try {
                 this.json = realizarPeticionServidor();
             } catch(Exception e)
@@ -165,11 +161,11 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
     private void registerEvent(String method) throws JSONException {
         if(this.json.getBoolean("success")){
-            String environment = this.json.getString("env");
+            String environment = this.context.getString(R.string.env);
             //TODO Poner aca la descripción que se le manda al event.
             String description = "Descripcion";
 
-            cObjetos.oUsuario.registrarEvento(environment, method, description);
+            cObjetos.oUsuario.registrarEvento(this.activity, this.context, environment, method, description);
 
         }
     }
@@ -183,16 +179,17 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
             cObjetos.oUsuario.setToken(token);
             cObjetos.oUsuario.setTokenRefresh(tokenRefresh);
-            cParametros.addCache("usuario_email", cObjetos.oUsuario.getEmail());
-            cParametros.addCache("usuario_password", cObjetos.oUsuario.getPassword());
-            cParametros.addCache("usuario_token", token);
-            cParametros.addCache("usuario_token_refresh", tokenRefresh);
+
+            cParametros.addCache(this.context,"usuario_email", cObjetos.oUsuario.getEmail());
+            cParametros.addCache(this.context,"usuario_password", cObjetos.oUsuario.getPassword());
+            cParametros.addCache(this.context,"usuario_token", token);
+            cParametros.addCache(this.context,"usuario_token_refresh", tokenRefresh);
 
             Log.i("Datos param:", this.params);
 
             Intent intent = new Intent(this.activity, activity_menu_2.class);
-            cObjetos.oActivity.startActivity(intent);
-            cObjetos.oActivity.finish();
+            this.activity.startActivity(intent);
+//            this.activity.finish();
         }
         else {
             Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
@@ -207,14 +204,14 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             String tokenRefresh = this.json.getString("token_refresh");
             cObjetos.oUsuario.setToken(token);
             cObjetos.oUsuario.setTokenRefresh(tokenRefresh);
-            cParametros.addCache("usuario_email", cObjetos.oUsuario.getEmail());
-            cParametros.addCache("usuario_password", cObjetos.oUsuario.getPassword());
-            cParametros.addCache("usuario_token", token);
-            cParametros.addCache("usuario_token_refresh", tokenRefresh);
+            cParametros.addCache(this.context, "usuario_email", cObjetos.oUsuario.getEmail());
+            cParametros.addCache(this.context, "usuario_password", cObjetos.oUsuario.getPassword());
+            cParametros.addCache(this.context, "usuario_token", token);
+            cParametros.addCache(this.context, "usuario_token_refresh", tokenRefresh);
             Toast.makeText(context, "Registro exitoso!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this.activity, activity_menu_2.class);
-            cObjetos.oActivity.startActivity(intent);
-            cObjetos.oActivity.finish();
+            this.activity.startActivity(intent);
+            this.activity.finish();
         }else {
             Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
         }
@@ -225,13 +222,15 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             String environment = this.json.getString("env");
             JSONObject event = this.json.getJSONObject("event");
 
-            String prod = cObjetos.oActivity.getApplicationContext().getString(R.string.prod);
+            String prod = this.context.getString(R.string.prod);
             if(environment == prod){
                 cObjetos.oUsuario.setDni(event.getInt("dni"));
                 cObjetos.oEvento.setId(event.getInt("id"));
             }
             cObjetos.oEvento.setTypeEvent(event.getString("type_events"));
             cObjetos.oEvento.setDescription(event.getString("description"));
+            Log.i("Registro de evento:", "Se registro la acción de " + event.getString("type_events"));
+            Log.i("Resultado evento:", this.json.toString());
             Toast.makeText(context, "Se registró en el servidor la accion", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();

@@ -29,26 +29,26 @@ public class cParametros {
                     : resultString;
         }
 
-        public static void clearCache()
+        public static void clearCache(Context context)
         {
-            SharedPreferences prefs = cObjetos.oActivity.getApplicationContext().getSharedPreferences("RespirApp", Context.MODE_PRIVATE);
+            SharedPreferences prefs = context.getSharedPreferences("RespirApp", Context.MODE_PRIVATE);
             SharedPreferences.Editor prefEditor = prefs.edit();
             prefEditor.clear();
             prefEditor.commit();
         }
 
-        public static void addCache(String key, String value)
+        public static void addCache(Context context, String key, String value)
         {
-            SharedPreferences prefs = cObjetos.oActivity.getApplicationContext().getSharedPreferences("RespirApp", Context.MODE_PRIVATE);
+            SharedPreferences prefs = context.getSharedPreferences("RespirApp", Context.MODE_PRIVATE);
             SharedPreferences.Editor prefEditor = prefs.edit();
-            prefEditor.clear();
+//            prefEditor.clear();
             prefEditor.putString(key, value);
             prefEditor.commit();
         }
 
-        public static String getCache(String key)
+        public static String getCache(Context context, String key)
         {
-            SharedPreferences prefs = cObjetos.oActivity.getApplicationContext().getSharedPreferences("RespirApp", Context.MODE_PRIVATE);
+            SharedPreferences prefs = context.getSharedPreferences("RespirApp", Context.MODE_PRIVATE);
             return prefs.getString(key, "");
         }
 
