@@ -62,6 +62,7 @@ public class ActivityRegister extends AppCompatActivity {
                 case R.id.btnRegistrarse:
                     Log.i("El texto", "Se detectó boton de registrarse");
                     realizarRegistro();
+                    break;
                 default:
                     Toast.makeText(getApplicationContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
             }
@@ -72,7 +73,8 @@ public class ActivityRegister extends AppCompatActivity {
     private void realizarRegistro() {
         mProgressBar.setVisibility(View.VISIBLE);
 
-        cObjetos.oUsuario.registrar(this, getApplicationContext(), Integer.parseInt(inDNI.getText().toString()), inName.getText().toString(), inLastName.getText().toString(), inUser.getText().toString(), inPassword.getText().toString());
+//        cObjetos.oUsuario.registrar(this, getApplicationContext(), inDNI.getText().toString(), inName.getText().toString(), inLastName.getText().toString(), inUser.getText().toString(), inPassword.getText().toString());
+        cObjetos.oUsuario.registrar(this, getApplicationContext(), "36076620", "Nicolas", "Hornos", "nhornos@alumno.unlam.edu.ar", "abcd1234");
         //cObjetos.oUsuario.registrar(36076620, "Nicolas", "Hornos", "nhornos@alumno.unlam.edu.ar", "abcd1234");
     }
 }

@@ -83,12 +83,20 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        if(this.verbo == "GET")
-            conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
-        else
-            conn.setRequestProperty("Accept", "application/json; charset=utf-8");
+//        if(this.verbo == "GET")
+//            conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+//        else
+//            conn.setRequestProperty("Accept", "application/json; charset=utf-8");
 
-        conn.setRequestMethod(this.verbo); //GET o POST
+        conn.setRequestMethod(this.verbo); //POST o PUT
+        //header
+//        conn.setRequestProperty("Accept", "application/json; charset=utf-8");
+        conn.setRequestProperty("Content-Type", "application/json");
+//        if(this.metodo.equals("event"))
+//            conn.setRequestProperty("Authorization", "Bearer " + cParametros.getCache(this.context, "usuario_token"));
+//        else if(this.metodo.equals("refresh"))
+//            conn.setRequestProperty("Authorization", "Bearer " + cParametros.getCache(this.context, "usuario_token_refresh"));
+
         conn.setConnectTimeout(5000);
         conn.setReadTimeout(5000);
 
@@ -146,11 +154,11 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         switch (method){
             case "login":
                 login();
-                registerEvent(method);
+//                registerEvent(method);
                 break;
             case "register":
                 register();
-                registerEvent(method);
+//                registerEvent(method);
                 break;
             case "event":
                 event();
@@ -189,7 +197,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
             Intent intent = new Intent(this.activity, activity_menu_2.class);
             this.activity.startActivity(intent);
-//            this.activity.finish();
+            this.activity.finish();
         }
         else {
             Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();

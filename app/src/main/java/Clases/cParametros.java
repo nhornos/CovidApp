@@ -11,22 +11,29 @@ import java.util.Map;
 public class cParametros {
         public static String getParamsString(Map<String, String> params) {
             StringBuilder result = new StringBuilder();
-
-            try{
+            String resultString = "";
+                result.append("{");
                 for (Map.Entry<String, String> entry : params.entrySet()) {
-                    result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-                    result.append("=");
-                    result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-                    result.append("&");
+                    result.append("\"");
+                    result.append(entry.getKey());
+                    result.append("\"");
+                    result.append(":");
+                    result.append("\"");
+                    result.append(entry.getValue());
+                    result.append("\"");
+                    result.append(",");
                 }
-            } catch (UnsupportedEncodingException e) {
-                Log.i("getParamsString()", e.getMessage());
-            }
+                resultString = result.toString();
+                resultString = resultString.length() > 0
+                        ? resultString.substring(0, resultString.length() - 1)
+                        : resultString;
+                resultString += "}";
 
-            String resultString = result.toString();
-            return resultString.length() > 0
-                    ? resultString.substring(0, resultString.length() - 1)
-                    : resultString;
+//            String resultString = result.toString();
+//            return resultString.length() > 0
+//                    ? resultString.substring(0, resultString.length() - 1)
+//                    : resultString;
+            return resultString;
         }
 
         public static void clearCache(Context context)

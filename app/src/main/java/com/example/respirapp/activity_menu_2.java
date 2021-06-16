@@ -22,6 +22,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import Clases.cObjetos;
+import Clases.cParametros;
 
 public class activity_menu_2 extends AppCompatActivity {
 
@@ -106,6 +107,7 @@ public class activity_menu_2 extends AppCompatActivity {
                 startActivity(intent);
             }
 
+            //Se espera tres segundos a detectar nuevamente el boton de back
             new CountDownTimer(3000, 1000){
 
                 @Override

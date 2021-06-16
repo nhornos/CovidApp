@@ -52,10 +52,6 @@ public class ActivityLogin extends Activity {
 
         inUser.setText(cParametros.getCache(this.getApplicationContext(), "usuario_email"));
         inPassword.setText(cParametros.getCache(this.getApplicationContext(), "usuario_password"));
-
-//        loguear();
-
-        //Toast.makeText(this, String.valueOf(Build.VERSION.SDK_INT), Toast.LENGTH_LONG).show();
     }
 
     @Override
