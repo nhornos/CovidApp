@@ -65,8 +65,8 @@ public class ActivityRegister extends AppCompatActivity {
     };
 
     private void realizarRegistro() {
-//        cEstructuras.cUsuario.registrar(this, getApplicationContext(), inDNI.getText().toString(), inName.getText().toString(), inLastName.getText().toString(), inUser.getText().toString(), inPassword.getText().toString());
-        cEstructuras.cUsuario.registrar(this, getApplicationContext(), "36076620", "Nicolas", "Hornos", "nhornos@alumno.unlam.edu.ar", "abcd1234");
+        cEstructuras.cUsuario.registrar(this, getApplicationContext(), inDNI.getText().toString(), inName.getText().toString(), inLastName.getText().toString(), inUser.getText().toString(), inPassword.getText().toString());
+//        cEstructuras.cUsuario.registrar(this, getApplicationContext(), "36076620", "Nicolas", "Hornos", "nhornos@alumno.unlam.edu.ar", "abcd1234");
         //cEstructuras.cUsuario.registrar(36076620, "Nicolas", "Hornos", "nhornos@alumno.unlam.edu.ar", "abcd1234");
     }
 }

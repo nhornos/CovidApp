@@ -74,6 +74,8 @@ public class cEstructuras {
             if(nombre.equals("") || apellido.equals("") || email.equals("") || password.equals("") || dni.equals("")){
                 Toast.makeText(context, "Ingrese los campos faltantes", Toast.LENGTH_SHORT).show();
             }else{
+                cUsuario.password = password;
+                cUsuario.email = email;
                 Map<String, String> parameters = new TreeMap<>();
                 parameters.put("env", context.getString(R.string.env));
                 parameters.put("name", nombre);
@@ -84,8 +86,8 @@ public class cEstructuras {
                 parameters.put("commission", context.getString(R.string.commission));
                 parameters.put("group", context.getString(R.string.group));
                 String params = cFunciones.getParamsString(parameters);
-                AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context);
-                registerAsyncTask.execute("POST","register",params);
+                AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context, "POST","register");
+                registerAsyncTask.execute(params);
             }
 
         }
@@ -100,8 +102,8 @@ public class cEstructuras {
             String params = cFunciones.getParamsString(parameters);
             Log.i("Json:", params);
 //            try {
-                AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context);
-                registerAsyncTask.execute("POST","login",params);
+                AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context, "POST","login");
+                registerAsyncTask.execute(params);
 //                registerAsyncTask.execute("POST","login","{\"email\":\"nhornos@alumno.unlam.edu.ar\",\"password\":\"abcd1234\"}");
 //            {
 //                "email": <<String>>,
@@ -137,8 +139,8 @@ public class cEstructuras {
             parameters.put("description", description);
             String params = cFunciones.getParamsString(parameters);
 
-            AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context);
-            registerAsyncTask.execute("POST","event",params);
+            AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context, "POST","event");
+            registerAsyncTask.execute(params);
         }
     }
 }

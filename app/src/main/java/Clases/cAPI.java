@@ -3,8 +3,10 @@ package Clases;
 import com.example.respirapp.*;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
@@ -45,18 +47,17 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
     private boolean conexion = true;
 
-    public cAPI(Activity activity, Context context){
+    public cAPI(Activity activity, Context context, String verbo, String metodo){
         this.context = context;
         this.activity = activity;
-        if(activity != null)
-            this.dialog = new ProgressDialog(activity);
+        this.verbo = verbo;
+        this.metodo = metodo;
     }
 
     @Override
     protected void onPreExecute() {
-        if(activity != null){
-            this.dialog.setMessage("Por favor espere");
-            this.dialog.show();
+        if(this.metodo == "login" || this.metodo == "register"){
+            showBar("Por favor espere");
         }
     }
 
@@ -64,9 +65,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
     protected JSONObject doInBackground(String... strings) {
         this.json = new JSONObject();
 
-        this.verbo = strings[0];
-        this.metodo = strings[1];
-        this.params = strings[2];
+        this.params = strings[0];
 
         if(checkConection(this.context)){
             try {
@@ -94,6 +93,8 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
         if(this.metodo.equals("event"))
             conn.setRequestProperty("Authorization", "Bearer " + cFunciones.getCache(this.context, "usuario_token"));
+        else if(this.metodo.equals("refresh"))
+            conn.setRequestProperty("Authorization", "Bearer " + cFunciones.getCache(this.context, "usuario_token_refresh"));
 
         conn.setConnectTimeout(5000);
         conn.setReadTimeout(5000);
@@ -157,10 +158,20 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
                 break;
             case "event":
                 event();
+                break;
+            case "refresh":
+                refreshToken();
+                break;
             default:
                 break;
         }
         hideBar();
+    }
+
+    private void showBar(String msg){
+        this.dialog = new ProgressDialog(this.activity);
+        this.dialog.setMessage(msg);
+        this.dialog.show();
     }
 
     private void hideBar(){
@@ -172,6 +183,18 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
     private void registerEvent(String method, String description) throws JSONException {
         if(this.json.getBoolean("success")){
             cEstructuras.cEvento.registrar(null, this.context, this.context.getString(R.string.env), method, description);
+        }
+    }
+
+    private void refreshToken() throws JSONException {
+        if(this.json.getBoolean("success")) {
+            String token = this.json.getString("token");
+            String tokenRefresh = this.json.getString("token_refresh");
+
+            cEstructuras.cUsuario.token = token;
+            cEstructuras.cUsuario.tokenRefresh = tokenRefresh;
+        } else{
+            Log.i("Error refresh token", this.json.getString("msg"));
         }
     }
 
@@ -219,7 +242,9 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
     }
 
     private void event() throws JSONException {
-        if(this.json.getBoolean("success")){
+        if(this.activity != null)
+            this.estado = 401;
+        if(this.estado == 200 || this.estado == 201){
             String environment = this.json.getString("env");
             JSONObject event = this.json.getJSONObject("event");
 
@@ -234,7 +259,36 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             Log.i("Resultado evento:", this.json.toString());
             Toast.makeText(context, "Se registró en el servidor la accion", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
+            if(this.estado == 400)
+                Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
+            else if(this.estado == 401) {
+
+                new AlertDialog.Builder(this.context)
+                        .setTitle("Sesión expirada")
+                        .setMessage("La sesión a expirado debido a su inactividad")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent i = new Intent(context, ActivityLogin.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                i.putExtra("EXIT", true);
+                                activity.startActivity(i);
+                                activity.finish();
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+//                showBar("Se venció la conexión... Cerrando sesión.");
+            }
+            else
+                Log.i("Resultado evento:", "Codigo de respuesta \"" + this.estado + "\" no reconocido");
+
         }
     }
 

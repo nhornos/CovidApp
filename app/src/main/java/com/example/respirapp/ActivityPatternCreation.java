@@ -15,7 +15,7 @@ import java.util.List;
 
 import io.paperdb.Paper;
 
-public class ActivityPatternCreation extends Activity {
+public class ActivityPatternCreation extends Activity implements PatternLockViewListener {
 
     String save_pattern_key = "pattern_code";
     String final_pattern;
@@ -27,7 +27,7 @@ public class ActivityPatternCreation extends Activity {
 
         //Seteo el patron
         mPatternLockView = (PatternLockView)findViewById(R.id.pattern_lock_creation);
-        mPatternLockView.addPatternLockListener(patronListener);
+        mPatternLockView.addPatternLockListener(this);
 
         //Seteo los botones
         Button btnSetup = (Button)findViewById(R.id.btnSetearPatron);
@@ -37,27 +37,6 @@ public class ActivityPatternCreation extends Activity {
         Paper.init(this);
 
     }
-
-    private final PatternLockViewListener patronListener = new PatternLockViewListener() {
-
-
-        @Override
-        public void onStarted() {
-        }
-
-        @Override
-        public void onProgress(List<PatternLockView.Dot> progressPattern) {
-        }
-
-        @Override
-        public void onComplete(List<PatternLockView.Dot> pattern) {
-            final_pattern = PatternLockUtils.patternToString(mPatternLockView,pattern);
-        }
-
-        @Override
-        public void onCleared() {
-        }
-    };
 
     private final View.OnClickListener botonesListeners = new View.OnClickListener() {
 
@@ -89,4 +68,23 @@ public class ActivityPatternCreation extends Activity {
         }
     }
 
+    @Override
+    public void onStarted() {
+
+    }
+
+    @Override
+    public void onProgress(List<PatternLockView.Dot> progressPattern) {
+
+    }
+
+    @Override
+    public void onComplete(List<PatternLockView.Dot> pattern) {
+        final_pattern = PatternLockUtils.patternToString(mPatternLockView,pattern);
+    }
+
+    @Override
+    public void onCleared() {
+
+    }
 }

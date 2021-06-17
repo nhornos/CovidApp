@@ -19,6 +19,7 @@ import com.example.respirapp.R;
 
 import java.util.List;
 
+import Clases.cEstructuras;
 import io.paperdb.Paper;
 
 public class ToolsFragment extends Fragment {
@@ -52,7 +53,7 @@ public class ToolsFragment extends Fragment {
 
         //Inicializo el paper donde voy a guardar el patron
 //        Paper.init(this);
-        Paper.init(this.getContext());
+        Paper.init(getContext());
         return root;
     }
 
@@ -92,19 +93,10 @@ public class ToolsFragment extends Fragment {
                     if(final_pattern.length() > 3){
                         Paper.book().write(save_pattern_key, final_pattern);
                         Toast.makeText(getContext(), "Patron guardado!", Toast.LENGTH_SHORT).show();
-//                        intent = new Intent(ActivityPatternCreation.this, ActivityLogin.class);
-//                        intent = new Intent(getContext(), ActivityLogin.class);
-//
-//                        startActivity(intent);
-
-//                        Fragment fragment = new HomeFragment();
-//                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                        fragmentTransaction.replace(R.id.container, fragment);
-//                        fragmentTransaction.addToBackStack(null);
-//                        fragmentTransaction.commit();
+                        cEstructuras.cEvento.registrar(getActivity(), getContext(), getContext().getString(R.string.env),
+                                "Patrón modificado", "El usuario modificó el patrón manualmente");
                     } else{
-                        Toast.makeText(ToolsFragment.this.getContext(), "El patron es muy corto!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "El patron es muy corto!", Toast.LENGTH_LONG).show();
                     }
                     mPatternLockView.clearPattern();
                     break;
