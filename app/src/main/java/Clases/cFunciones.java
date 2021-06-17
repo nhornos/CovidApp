@@ -8,7 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
 
-public class cParametros {
+public class cFunciones {
         public static String getParamsString(Map<String, String> params) {
             StringBuilder result = new StringBuilder();
             String resultString = "";

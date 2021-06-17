@@ -7,7 +7,6 @@ android:gravity="center">
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/scrollRegister"
     android:orientation="vertical"
     android:gravity="center">
     <LinearLayout
@@ -33,7 +32,7 @@ android:gravity="center">
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:id="@+id/inUserRegister"
-            android:maxLength="30"
+            android:maxLength="40"
             android:textAlignment="center"
             android:hint="Usuario"
             android:gravity="center_horizontal" />
@@ -89,16 +88,6 @@ android:gravity="center">
         <Space
             android:layout_width="match_parent"
             android:layout_height="5dip" />
-        <ProgressBar
-            android:id="@+id/progressLoaderRegister"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_gravity="center_horizontal"
-            android:visibility="gone" />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="5dip" />
         <Button
             android:text="Ingresar"
             android:layout_width="match_parent"
@@ -112,6 +101,15 @@ android:gravity="center">
         <Space
             android:layout_width="match_parent"
             android:layout_height="5dip" />
+        <TextView
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/lbl_msgReg"
+            android:textAlignment="center"
+            android:gravity="center_horizontal" />
     </LinearLayout>
 </ScrollView>
 </LinearLayout>

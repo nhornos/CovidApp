@@ -7,13 +7,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import Clases.cObjetos;
+import Clases.cEstructuras;
 
 public class ActivityRegister extends AppCompatActivity {
+
+    public static TextView txtMsg;
 
     private EditText inUser;
     private EditText inPassword;
@@ -21,7 +24,6 @@ public class ActivityRegister extends AppCompatActivity {
     private EditText inName;
     private EditText inLastName;
     private Button btnRegistrarse;
-    public static ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +42,8 @@ public class ActivityRegister extends AppCompatActivity {
         inLastName = (EditText) findViewById(R.id.inLastNameRegister);
         inUser = (EditText) findViewById(R.id.inUserRegister);
         inPassword = (EditText) findViewById(R.id.inPassRegister);
+        txtMsg = (TextView)findViewById(R.id.lbl_msg);
 
-        //Defino barra de cargando
-        mProgressBar = (ProgressBar) findViewById(R.id.progressLoaderRegister);
-        cObjetos.oProgressBar = mProgressBar;
-    }
-
-    @Override
-    protected void onResume() {
-        cObjetos.oProgressBar = mProgressBar;
-        super.onResume();
     }
 
     private final View.OnClickListener botonesListeners = new View.OnClickListener() {
@@ -71,10 +65,8 @@ public class ActivityRegister extends AppCompatActivity {
     };
 
     private void realizarRegistro() {
-        mProgressBar.setVisibility(View.VISIBLE);
-
-//        cObjetos.oUsuario.registrar(this, getApplicationContext(), inDNI.getText().toString(), inName.getText().toString(), inLastName.getText().toString(), inUser.getText().toString(), inPassword.getText().toString());
-        cObjetos.oUsuario.registrar(this, getApplicationContext(), "36076620", "Nicolas", "Hornos", "nhornos@alumno.unlam.edu.ar", "abcd1234");
-        //cObjetos.oUsuario.registrar(36076620, "Nicolas", "Hornos", "nhornos@alumno.unlam.edu.ar", "abcd1234");
+//        cEstructuras.cUsuario.registrar(this, getApplicationContext(), inDNI.getText().toString(), inName.getText().toString(), inLastName.getText().toString(), inUser.getText().toString(), inPassword.getText().toString());
+        cEstructuras.cUsuario.registrar(this, getApplicationContext(), "36076620", "Nicolas", "Hornos", "nhornos@alumno.unlam.edu.ar", "abcd1234");
+        //cEstructuras.cUsuario.registrar(36076620, "Nicolas", "Hornos", "nhornos@alumno.unlam.edu.ar", "abcd1234");
     }
 }

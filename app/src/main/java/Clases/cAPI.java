@@ -1,6 +1,9 @@
 package Clases;
 
+import com.example.respirapp.*;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -9,11 +12,9 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.respirapp.R;
-import com.example.respirapp.activity_menu_2;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,14 +28,14 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class cAPI extends AsyncTask<String, String, JSONObject> {
     //public static Semaphore mutex = new Semaphore(1);
     private int estado;
     private JSONObject json;
+
+    private ProgressDialog dialog;
 
     private String verbo;
     private String metodo;
@@ -47,21 +48,26 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
     public cAPI(Activity activity, Context context){
         this.context = context;
         this.activity = activity;
+        if(activity != null)
+            this.dialog = new ProgressDialog(activity);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        if(activity != null){
+            this.dialog.setMessage("Por favor espere");
+            this.dialog.show();
+        }
     }
 
     @Override
     protected JSONObject doInBackground(String... strings) {
-
-
         this.json = new JSONObject();
 
         this.verbo = strings[0];
         this.metodo = strings[1];
         this.params = strings[2];
 
-        Log.i("Dentro del thread", this.params);
-
-//        if(checkConectionFacu(context)){
         if(checkConection(this.context)){
             try {
                 this.json = realizarPeticionServidor();
@@ -83,31 +89,25 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-//        if(this.verbo == "GET")
-//            conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
-//        else
-//            conn.setRequestProperty("Accept", "application/json; charset=utf-8");
+        conn.setRequestMethod(this.verbo);
+        conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 
-        conn.setRequestMethod(this.verbo); //POST o PUT
-        //header
-//        conn.setRequestProperty("Accept", "application/json; charset=utf-8");
-        conn.setRequestProperty("Content-Type", "application/json");
-//        if(this.metodo.equals("event"))
-//            conn.setRequestProperty("Authorization", "Bearer " + cParametros.getCache(this.context, "usuario_token"));
-//        else if(this.metodo.equals("refresh"))
-//            conn.setRequestProperty("Authorization", "Bearer " + cParametros.getCache(this.context, "usuario_token_refresh"));
+        if(this.metodo.equals("event"))
+            conn.setRequestProperty("Authorization", "Bearer " + cFunciones.getCache(this.context, "usuario_token"));
 
         conn.setConnectTimeout(5000);
         conn.setReadTimeout(5000);
 
         conn.setDoOutput(true);
-        DataOutputStream outPutStream = new DataOutputStream(conn.getOutputStream());
+        try{
+            DataOutputStream outPutStream = new DataOutputStream(conn.getOutputStream());
+            outPutStream.writeBytes(this.params);
 
-        //Conversion del map de parametros a string:
-        outPutStream.writeBytes(this.params);
-
-        outPutStream.flush();
-        outPutStream.close();
+            outPutStream.flush();
+            outPutStream.close();
+        }catch(IOException e){
+            Log.i("cAPI", e.getMessage());
+        }
 
         this.estado = conn.getResponseCode();
         Reader streamReader = null;
@@ -119,16 +119,14 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         }
 
         BufferedReader in = new BufferedReader(streamReader);
-        String inputLine;
         StringBuffer content = new StringBuffer();
 
+        String inputLine;
         while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
         }
         in.close();
         conn.disconnect();
-
-        Log.i("Resultado conexion:", content.toString());
 
         return new JSONObject(content.toString());
     }
@@ -136,8 +134,10 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
         try {
-            if(!conexion)
-                errorConnection();
+            if(!conexion){
+                hideBar();
+                Toast.makeText(context, "Error. No hay conexión a internet", Toast.LENGTH_LONG).show();
+            }
             else
                 switchBetweenMethods(this.metodo);
         } catch (JSONException e) {
@@ -145,53 +145,48 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         }
     }
 
-    private void errorConnection() {
-        hideBar();
-        Toast.makeText(context, "Error. No hay conexión a internet", Toast.LENGTH_LONG).show();
-    }
-
     private void switchBetweenMethods(String method) throws JSONException {
         switch (method){
             case "login":
                 login();
-//                registerEvent(method);
+                registerEvent(method, "Usuario logueado exitosamente.");
                 break;
             case "register":
                 register();
-//                registerEvent(method);
+                registerEvent(method, "Usuario registrado exitosamente.");
                 break;
             case "event":
                 event();
             default:
                 break;
         }
+        hideBar();
     }
 
-    private void registerEvent(String method) throws JSONException {
+    private void hideBar(){
+        if (this.dialog != null && this.dialog.isShowing()) {
+            this.dialog.dismiss();
+        }
+    }
+
+    private void registerEvent(String method, String description) throws JSONException {
         if(this.json.getBoolean("success")){
-            String environment = this.context.getString(R.string.env);
-            //TODO Poner aca la descripción que se le manda al event.
-            String description = "Descripcion";
-
-            cObjetos.oUsuario.registrarEvento(this.activity, this.context, environment, method, description);
-
+            cEstructuras.cEvento.registrar(null, this.context, this.context.getString(R.string.env), method, description);
         }
     }
 
     private void login() throws JSONException {
-        hideBar();
-
         if(this.json.getBoolean("success")) {
             String token = this.json.getString("token");
             String tokenRefresh = this.json.getString("token_refresh");
 
-            cObjetos.oUsuario.setToken(token);
-            cObjetos.oUsuario.setTokenRefresh(tokenRefresh);
+            cEstructuras.cUsuario.token = token;
+            cEstructuras.cUsuario.tokenRefresh = tokenRefresh;
 
-            cParametros.addCache(this.context,"usuario_email", cObjetos.oUsuario.getEmail());
-            cParametros.addCache(this.context,"usuario_password", cObjetos.oUsuario.getPassword());
-            cParametros.addCache(this.context,"usuario_token", token);
-            cParametros.addCache(this.context,"usuario_token_refresh", tokenRefresh);
+            cFunciones.addCache(this.context,"usuario_email", cEstructuras.cUsuario.email);
+            cFunciones.addCache(this.context,"usuario_password", cEstructuras.cUsuario.password);
+            cFunciones.addCache(this.context,"usuario_token", token);
+            cFunciones.addCache(this.context,"usuario_token_refresh", tokenRefresh);
 
             Log.i("Datos param:", this.params);
 
@@ -200,23 +195,21 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             this.activity.finish();
         }
         else {
-            Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
+            ActivityLogin.txtMsg.setText(this.json.getString("msg"));
+//            Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
         }
     }
 
     private void register() throws JSONException {
-        hideBar();
-
         if(this.estado == 200) {
             String token = this.json.getString("token");
             String tokenRefresh = this.json.getString("token_refresh");
-            cObjetos.oUsuario.setToken(token);
-            cObjetos.oUsuario.setTokenRefresh(tokenRefresh);
-            cParametros.addCache(this.context, "usuario_email", cObjetos.oUsuario.getEmail());
-            cParametros.addCache(this.context, "usuario_password", cObjetos.oUsuario.getPassword());
-            cParametros.addCache(this.context, "usuario_token", token);
-            cParametros.addCache(this.context, "usuario_token_refresh", tokenRefresh);
-            Toast.makeText(context, "Registro exitoso!", Toast.LENGTH_SHORT).show();
+            cEstructuras.cUsuario.token = token;
+            cEstructuras.cUsuario.tokenRefresh = tokenRefresh;
+            cFunciones.addCache(this.context, "usuario_email", cEstructuras.cUsuario.email);
+            cFunciones.addCache(this.context, "usuario_password", cEstructuras.cUsuario.password);
+            cFunciones.addCache(this.context, "usuario_token", token);
+            cFunciones.addCache(this.context, "usuario_token_refresh", tokenRefresh);
             Intent intent = new Intent(this.activity, activity_menu_2.class);
             this.activity.startActivity(intent);
             this.activity.finish();
@@ -232,11 +225,11 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
             String prod = this.context.getString(R.string.prod);
             if(environment == prod){
-                cObjetos.oUsuario.setDni(event.getInt("dni"));
-                cObjetos.oEvento.setId(event.getInt("id"));
+                cEstructuras.cUsuario.dni = event.getInt("dni");
+                cEstructuras.cEvento.id = event.getInt("id");
             }
-            cObjetos.oEvento.setTypeEvent(event.getString("type_events"));
-            cObjetos.oEvento.setDescription(event.getString("description"));
+            cEstructuras.cEvento.typeEvent = event.getString("type_events");
+            cEstructuras.cEvento.description = event.getString("description");
             Log.i("Registro de evento:", "Se registro la acción de " + event.getString("type_events"));
             Log.i("Resultado evento:", this.json.toString());
             Toast.makeText(context, "Se registró en el servidor la accion", Toast.LENGTH_SHORT).show();
@@ -245,34 +238,17 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         }
     }
 
-    private void hideBar(){
-        if (cObjetos.oProgressBar.isShown()) {
-            cObjetos.oProgressBar.setVisibility(View.GONE);
-        }
-    }
-
     public static boolean checkConection(Context context){
             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
             // For 29 api or above
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
 
-                if(capabilities == null)
-                    return false;
+                if(capabilities == null) return false;
 
-                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)){
-                    Log.i("checkConection", "Wifi detectado");
-                    return true;
-                }
-                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
-                    Log.i("checkConection", "Ethernet detectado");
-                    return true;
-                }
-                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                    Log.i("checkConection", "Internet celular detectado");
-                    return true;
-                }
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) return true;
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) return true;
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) return true;
 
                 return false;
             }
@@ -284,14 +260,6 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             }
             return false;
     }
-
-    public static boolean checkConectionFacu(Context context) {
-        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-    }
-
 
 }
 

@@ -1,6 +1,7 @@
 package com.example.respirapp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,18 +14,17 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 
-import Clases.cObjetos;
-import Clases.cParametros;
+import Clases.*;
 
 //public class ActivityLogin extends Activity implements SensorEventListener {
 public class ActivityLogin extends Activity {
+
+    public static TextView txtMsg;
 
     private EditText inUser;
     private EditText inPassword;
     private Button btnSubmit;
     private Button btnRegistrarse;
-    private TextView txtMsg;
-    public static ProgressBar mProgressBar;
 //    private SensorManager mSensorManager;
 
     DecimalFormat dosdecimales = new DecimalFormat("###.###");
@@ -42,16 +42,14 @@ public class ActivityLogin extends Activity {
 
         txtMsg = (TextView)findViewById(R.id.lbl_msg);
 
-        mProgressBar = (ProgressBar) findViewById(R.id.progressLoaderLogin);
-
         // Accedemos al servicio de sensores
 //        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         btnSubmit.setOnClickListener(botonesListeners);
         btnRegistrarse.setOnClickListener(botonesListeners);
 
-        inUser.setText(cParametros.getCache(this.getApplicationContext(), "usuario_email"));
-        inPassword.setText(cParametros.getCache(this.getApplicationContext(), "usuario_password"));
+        inUser.setText(cFunciones.getCache(this.getApplicationContext(), "usuario_email"));
+        inPassword.setText(cFunciones.getCache(this.getApplicationContext(), "usuario_password"));
     }
 
     @Override
@@ -83,7 +81,6 @@ public class ActivityLogin extends Activity {
     protected void onResume()
     {
         super.onResume();
-        cObjetos.oProgressBar = mProgressBar;
 //        iniSensores();
     }
 
@@ -130,9 +127,8 @@ public class ActivityLogin extends Activity {
             return;
         }
 
-        mProgressBar.setVisibility(View.VISIBLE);
-        cObjetos.oUsuario.loguear(this, this.getApplicationContext(), inUser.getText().toString().trim(), inPassword.getText().toString().trim());
-//        cObjetos.oUsuario.loguear(this, getApplicationContext(), "nhornos@alumno.unlam.edu.ar", "abcd1234");
+        cEstructuras.cUsuario.loguear(this, this.getApplicationContext(), inUser.getText().toString().trim(), inPassword.getText().toString().trim());
+//        cEstructuras.cUsuario.loguear(this, getApplicationContext(), "nhornos@alumno.unlam.edu.ar", "abcd1234");
     }
 
     //Nuevas cosas agregadas para sensores:

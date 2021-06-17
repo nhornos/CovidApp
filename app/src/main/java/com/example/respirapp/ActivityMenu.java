@@ -6,8 +6,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import Clases.cObjetos;
-
 public class ActivityMenu extends Activity {
 
     private EditText inPassword;

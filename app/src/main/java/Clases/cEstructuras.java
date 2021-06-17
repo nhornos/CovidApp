@@ -19,74 +19,60 @@ import java.util.TreeMap;
 public class cEstructuras {
 
     public static class cUsuario{
-        private int dni;
-        private String nombre;
-        private String apellido;
-        private String email;
-        private String password;
-        private String token;
-        private String tokenRefresh;
+        public static int dni;
+        public static String nombre;
+        public static String apellido;
+        public static String email;
+        public static String password;
+        public static String token;
+        public static String tokenRefresh;
 
-        //GETTERS
-        public int getDni() {
-            return this.dni;
-        }
-        public String getNombre(){
-            return this.nombre;
-        }
-        public String getApellido(){ return this.apellido; }
-        public String getEmail(){
-            return this.email;
-        }
-        public String getPassword(){
-            return this.password;
-        }
-        public String getToken() {
-            return this.token;
-        }
-        public String getTokenRefresh() {
-            return tokenRefresh;
-        }
+//        //GETTERS
+//        public static int getDni() { return dni; }
+//        public static String getNombre(){ return nombre; }
+//        public static String getApellido(){ return apellido; }
+//        public static String getEmail(){ return email; }
+//        public static String getPassword(){ return password; }
+//        public static String getToken() { return token; }
+//        public static String getTokenRefresh() {
+//            return tokenRefresh;
+//        }
+//
+//        //SETTERS
+//        public void setDni(int dni) { cUsuario.dni = dni; }
+//        public void setEmail(String email){
+//            cUsuario.email = email;
+//        }
+//        public void setNombre(String nombre){
+//            cUsuario.nombre = nombre;
+//        }
+//        public void setApellido(String apellido){
+//            cUsuario.apellido = apellido;
+//        }
+//        public void setPassword(String password){
+//            cUsuario.password = password;
+//        }
+//        public void setToken(String token) {
+//            cUsuario.token = token;
+//        }
+//        public void setTokenRefresh(String tokenRefresh) {
+//            cUsuario.tokenRefresh = tokenRefresh;
+//        }
 
-        //SETTERS
-        public void setDni(int dni) {
-            this.dni = dni;
-        }
-        public void setEmail(String email){
-            this.email = email;
-        }
-        public void setNombre(String nombre){
-            this.nombre = nombre;
-        }
-        public void setApellido(String apellido){
-            this.apellido = apellido;
-        }
-        public void setPassword(String password){
-            this.password = password;
-        }
-        public void setToken(String token) {
-            this.token = token;
-        }
-        public void setTokenRefresh(String tokenRefresh) {
-            this.tokenRefresh = tokenRefresh;
-        }
+//        public void setDataUsuario(int dni, String nombre, String apellido, String email, String password, String token, String tokenRefresh){
+//            setDni(dni);
+//            setNombre(nombre);
+//            setApellido(apellido);
+//            setEmail(email);
+//            setPassword(password);
+//            setToken(token);
+//            setTokenRefresh(tokenRefresh);
+//        }
 
-        public void setDataUsuario(int dni, String nombre, String apellido, String email, String password, String token, String tokenRefresh){
-            setDni(dni);
-            setNombre(nombre);
-            setApellido(apellido);
-            setEmail(email);
-            setPassword(password);
-            setToken(token);
-            setTokenRefresh(tokenRefresh);
-        }
-
-        public void registrar(Activity activity, Context context, String dni, String nombre, String apellido, String email, String password){
+        public static void registrar(Activity activity, Context context, String dni, String nombre, String apellido, String email, String password){
 
             if(nombre.equals("") || apellido.equals("") || email.equals("") || password.equals("") || dni.equals("")){
                 Toast.makeText(context, "Ingrese los campos faltantes", Toast.LENGTH_SHORT).show();
-                if (cObjetos.oProgressBar.isShown())
-                    cObjetos.oProgressBar.setVisibility(View.GONE);
             }else{
                 Map<String, String> parameters = new TreeMap<>();
                 parameters.put("env", context.getString(R.string.env));
@@ -97,21 +83,21 @@ public class cEstructuras {
                 parameters.put("password", password);
                 parameters.put("commission", context.getString(R.string.commission));
                 parameters.put("group", context.getString(R.string.group));
-                String params = cParametros.getParamsString(parameters);
+                String params = cFunciones.getParamsString(parameters);
                 AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context);
                 registerAsyncTask.execute("POST","register",params);
             }
 
         }
 
-        public void loguear(Activity activity, Context context, String email, String password){
+        public static void loguear(Activity activity, Context context, String email, String password){
             //Guardo los datos en la estructura de usuario
-            cObjetos.oUsuario.setPassword(password);
-            cObjetos.oUsuario.setEmail(email);
+            cUsuario.password = password;
+            cUsuario.email = email;
             Map<String, String> parameters = new TreeMap<String, String>();
             parameters.put("email", email);
             parameters.put("password", password);
-            String params = cParametros.getParamsString(parameters);
+            String params = cFunciones.getParamsString(parameters);
             Log.i("Json:", params);
 //            try {
                 AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context);
@@ -126,37 +112,33 @@ public class cEstructuras {
 //            }
 
         }
-        public void registrarEvento(Activity activity, Context context, String environment, String method, String description){
-            Map<String, String> parameters = new HashMap<>();
-            parameters.put("env", environment);
-            parameters.put("type_events", method);
-            parameters.put("description", "Descripción");
-            String params = cParametros.getParamsString(parameters);
-
-//            try {
-                AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context);
-                registerAsyncTask.execute("POST","event",params);
-//            }catch (Exception e){
-//                Log.i("EVENT", e.getMessage());
-//            }
-
-        }
     }
 
     public static class cEvento{
-        private int id;
-        private String typeEvent;
-        private String description;
-        private int dni;
+        public static int id;
+        public static String typeEvent;
+        public static String description;
+        public static int dni;
 
-        //SETTERS
-        public void setId(int id) { this.id = id; }
-        public void setTypeEvent(String typeEvent) { this.typeEvent = typeEvent;  }
-        public void setDescription(String description) { this.description = description; }
+//        //SETTERS
+//        public void setId(int id) { this.id = id; }
+//        public void setTypeEvent(String typeEvent) { this.typeEvent = typeEvent;  }
+//        public void setDescription(String description) { this.description = description; }
+//
+//        //GETTERS
+//        public int getId() { return this.id; }
+//        public String getTypeEvent() { return this.typeEvent; }
+//        public String getDescription() { return this.description; }
 
-        //GETTERS
-        public int getId() { return this.id; }
-        public String getTypeEvent() { return this.typeEvent; }
-        public String getDescription() { return this.description; }
+        public static void registrar(Activity activity, Context context, String environment, String method, String description){
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put("env", environment);
+            parameters.put("type_events", method);
+            parameters.put("description", description);
+            String params = cFunciones.getParamsString(parameters);
+
+            AsyncTask<String, String, JSONObject> registerAsyncTask = new cAPI(activity, context);
+            registerAsyncTask.execute("POST","event",params);
+        }
     }
 }

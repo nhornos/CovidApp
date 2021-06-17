@@ -21,8 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-import Clases.cObjetos;
-import Clases.cParametros;
+import Clases.cEstructuras;
 
 public class activity_menu_2 extends AppCompatActivity {
 
@@ -65,7 +64,7 @@ public class activity_menu_2 extends AppCompatActivity {
         //Inicializo los textos del navigation
         View headerView = navigationView.getHeaderView(0);
         navEmail = (TextView) headerView.findViewById(R.id.textViewEmailNav);
-        navEmail.setText(cObjetos.oUsuario.getEmail());
+        navEmail.setText(cEstructuras.cUsuario.email);
         navTitle = (TextView) headerView.findViewById(R.id.textViewTitleNav);
         navTitle.setText("RespirApp");
 
