@@ -17,9 +17,7 @@ import java.text.DecimalFormat;
 import Clases.*;
 
 //public class ActivityLogin extends Activity implements SensorEventListener {
-public class ActivityLogin extends Activity {
-
-    public static TextView txtMsg;
+public class ActivityLogin extends Activity implements View.OnClickListener {
 
     private EditText inUser;
     private EditText inPassword;
@@ -40,28 +38,14 @@ public class ActivityLogin extends Activity {
         inUser = (EditText)findViewById(R.id.inUserLogin);
         inPassword = (EditText)findViewById(R.id.inPassLogin);
 
-        txtMsg = (TextView)findViewById(R.id.lbl_msg);
-
         // Accedemos al servicio de sensores
 //        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-        btnSubmit.setOnClickListener(botonesListeners);
-        btnRegistrarse.setOnClickListener(botonesListeners);
+        btnSubmit.setOnClickListener(this);
+        btnRegistrarse.setOnClickListener(this);
 
         inUser.setText(cFunciones.getCache(this.getApplicationContext(), "usuario_email"));
         inPassword.setText(cFunciones.getCache(this.getApplicationContext(), "usuario_password"));
-    }
-
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
     }
 
     @Override
@@ -72,63 +56,32 @@ public class ActivityLogin extends Activity {
     }
 
     @Override
-    protected void onRestart()
-    {
-        super.onRestart();
-    }
-
-    @Override
     protected void onResume()
     {
         super.onResume();
 //        iniSensores();
     }
 
-    private final View.OnClickListener botonesListeners = new View.OnClickListener() {
-
-        public void onClick(View v) {
-            //Se determina que componente genero un evento
-            switch (v.getId()) {
-                case R.id.btnSubmit:
-                    Log.i("El texto", "Se detectó boton de submit");
-                    if(inUser.getText().toString().length() == 0){
-                        txtMsg.setText("Ingrese su usuario y contraseña.");
-                        inUser.setError("Debe ingresar un usuario válido");
-                        break;
-                    }
-                    if(inPassword.getText().toString().length() == 0 ){
-                        txtMsg.setText("Ingrese su usuario y contraseña.");
-                        inPassword.setError("Debe ingresar una contraseña válida");
-                        break;
-                    }
-                    loguear();
-                    break;
-                case R.id.btnRegistro:
-                    Log.i("El texto", "Se detectó boton de registro");
-                    Intent intent=new Intent(ActivityLogin.this, ActivityRegister.class);
-                    startActivity(intent);
-//                    if(cAPI.checkConection(getApplicationContext()))
-//                        Toast.makeText(getApplicationContext(), "Conectado", Toast.LENGTH_LONG).show();
-//                    else
-//                        Toast.makeText(getApplicationContext(), "Desconectado", Toast.LENGTH_LONG).show();
-                    break;
-                default:
-                    Toast.makeText(getApplicationContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
-            }
-
-
-        }
-    };
-
     private void loguear() {
-
-        if(inUser.getText().toString().length() == 0 || inPassword.getText().toString().length() == 0 ){
-            txtMsg.setText("Ingrese su usuario y contraseña.");
-            return;
-        }
-
         cEstructuras.cUsuario.loguear(this, this.getApplicationContext(), inUser.getText().toString().trim(), inPassword.getText().toString().trim());
 //        cEstructuras.cUsuario.loguear(this, getApplicationContext(), "nhornos@alumno.unlam.edu.ar", "abcd1234");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnSubmit:
+                Log.i("El texto", "Se detectó boton de submit");
+                loguear();
+                break;
+            case R.id.btnRegistro:
+                Log.i("El texto", "Se detectó boton de registro");
+                Intent intent=new Intent(ActivityLogin.this, ActivityRegister.class);
+                startActivity(intent);
+                break;
+            default:
+                Toast.makeText(getApplicationContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
+        }
     }
 
     //Nuevas cosas agregadas para sensores:

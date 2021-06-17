@@ -4,6 +4,8 @@
     <string name="env">@string/test</string>
     <string name="commission">2900</string>
     <string name="group">9</string>
+    <string name="patron_actual">patron_actual</string>
+    <string name="patron_nuevo">patron_nuevo</string>
 
     <string name="app_name">RespirApp</string>
     <string name="title_activity_menu_2">activity_menu_2</string>
@@ -18,4 +20,7 @@
     <string name="menu_tools">Modificar patron</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+
+    <string name="msgAceptar">SI</string>
+    <string name="msgDenegar">NO</string>
 </resources>

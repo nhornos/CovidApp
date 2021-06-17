@@ -10,10 +10,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.respirapp.R;
@@ -31,9 +31,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-
 public class cAPI extends AsyncTask<String, String, JSONObject> {
-    //public static Semaphore mutex = new Semaphore(1);
     private int estado;
     private JSONObject json;
 
@@ -187,89 +185,78 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
     }
 
     private void refreshToken() throws JSONException {
-        if(this.json.getBoolean("success")) {
-            String token = this.json.getString("token");
-            String tokenRefresh = this.json.getString("token_refresh");
-
-            cEstructuras.cUsuario.token = token;
-            cEstructuras.cUsuario.tokenRefresh = tokenRefresh;
+        if(this.estado == 200) {
+            cFunciones.setCache(this.context,"usuario_token", this.json.getString("token"));
+            cFunciones.setCache(this.context,"usuario_token_refresh", this.json.getString("token_refresh"));
         } else{
             Log.i("Error refresh token", this.json.getString("msg"));
         }
     }
 
     private void login() throws JSONException {
-        if(this.json.getBoolean("success")) {
-            String token = this.json.getString("token");
-            String tokenRefresh = this.json.getString("token_refresh");
-
-            cEstructuras.cUsuario.token = token;
-            cEstructuras.cUsuario.tokenRefresh = tokenRefresh;
-
-            cFunciones.addCache(this.context,"usuario_email", cEstructuras.cUsuario.email);
-            cFunciones.addCache(this.context,"usuario_password", cEstructuras.cUsuario.password);
-            cFunciones.addCache(this.context,"usuario_token", token);
-            cFunciones.addCache(this.context,"usuario_token_refresh", tokenRefresh);
-
-            Log.i("Datos param:", this.params);
+        if(this.estado == 200) {
+            cFunciones.setCache(this.context,"usuario_token", this.json.getString("token"));
+            cFunciones.setCache(this.context,"usuario_token_refresh", this.json.getString("token_refresh"));
 
             Intent intent = new Intent(this.activity, activity_menu_2.class);
             this.activity.startActivity(intent);
             this.activity.finish();
+        }else if(this.estado == 400){
+            TextView txtMsg = (TextView)this.activity.findViewById(R.id.lbl_msg);
+            txtMsg.setText(this.json.getString("msg"));
         }
-        else {
-            ActivityLogin.txtMsg.setText(this.json.getString("msg"));
-//            Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
-        }
+        else
+            Log.i("Resultado evento:", "Codigo de respuesta \"" + this.estado + "\" no reconocido");
     }
 
     private void register() throws JSONException {
         if(this.estado == 200) {
-            String token = this.json.getString("token");
-            String tokenRefresh = this.json.getString("token_refresh");
-            cEstructuras.cUsuario.token = token;
-            cEstructuras.cUsuario.tokenRefresh = tokenRefresh;
-            cFunciones.addCache(this.context, "usuario_email", cEstructuras.cUsuario.email);
-            cFunciones.addCache(this.context, "usuario_password", cEstructuras.cUsuario.password);
-            cFunciones.addCache(this.context, "usuario_token", token);
-            cFunciones.addCache(this.context, "usuario_token_refresh", tokenRefresh);
+
+            cFunciones.setCache(this.context, "usuario_token", this.json.getString("token"));
+            cFunciones.setCache(this.context, "usuario_token_refresh", this.json.getString("token_refresh"));
+
             Intent intent = new Intent(this.activity, activity_menu_2.class);
             this.activity.startActivity(intent);
             this.activity.finish();
-        }else {
-            Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
+        }else if(this.estado == 400){
+            TextView txtMsg = (TextView)this.activity.findViewById(R.id.lbl_msgReg);
+            txtMsg.setText(this.json.getString("msg"));
         }
+        else
+            Log.i("Resultado evento:", "Codigo de respuesta \"" + this.estado + "\" no reconocido");
     }
 
     private void event() throws JSONException {
         if(this.activity != null)
             this.estado = 401;
+
         if(this.estado == 200 || this.estado == 201){
             String environment = this.json.getString("env");
             JSONObject event = this.json.getJSONObject("event");
 
-            String prod = this.context.getString(R.string.prod);
-            if(environment == prod){
+            if(environment == this.context.getString(R.string.prod)){
                 cEstructuras.cUsuario.dni = event.getInt("dni");
                 cEstructuras.cEvento.id = event.getInt("id");
             }
             cEstructuras.cEvento.typeEvent = event.getString("type_events");
             cEstructuras.cEvento.description = event.getString("description");
-            Log.i("Registro de evento:", "Se registro la acción de " + event.getString("type_events"));
+
+            if(cEstructuras.cEvento.typeEvent.equals("patron")){
+                if(this.estado == 200){
+                    cFunciones.actualizarPatron(this.context);
+                    Toast.makeText(this.context, "Patron guardado!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
             Log.i("Resultado evento:", this.json.toString());
-            Toast.makeText(context, "Se registró en el servidor la accion", Toast.LENGTH_SHORT).show();
         }else{
             if(this.estado == 400)
                 Toast.makeText(context, this.json.getString("msg"), Toast.LENGTH_LONG).show();
             else if(this.estado == 401) {
-
                 new AlertDialog.Builder(this.context)
                         .setTitle("Sesión expirada")
-                        .setMessage("La sesión a expirado debido a su inactividad")
-
-                        // Specifying a listener allows you to take an action before dismissing the dialog.
-                        // The dialog is automatically dismissed when a dialog button is clicked.
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        .setMessage("Desea continuar dentro de la aplicación?")
+                        .setNegativeButton(R.string.msgDenegar, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent i = new Intent(context, ActivityLogin.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -280,15 +267,16 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
                                 activity.finish();
                             }
                         })
-
-                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setPositiveButton(R.string.msgAceptar, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                cEstructuras.cRefresh.refrescar(null, context);
+                            }
+                        })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
-//                showBar("Se venció la conexión... Cerrando sesión.");
             }
             else
                 Log.i("Resultado evento:", "Codigo de respuesta \"" + this.estado + "\" no reconocido");
-
         }
     }
 

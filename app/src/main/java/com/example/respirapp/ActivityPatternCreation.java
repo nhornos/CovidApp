@@ -13,6 +13,7 @@ import com.andrognito.patternlockview.utils.PatternLockUtils;
 
 import java.util.List;
 
+import Clases.cFunciones;
 import io.paperdb.Paper;
 
 public class ActivityPatternCreation extends Activity implements PatternLockViewListener {
@@ -57,7 +58,8 @@ public class ActivityPatternCreation extends Activity implements PatternLockView
 
     private void guardarPatron() {
         if(final_pattern.length() > 3){
-            Paper.book().write(save_pattern_key, final_pattern);
+//            Paper.book().write(save_pattern_key, final_pattern);
+            cFunciones.setCache(getApplicationContext(), getApplicationContext().getString(R.string.patron_actual), final_pattern);
             Toast.makeText(ActivityPatternCreation.this, "Patron guardado!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(ActivityPatternCreation.this, ActivityLogin.class);
             startActivity(intent);

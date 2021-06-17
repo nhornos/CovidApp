@@ -20,91 +20,65 @@ import com.example.respirapp.R;
 import java.util.List;
 
 import Clases.cEstructuras;
+import Clases.cFunciones;
 import io.paperdb.Paper;
 
-public class ToolsFragment extends Fragment {
+public class ToolsFragment extends Fragment implements PatternLockViewListener, View.OnClickListener {
 
     private ToolsViewModel toolsViewModel;
-    String save_pattern_key = "pattern_code";
     private PatternLockView mPatternLockView;
+    private Button btnSetup;
+
     private String final_pattern;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        toolsViewModel =
-                ViewModelProviders.of(this).get(ToolsViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        toolsViewModel = ViewModelProviders.of(this).get(ToolsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_tools, container, false);
-//        final TextView textView = root.findViewById(R.id.text_tools);
-//        toolsViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
-
 
         //Seteo el patron
         mPatternLockView = (PatternLockView)root.findViewById(R.id.pattern_lock_creation);
-        mPatternLockView.addPatternLockListener(patronListener);
+        btnSetup = (Button)root.findViewById(R.id.btnSetearPatron);
 
-        //Seteo los botones
-        Button btnSetup = (Button)root.findViewById(R.id.btnSetearPatron);
-        btnSetup.setOnClickListener(botonesListeners);
+        mPatternLockView.addPatternLockListener(this);
+        btnSetup.setOnClickListener(this);
 
-        //Inicializo el paper donde voy a guardar el patron
-//        Paper.init(this);
-        Paper.init(getContext());
         return root;
     }
 
-    private final PatternLockViewListener patronListener = new PatternLockViewListener() {
+    @Override
+    public void onComplete(List<PatternLockView.Dot> pattern) {
+        final_pattern = PatternLockUtils.patternToString(mPatternLockView,pattern);
+        cFunciones.setCache(getActivity().getApplicationContext(), getActivity().getApplicationContext().getString(R.string.patron_nuevo), final_pattern);
+    }
 
-        @Override
-        public void onStarted() {
-
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnSetearPatron:
+                if(final_pattern.length() > 3){
+                    cEstructuras.cEvento.registrar(getActivity(), getContext(), getContext().getString(R.string.env), "patron", "El usuario modifico el patron manualmente");
+                } else{
+                    Toast.makeText(getContext(), "El patron es muy corto!", Toast.LENGTH_LONG).show();
+                }
+                mPatternLockView.clearPattern();
+                break;
+            default:
+                Toast.makeText(getContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
         }
+    }
 
-        @Override
-        public void onProgress(List<PatternLockView.Dot> progressPattern) {
+    @Override
+    public void onStarted() {
 
-        }
+    }
 
-        @Override
-        public void onComplete(List<PatternLockView.Dot> pattern) {
-            final_pattern = PatternLockUtils.patternToString(mPatternLockView,pattern);
-        }
+    @Override
+    public void onProgress(List<PatternLockView.Dot> progressPattern) {
 
-        @Override
-        public void onCleared() {
+    }
 
-        }
+    @Override
+    public void onCleared() {
 
-    };
-
-    private final View.OnClickListener botonesListeners = new View.OnClickListener() {
-
-        public void onClick(View v) {
-            Intent intent;
-
-            //Se determina que componente genero un evento
-            switch (v.getId()) {
-                //Si se ocurrio un evento en el boton Registrar Patron
-                case R.id.btnSetearPatron:
-                    if(final_pattern.length() > 3){
-                        Paper.book().write(save_pattern_key, final_pattern);
-                        Toast.makeText(getContext(), "Patron guardado!", Toast.LENGTH_SHORT).show();
-                        cEstructuras.cEvento.registrar(getActivity(), getContext(), getContext().getString(R.string.env),
-                                "Patrón modificado", "El usuario modificó el patrón manualmente");
-                    } else{
-                        Toast.makeText(getContext(), "El patron es muy corto!", Toast.LENGTH_LONG).show();
-                    }
-                    mPatternLockView.clearPattern();
-                    break;
-                default:
-                    Toast.makeText(getContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
-            }
-
-
-        }
-    };
+    }
 }

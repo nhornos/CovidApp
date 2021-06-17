@@ -22,6 +22,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import Clases.cEstructuras;
+import Clases.cFunciones;
 
 public class activity_menu_2 extends AppCompatActivity {
 
@@ -64,7 +65,7 @@ public class activity_menu_2 extends AppCompatActivity {
         //Inicializo los textos del navigation
         View headerView = navigationView.getHeaderView(0);
         navEmail = (TextView) headerView.findViewById(R.id.textViewEmailNav);
-        navEmail.setText(cEstructuras.cUsuario.email);
+        navEmail.setText(cFunciones.getCache(getApplicationContext(), "usuario_email"));
         navTitle = (TextView) headerView.findViewById(R.id.textViewTitleNav);
         navTitle.setText("RespirApp");
 

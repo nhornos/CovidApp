@@ -16,6 +16,7 @@ import com.andrognito.patternlockview.utils.PatternLockUtils;
 
 import java.util.List;
 
+import Clases.cFunciones;
 import io.paperdb.Paper;
 
 public class ActivityPatternValidation extends Activity implements PatternLockViewListener {
@@ -91,7 +92,7 @@ public class ActivityPatternValidation extends Activity implements PatternLockVi
         //Me fijo si no hay patrón, y mando a crearlo
 
         Log.i("Entro a:", "verificar Patron");
-        if(save_pattern == null || save_pattern.equals("null")) {
+        if(cFunciones.getCache(getApplicationContext(), getApplicationContext().getString(R.string.patron_actual)) == "") {
             //Voy al activity de la creación del patrón
             Intent intent = new Intent(ActivityPatternValidation.this, ActivityPatternCreation.class);
             startActivity(intent);
@@ -119,7 +120,8 @@ public class ActivityPatternValidation extends Activity implements PatternLockVi
         Log.i("Pattron:","On complete");
         patternEntered = PatternLockUtils.patternToString(mPatternLockView,pattern);
         Log.i("Pattron:",save_pattern);
-        if(patternEntered.equals(save_pattern)){
+//        if(patternEntered.equals(save_pattern)){
+        if(patternEntered.equals(cFunciones.getCache(getApplicationContext(), getApplicationContext().getString(R.string.patron_actual)))){
             //Toast.makeText(ActivityPatternValidation.this, "Password Correcta!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(ActivityPatternValidation.this, ActivityLogin.class);
             startActivity(intent);
