@@ -5,121 +5,53 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    tools:context="com.example.respirapp.ActivityPatternCreation">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    android:background="@drawable/bienvenida">
+    <LinearLayout
         android:orientation="vertical"
-        android:gravity="center">
-        <LinearLayout
-            android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="#8000">
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/text_home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:text="Bienvenido a la app"
-                android:gravity="center_horizontal"
-                android:layout_gravity="center_horizontal"
-                android:textAlignment="center"/>
-            <Space
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="25dp" />
-            <TextView
-                android:id="@+id/text_body_home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:padding="10dp"
-                android:text="Explicacion masomenos ashudifiadshfiu sdhfiuaosd hfoiausdhfios udhfiouas dhfiouasdhfio suadhfiasudhgb naowiernbgoía erhngaéoirghaeróighaergegoie iaegóaegr´joi gearjioágerj iógreajoi´gaerjigaejiro"
-                android:textAlignment="viewStart"
-                android:textColor="#000000"
-                android:textSize="15dp"
-                android:textStyle="normal"
-                tools:ignore="RtlCompat" />
-            <TextView
-                android:id="@+id/text_ej_recomendados"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:text="Ejercicios del día:"
-                android:gravity="left"
-                android:layout_gravity="left" />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:padding="5dp">
+
                 <TextView
-                    android:id="@+id/text_ejercicio1"
+                    android:id="@+id/text_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:textSize="20dp"
+                    android:textSize="70dp"
                     android:textStyle="bold"
-                    android:textColor="#000000"
-                    android:text="Ejercicio Recomendado 1:"
-                    android:gravity="left"
-                    android:layout_gravity="left" />
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:background="@drawable/icono" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                    android:textColor="@color/colorTextoBienvenida"
+                    android:text="@string/app_name"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:textAlignment="center"/>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp" />
                 <TextView
-                    android:id="@+id/text_ejercicio2"
+                    android:id="@+id/text_body_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
                     android:padding="10dp"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:textColor="#000000"
-                    android:text="Ejercicio Recomendado 2:"
-                    android:gravity="left"
-                    android:layout_gravity="left" />
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:background="@drawable/icono" />
+                    android:text="@string/bienvenida"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorTextoBienvenida"
+                    android:textSize="40dp"
+                    android:textStyle="bold|italic"
+                    tools:ignore="RtlCompat" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/text_ejercicio3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:textColor="#000000"
-                    android:text="Ejercicio Recomendado 3:"
-                    android:gravity="left"
-                    android:layout_gravity="left" />
-
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:background="@drawable/icono" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+    </LinearLayout>
 </LinearLayout>

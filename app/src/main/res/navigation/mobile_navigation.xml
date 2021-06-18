@@ -8,35 +8,23 @@
         android:id="@+id/nav_home"
         android:name="com.example.respirapp.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_respiraciones" />
-
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.respirapp.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_respiracion"
+        android:name="com.example.respirapp.ui.gallery.GalleryFragment"
+        android:label="@string/menu_respiracion"
+        tools:layout="@layout/fragment_respiraciones" />
+
+    <fragment
+        android:id="@+id/nav_ejercicios_del_dia"
         android:name="com.example.respirapp.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:label="@string/menu_ejercicios_del_dia"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
-        android:id="@+id/nav_tools"
+        android:id="@+id/nav_patron"
         android:name="com.example.respirapp.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
+        android:label="@string/menu_patron"
         tools:layout="@layout/fragment_tools" />
-
-    <fragment
-        android:id="@+id/nav_share"
-        android:name="com.example.respirapp.ui.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
-
-    <fragment
-        android:id="@+id/nav_send"
-        android:name="com.example.respirapp.ui.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
 </navigation>

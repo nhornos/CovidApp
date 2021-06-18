@@ -21,9 +21,10 @@
             android:text="@string/Categoría1"
             android:fontFamily="sans-serif"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/colorTextoCategorias"
             android:textSize="50dp"
             android:textAlignment="center"
+            android:background="#5000"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     </RelativeLayout>
@@ -46,9 +47,10 @@
             android:text="@string/Categoría2"
             android:fontFamily="sans-serif"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/colorTextoCategorias"
             android:textSize="50dp"
             android:textAlignment="center"
+            android:background="#5000"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     </RelativeLayout>
@@ -71,9 +73,10 @@
             android:text="@string/Categoría3"
             android:fontFamily="sans-serif"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/colorTextoCategorias"
             android:textSize="50dp"
             android:textAlignment="center"
+            android:background="#5000"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     </RelativeLayout>
