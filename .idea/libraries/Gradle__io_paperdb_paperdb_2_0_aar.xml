@@ -3,8 +3,8 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0aab344b84396388a45355c1c6cc24c3/paperdb-2.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0025793c375a4ea08bbba3aa1d67b6f8/jetified-paperdb-2.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0025793c375a4ea08bbba3aa1d67b6f8/jetified-paperdb-2.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0025793c375a4ea08bbba3aa1d67b6f8/jetified-paperdb-2.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0aab344b84396388a45355c1c6cc24c3/paperdb-2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0aab344b84396388a45355c1c6cc24c3/paperdb-2.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.paperdb/paperdb/2.0/d5ff720a7c83dc8ba36e770f30e3e846a3d9c6d5/paperdb-2.0-javadoc.jar!/" />
