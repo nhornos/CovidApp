@@ -36,7 +36,6 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".ActivityMenu" />
         <activity
             android:name=".ActivityLogin"
             android:configChanges="orientation"
