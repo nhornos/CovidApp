@@ -238,7 +238,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             String environment = this.json.getString("env");
             JSONObject event = this.json.getJSONObject("event");
 
-            if(environment == this.context.getString(R.string.prod)){
+            if(environment.equals(this.context.getString(R.string.prod))){
                 cEstructuras.cUsuario.dni = event.getInt("dni");
                 cEstructuras.cEvento.id = event.getInt("id");
             }
@@ -246,7 +246,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             cEstructuras.cEvento.description = event.getString("description");
 
             if(cEstructuras.cEvento.typeEvent.equals("patron")){
-                if(this.estado == 200){
+                if(this.estado == 200 || this.estado == 201){
                     cFunciones.actualizarPatron(this.context);
                     Toast.makeText(this.context, "Patron guardado!", Toast.LENGTH_SHORT).show();
                 }

@@ -34,9 +34,6 @@ public class ActivityPatternCreation extends Activity implements PatternLockView
         Button btnSetup = (Button)findViewById(R.id.btnSetearPatron);
         btnSetup.setOnClickListener(botonesListeners);
 
-        //Inicializo el paper donde voy a guardar el patron
-        Paper.init(this);
-
     }
 
     private final View.OnClickListener botonesListeners = new View.OnClickListener() {

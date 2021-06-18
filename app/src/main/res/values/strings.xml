@@ -1,7 +1,7 @@
 <resources>
+    <string name="env">@string/prod</string>
     <string name="prod">PROD</string>
     <string name="test">TEST</string>
-    <string name="env">@string/test</string>
     <string name="commission">2900</string>
     <string name="group">9</string>
     <string name="patron_actual">patron_actual</string>
@@ -28,5 +28,6 @@
     <string name="msgAceptar">SI</string>
     <string name="msgDenegar">NO</string>
 
-    <string name="colorFuente">#FFFFFF</string>
+    <string name="tituloPatron"><font fgcolor='#FFFFFF'>Dibuje el patrón</font></string>
+    <color name="colorFuenteBlanco">#FFFFFF</color>
 </resources>

@@ -85,7 +85,8 @@ public class ActivityPatternValidation extends Activity implements PatternLockVi
     }
 
     private void actualizarPassPatron() {
-        save_pattern = Paper.book().read(save_pattern_key);
+//        save_pattern = Paper.book().read(save_pattern_key);
+        save_pattern = cFunciones.getCache(getApplicationContext(), getApplicationContext().getString(R.string.patron_actual));
     }
 
     private void verificarPatron() {
@@ -119,7 +120,6 @@ public class ActivityPatternValidation extends Activity implements PatternLockVi
     public void onComplete(List<PatternLockView.Dot> pattern) {
         Log.i("Pattron:","On complete");
         patternEntered = PatternLockUtils.patternToString(mPatternLockView,pattern);
-        Log.i("Pattron:",save_pattern);
 //        if(patternEntered.equals(save_pattern)){
         if(patternEntered.equals(cFunciones.getCache(getApplicationContext(), getApplicationContext().getString(R.string.patron_actual)))){
             //Toast.makeText(ActivityPatternValidation.this, "Password Correcta!", Toast.LENGTH_SHORT).show();

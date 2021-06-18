@@ -14,7 +14,7 @@
         android:id="@+id/nav_gallery"
         android:name="com.example.respirapp.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_slideshow"

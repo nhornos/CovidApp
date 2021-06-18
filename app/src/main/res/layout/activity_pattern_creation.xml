@@ -25,8 +25,8 @@
                 android:padding="10dp"
                 android:textSize="30dp"
                 android:textStyle="bold"
-                android:textColor="@string/colorFuente"
-                android:text="Crear patrón de inicio"
+                android:textColor="@color/colorFuenteBlanco"
+                android:text="Dibuje el patrón de inicio"
                 android:gravity="center_horizontal"
                 android:layout_gravity="center_horizontal"/>
 
@@ -51,7 +51,7 @@
                 android:layout_gravity="center"
                 android:text="Guardar Patron"
                 android:id="@+id/btnSetearPatron"
-                android:layout_below="@+id/pattern_lock_create"
+                android:layout_below="@+id/pattern_lock_modify"
                 android:layout_centerHorizontal="true"/>
 
             <Space
