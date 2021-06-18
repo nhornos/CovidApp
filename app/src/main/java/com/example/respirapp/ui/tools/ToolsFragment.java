@@ -56,7 +56,7 @@ public class ToolsFragment extends Fragment implements PatternLockViewListener, 
         switch (v.getId()) {
             case R.id.btnSetearPatron:
                 if(final_pattern.length() > 3){
-                    cEstructuras.cEvento.registrar(getActivity(), getContext(), getContext().getString(R.string.env), "patron", "El usuario modifico el patron manualmente");
+                   cEstructuras.cEvento.registrar(getActivity(), getContext(), getContext().getString(R.string.env), "patron", "El usuario modifico el patron manualmente");
                 } else{
                     Toast.makeText(getContext(), "El patron es muy corto!", Toast.LENGTH_LONG).show();
                 }

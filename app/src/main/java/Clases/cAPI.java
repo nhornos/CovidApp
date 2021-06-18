@@ -80,7 +80,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         return this.json;
     }
 
-    private JSONObject realizarPeticionServidor() throws URISyntaxException, IOException, JSONException {
+    private synchronized JSONObject realizarPeticionServidor() throws URISyntaxException, IOException, JSONException {
         URI uri = new URI("http://so-unlam.net.ar/api/api/" + this.metodo);
         URL url = new URL(uri.toURL().toString());
 
@@ -89,8 +89,10 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         conn.setRequestMethod(this.verbo);
         conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
 
-        if(this.metodo.equals("event"))
+        if(this.metodo.equals("event")){
             conn.setRequestProperty("Authorization", "Bearer " + cFunciones.getCache(this.context, "usuario_token"));
+            Log.i("TokenPeticion", cFunciones.getCache(this.context, "usuario_token"));
+        }
         else if(this.metodo.equals("refresh"))
             conn.setRequestProperty("Authorization", "Bearer " + cFunciones.getCache(this.context, "usuario_token_refresh"));
 
@@ -126,6 +128,8 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         }
         in.close();
         conn.disconnect();
+
+        Log.i("Resultado conexion:", content.toString());
 
         return new JSONObject(content.toString());
     }
@@ -188,6 +192,8 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         if(this.estado == 200) {
             cFunciones.setCache(this.context,"usuario_token", this.json.getString("token"));
             cFunciones.setCache(this.context,"usuario_token_refresh", this.json.getString("token_refresh"));
+            Log.i("TokenDespues:", cFunciones.getCache(context, "usuario_token"));
+            Log.i("TokenRefreshDespues:", cFunciones.getCache(context, "usuario_token_refresh"));
         } else{
             Log.i("Error refresh token", this.json.getString("msg"));
         }
@@ -227,8 +233,6 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
     }
 
     private void event() throws JSONException {
-        if(this.activity != null)
-            this.estado = 401;
 
         if(this.estado == 200 || this.estado == 201){
             String environment = this.json.getString("env");
@@ -270,6 +274,8 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
                         .setPositiveButton(R.string.msgAceptar, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 cEstructuras.cRefresh.refrescar(null, context);
+                                Log.i("TokenAntes:", cFunciones.getCache(context, "usuario_token"));
+                                Log.i("TokenRefreshAntes:", cFunciones.getCache(context, "usuario_token_refresh"));
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)

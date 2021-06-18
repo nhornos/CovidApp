@@ -14,12 +14,16 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_home">Categorías de ejercicios</string>
+    <string name="menu_gallery">Ejercicios</string>
+    <string name="menu_slideshow">Ejercicios del día</string>
     <string name="menu_tools">Modificar patron</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+
+    <string name="Categoría1">Enfriante / Relajante</string>
+    <string name="Categoría2">Equilibrante</string>
+    <string name="Categoría3">Calentante / Energizante</string>
 
     <string name="msgAceptar">SI</string>
     <string name="msgDenegar">NO</string>
