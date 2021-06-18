@@ -27,4 +27,6 @@
 
     <string name="msgAceptar">SI</string>
     <string name="msgDenegar">NO</string>
+
+    <string name="colorFuente">#FFFFFF</string>
 </resources>

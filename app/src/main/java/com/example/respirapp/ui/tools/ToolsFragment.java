@@ -36,7 +36,7 @@ public class ToolsFragment extends Fragment implements PatternLockViewListener, 
         View root = inflater.inflate(R.layout.fragment_tools, container, false);
 
         //Seteo el patron
-        mPatternLockView = (PatternLockView)root.findViewById(R.id.pattern_lock_creation);
+        mPatternLockView = (PatternLockView)root.findViewById(R.id.pattern_lock_modify);
         btnSetup = (Button)root.findViewById(R.id.btnSetearPatron);
 
         mPatternLockView.addPatternLockListener(this);

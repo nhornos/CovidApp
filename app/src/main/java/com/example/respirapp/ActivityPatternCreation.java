@@ -27,7 +27,7 @@ public class ActivityPatternCreation extends Activity implements PatternLockView
         setContentView(R.layout.activity_pattern_creation);
 
         //Seteo el patron
-        mPatternLockView = (PatternLockView)findViewById(R.id.pattern_lock_creation);
+        mPatternLockView = (PatternLockView)findViewById(R.id.pattern_lock_create);
         mPatternLockView.addPatternLockListener(this);
 
         //Seteo los botones
