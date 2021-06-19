@@ -204,7 +204,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             cFunciones.setCache(this.context,"usuario_token", this.json.getString("token"));
             cFunciones.setCache(this.context,"usuario_token_refresh", this.json.getString("token_refresh"));
 
-            Intent intent = new Intent(this.activity, activity_menu_2.class);
+            Intent intent = new Intent(this.activity, ActivityMenu.class);
             this.activity.startActivity(intent);
             this.activity.finish();
         }else if(this.estado == 400){
@@ -221,7 +221,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             cFunciones.setCache(this.context, "usuario_token", this.json.getString("token"));
             cFunciones.setCache(this.context, "usuario_token_refresh", this.json.getString("token_refresh"));
 
-            Intent intent = new Intent(this.activity, activity_menu_2.class);
+            Intent intent = new Intent(this.activity, ActivityMenu.class);
             this.activity.startActivity(intent);
             this.activity.finish();
         }else if(this.estado == 400){

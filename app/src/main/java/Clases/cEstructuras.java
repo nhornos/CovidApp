@@ -12,6 +12,7 @@ import com.example.respirapp.R;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -76,4 +77,24 @@ public class cEstructuras {
             registerAsyncTask.execute("");
         }
     }
+
+    public static class cDB{
+//        public static String ejerciciosEnfriantes[][] = {   {"Sitali Pranayama", "descripcion", "info"},
+//                                                            {"nombre2", "descripcion", "info"},
+//                                                            {"nombre3", "descripcion", "info"}
+//                                                        };
+//        public static ArrayList<String> ejerciciosEnfriantes2 = (ArrayList<String>) Arrays.asList(ejerciciosEnfriantes);
+        public static ArrayList<cListViewColumns> ejerciciosEnfriantes = new ArrayList<cListViewColumns>() {{add(new cListViewColumns("Sitali Pranayama", "desc", "info"));
+                                                                                                            add(new cListViewColumns("Sitali dos", "desc", "info"));
+                                                                                                            add(new cListViewColumns("Sitali tres", "desc", "info"));}};
+        public static String ejerciciosEquilibrantes[][] = {   {"Respiración cuadrada", "descripcion", "info"},
+                                                                {"Respiración circular", "descripcion", "info"},
+                                                                {"Respiración equilibrada", "descripcion", "info"}
+                                                        };
+        public static String ejerciciosCalentantes[][] = {  {"nombre1", "descripcion", "info"},
+                                                            {"nombre2", "descripcion", "info"},
+                                                            {"nombre3", "descripcion", "info"}
+                                                        };
+    }
+
 }

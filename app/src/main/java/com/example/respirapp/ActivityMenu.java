@@ -17,14 +17,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
-import Clases.cEstructuras;
 import Clases.cFunciones;
 
-public class activity_menu_2 extends AppCompatActivity {
+public class ActivityMenu extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private TextView navEmail;
@@ -50,8 +47,8 @@ public class activity_menu_2 extends AppCompatActivity {
                 R.id.nav_patron)
                 .setDrawerLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(activity_menu_2.this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(activity_menu_2.this, navController, mAppBarConfiguration);
+        NavController navController = Navigation.findNavController(ActivityMenu.this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(ActivityMenu.this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
         //Inicializo los textos del navigation
@@ -80,7 +77,7 @@ public class activity_menu_2 extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(activity_menu_2.this, R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(ActivityMenu.this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }

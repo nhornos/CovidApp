@@ -7,7 +7,7 @@
     <string name="patron_actual">patron_actual</string>
     <string name="patron_nuevo">patron_nuevo</string>
 
-    <string name="app_name"><u>RespirApp</u></string>
+    <string name="app_name">RespirApp</string>
     <string name="title_activity_menu_2">activity_menu_2</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
@@ -29,7 +29,13 @@
     <string name="msgDenegar">NO</string>
 
     <string name="tituloPatron"><font fgcolor='#FFFFFF'>Dibuje el patrón</font></string>
+    <string name="tituloEjerciciosDia">Ejercicios del día</string>
+    <string name="titulo_ejercicios_enfriantes">Ejercicios enfriantes</string>
+    <string name="titulo_ejercicios_equilibrantes">Ejercicios equilibrantes</string>
+    <string name="titulo_ejercicios_calentantes">Ejercicios calentantes</string>
+
     <color name="colorFuenteBlanco">#FFFFFF</color>
     <color name="colorTextoCategorias">#e2e9e9</color>
     <color name="colorTextoBienvenida">#ffd9cc</color>
+    <color name="colorTextoTitulo">#767676</color>
 </resources>

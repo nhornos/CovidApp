@@ -1,4 +1,4 @@
-package com.example.respirapp.ui.gallery;
+package com.example.respirapp.ui.respiraciones;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,18 +9,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.respirapp.ActivityListaEjercicios;
 import com.example.respirapp.R;
-import com.example.respirapp.activity_menu_2;
 
-public class GalleryFragment extends Fragment implements View.OnClickListener {
+public class FragmentRespiraciones extends Fragment implements View.OnClickListener {
 
-    private GalleryViewModel galleryViewModel;
+    private RespiracionesViewModel galleryViewModel;
     private TextView txtCategoria1;
     private TextView txtCategoria2;
     private TextView txtCategoria3;
@@ -28,7 +25,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
+                ViewModelProviders.of(this).get(RespiracionesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_respiraciones, container, false);
 //        final TextView textView = root.findViewById(R.id.text_gallery);
         txtCategoria1 = root.findViewById(R.id.textCategoria1);
@@ -49,24 +46,22 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Intent intent;
+        Intent intent = new Intent(getActivity().getApplicationContext(), ActivityListaEjercicios.class);
 
         switch (v.getId()) {
             case R.id.textCategoria1:
-                intent = new Intent(getActivity().getApplicationContext(), ActivityListaEjercicios.class);
-                startActivity(intent);
+                intent.putExtra("tipoEjercicio", "enfriantes");
                 break;
             case R.id.textCategoria2:
-                intent = new Intent(getActivity().getApplicationContext(), ActivityListaEjercicios.class);
-                startActivity(intent);
+                intent.putExtra("tipoEjercicio", "equilibrantes");
                 break;
             case R.id.textCategoria3:
-                intent = new Intent(getActivity().getApplicationContext(), ActivityListaEjercicios.class);
-                startActivity(intent);
+                intent.putExtra("tipoEjercicio", "calentantes");
                 break;
             default:
                 Toast.makeText(getActivity().getApplicationContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
                 break;
         }
+        startActivity(intent);
     }
 }

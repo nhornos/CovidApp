@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
         <activity
-            android:name=".activity_menu_2"
+            android:name=".ActivityMenu"
             android:label="@string/title_activity_menu_2"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ActivityPatternValidation"
