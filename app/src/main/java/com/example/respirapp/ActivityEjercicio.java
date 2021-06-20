@@ -16,12 +16,17 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
+import Clases.cEstructuras;
 import Clases.cListViewAdapter;
 
 public class ActivityEjercicio extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager mSensorManager;
     private Sensor mProximidad;
+    private Sensor mAccelerometer;
+    DecimalFormat dosdecimales = new DecimalFormat("###.###");
     private int idProxEjercicio;
 
     @Override
@@ -32,6 +37,8 @@ public class ActivityEjercicio extends AppCompatActivity implements SensorEventL
         // Accedemos al servicio de sensores
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mProximidad = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         TextView textEjercicio = (TextView) findViewById(R.id.text_titulo_ejercicio);
         ImageView imagenEjercicio = (ImageView) findViewById(R.id.img_instruccion_ejercicio);
@@ -50,12 +57,20 @@ public class ActivityEjercicio extends AppCompatActivity implements SensorEventL
         imagenEjercicio.setBackgroundResource(getApplicationContext().getResources().getIdentifier(nombreImagen, "drawable", getApplicationContext().getPackageName()));
         textInstrucciones.setText(explicacion);
         textContraindicaciones.setText(contraindicaciones);
+
+        Log.i("Pantalla", String.valueOf(App.posicionPantallaEjercicio));
+        Log.i("Izquierda", String.valueOf(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
+        Log.i("Derecha", String.valueOf(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE));
+        Log.i("Recto", String.valueOf(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT));
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+        setRequestedOrientation(App.posicionPantallaEjercicio);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         iniSensores();
+        setRequestedOrientation(App.posicionPantallaEjercicio);
     }
 
     @Override
@@ -69,29 +84,57 @@ public class ActivityEjercicio extends AppCompatActivity implements SensorEventL
 
         Log.i("Sensor:", event.sensor.getName());
         Log.i("Tipo:", String.valueOf(event.sensor.getType()));
-        if(event.sensor.getType() == Sensor.TYPE_PROXIMITY){
-            if( event.values[0] == 0 & App.permitePasarEjercicio)
-            {
-                Thread thread = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            while(true) {
-                                sleep(2000);
-                                App.permitePasarEjercicio = true;
-                            }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
+        synchronized (this) {
+            Log.d("sensor", event.sensor.getName());
 
-                App.permitePasarEjercicio = false;
-                Log.i("Sensores", "Proximidad detectada");
-                App.pasarEjercicio = true;
-                App.idEjercicio = idProxEjercicio;
-                thread.start();
-                this.finish();
+            switch (event.sensor.getType()) {
+                case Sensor.TYPE_PROXIMITY:
+                    if (event.values[0] == 0 & App.permitePasarEjercicio) {
+                        Thread thread = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    sleep(500);
+                                    App.permitePasarEjercicio = true;
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+
+                        App.permitePasarEjercicio = false;
+                        Log.i("Sensores", "Proximidad detectada");
+                        App.pasarEjercicio = true;
+                        App.idEjercicio = idProxEjercicio;
+                        thread.start();
+                        this.finish();
+                    }
+                    break;
+                case Sensor.TYPE_ACCELEROMETER:
+                    float valorX = Float.parseFloat(dosdecimales.format(event.values[0]));
+                    float valorY = Float.parseFloat(dosdecimales.format(event.values[1]));
+                    float valorZ = Float.parseFloat(dosdecimales.format(event.values[2]));
+
+                    if(valorX > 8.8 && getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
+                        //Izquierda
+                        Log.i("env:", getString(R.string.env));
+                        cEstructuras.cEvento.registrar(this, this.getApplicationContext(), getString(R.string.env), "rotacion pantalla", "El usuario giro la pantalla a la izquierda");
+                        App.posicionPantallaEjercicio = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                        setRequestedOrientation(App.posicionPantallaEjercicio);
+                    }
+                    if(valorX < -8.8 && getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE){
+                        //Derecha
+                        cEstructuras.cEvento.registrar(this, this.getApplicationContext(), getString(R.string.env), "rotacion pantalla", "El usuario giro la pantalla a la derecha");
+                        App.posicionPantallaEjercicio = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
+                        setRequestedOrientation(App.posicionPantallaEjercicio);
+                    }
+                    if(valorY > 8.8 && getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+                        //Abajo
+                        cEstructuras.cEvento.registrar(this, this.getApplicationContext(), getString(R.string.env), "rotacion pantalla", "El usuario puso la pantalla a verticalmente");
+                        App.posicionPantallaEjercicio = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                        setRequestedOrientation(App.posicionPantallaEjercicio);
+                    }
+                    break;
             }
         }
     }
@@ -103,6 +146,7 @@ public class ActivityEjercicio extends AppCompatActivity implements SensorEventL
 
     protected void iniSensores(){
         mSensorManager.registerListener(this, this.mProximidad, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     protected void pararSensores(){

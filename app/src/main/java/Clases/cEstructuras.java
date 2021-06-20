@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -60,7 +61,7 @@ public class cEstructuras {
         public static String description;
 
         public static void registrar(Activity activity, Context context, String environment, String method, String description){
-            Map<String, String> parameters = new HashMap<>();
+            Map<String, String> parameters = new TreeMap<>();
             parameters.put("env", environment);
             parameters.put("type_events", method);
             parameters.put("description", description);

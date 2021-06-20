@@ -116,25 +116,24 @@ public class ActivityLogin extends Activity implements View.OnClickListener, Sen
         Log.i("Sensor:", event.sensor.getName());
         Log.i("Tipo:", String.valueOf(event.sensor.getType()));
         if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            String txt = "Acelerometro:\n";
-            txt += "x: " + dosdecimales.format(event.values[0]) + " m/seg2 \n";
-            txt += "y: " + dosdecimales.format(event.values[1]) + " m/seg2 \n";
-            txt += "z: " + dosdecimales.format(event.values[2]) + " m/seg2 \n";
-            Log.i("Datos acelerometro:", txt);
             float valorX = Float.parseFloat(dosdecimales.format(event.values[0]));
             float valorY = Float.parseFloat(dosdecimales.format(event.values[1]));
             float valorZ = Float.parseFloat(dosdecimales.format(event.values[2]));
 
             if(valorX > 8.8){
                 //Izquierda
+                Log.i("env:", getString(R.string.env));
+                cEstructuras.cEvento.registrar(this, this.getApplicationContext(), getString(R.string.env), "rotación pantalla", "El usuario giró la pantalla a la izquierda");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             }
             if(valorX < -8.8){
                 //Derecha
+                cEstructuras.cEvento.registrar(this, this.getApplicationContext(), getString(R.string.env), "rotación pantalla", "El usuario giró la pantalla a la derecha");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
             }
             if(valorY > 8.8){
                 //Abajo
+                cEstructuras.cEvento.registrar(this, this.getApplicationContext(), getString(R.string.env), "rotación pantalla", "El usuario puso la pantalla a verticalmente");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
         }

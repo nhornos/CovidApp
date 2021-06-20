@@ -18,6 +18,7 @@
     <string name="menu_respiracion">Ejercicios de respiración</string>
     <string name="menu_ejercicios_del_dia">Ejercicios del día</string>
     <string name="menu_patron">Modificar patron</string>
+    <string name="menu_sensores">Listado sensores</string>
 
     <string name="bienvenida">Una aplicación pensada para vos donde podrás mejorar tu capacidad respiratoria a través de ejercicios de yoga basados en Pranayama</string>
 
