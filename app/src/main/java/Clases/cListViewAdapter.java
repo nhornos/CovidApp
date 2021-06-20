@@ -64,6 +64,7 @@ public class cListViewAdapter extends BaseAdapter {
         imagenEjercicio.setText(this.arrayEjercicios.get(position).imagen);
         explicacionEjercicio.setText(this.arrayEjercicios.get(position).descripcion);
         contraindicacionesEjercicio.setText(this.arrayEjercicios.get(position).info);
+        int num = getCount();
 
         //On click en el ejercicio
         convertView.setOnClickListener(new View.OnClickListener(){
@@ -84,5 +85,9 @@ public class cListViewAdapter extends BaseAdapter {
             }
         });
         return convertView;
+    }
+
+    public void pasarSiguienteEjercicio(int id){
+
     }
 }

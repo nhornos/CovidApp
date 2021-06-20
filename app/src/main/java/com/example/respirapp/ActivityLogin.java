@@ -61,7 +61,7 @@ public class ActivityLogin extends Activity implements View.OnClickListener, Sen
     protected void onPause()
     {
         super.onPause();
-//        pararSensores();
+        pararSensores();
     }
 
     @Override

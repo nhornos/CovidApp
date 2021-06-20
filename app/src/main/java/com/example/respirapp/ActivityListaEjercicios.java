@@ -64,6 +64,7 @@ public class ActivityListaEjercicios extends AppCompatActivity{
         }
 
         this.listView.setAdapter(this.adapter);
+        this.listView.getAdapter();
     }
 
 }
