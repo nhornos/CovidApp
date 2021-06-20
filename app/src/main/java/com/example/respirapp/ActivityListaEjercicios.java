@@ -34,6 +34,15 @@ public class ActivityListaEjercicios extends AppCompatActivity{
         Log.i("Registro", "On create");
     }
 
+    @Override
+    protected void onResume() {
+        if(App.pasarEjercicio){
+            App.pasarEjercicio = false;
+            this.listView.getAdapter().getView(App.idEjercicio, null, null).performClick();
+        }
+        super.onResume();
+    }
+
     private void configurarPantalla(){
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -64,7 +73,6 @@ public class ActivityListaEjercicios extends AppCompatActivity{
         }
 
         this.listView.setAdapter(this.adapter);
-        this.listView.getAdapter();
     }
 
 }

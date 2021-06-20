@@ -58,24 +58,34 @@ public class cListViewAdapter extends BaseAdapter {
         TextView imagenEjercicio = (TextView) convertView.findViewById(this.context.getResources().getIdentifier("text_imagen_ejercicio", "id", this.context.getPackageName()));
         TextView explicacionEjercicio = (TextView) convertView.findViewById(this.context.getResources().getIdentifier("text_explicacion", "id", this.context.getPackageName()));
         TextView contraindicacionesEjercicio = (TextView) convertView.findViewById(this.context.getResources().getIdentifier("text_contraindicaciones", "id", this.context.getPackageName()));
+        TextView idProxEjercicio = (TextView) convertView.findViewById(this.context.getResources().getIdentifier("text_prox_ejercicio", "id", this.context.getPackageName()));
 
         numEjercicio.setText(String.valueOf(position+1));
         nombreEjercicio.setText(this.arrayEjercicios.get(position).nombre);
         imagenEjercicio.setText(this.arrayEjercicios.get(position).imagen);
         explicacionEjercicio.setText(this.arrayEjercicios.get(position).descripcion);
         contraindicacionesEjercicio.setText(this.arrayEjercicios.get(position).info);
-        int num = getCount();
+
+        //obtener index prox ejercicio
+        if(position + 1 == getCount())
+            idProxEjercicio.setText(String.valueOf(0));
+        else
+            idProxEjercicio.setText(String.valueOf(position+1));
+
 
         //On click en el ejercicio
         convertView.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
+                TextView textProxEjercicio = (TextView) v.findViewById(context.getResources().getIdentifier("text_prox_ejercicio", "id", context.getPackageName()));
                 TextView textNombreEjercicio = (TextView) v.findViewById(context.getResources().getIdentifier("text_nombre_ejercicio", "id", context.getPackageName()));
                 TextView textImagenEjercicio = (TextView) v.findViewById(context.getResources().getIdentifier("text_imagen_ejercicio", "id", context.getPackageName()));
                 TextView textExplicacionEjercicio = (TextView) v.findViewById(context.getResources().getIdentifier("text_explicacion", "id", context.getPackageName()));
                 TextView textContraindicacionesEjercicio = (TextView) v.findViewById(context.getResources().getIdentifier("text_contraindicaciones", "id", context.getPackageName()));
                 Intent intent = new Intent(context, ActivityEjercicio.class);
+
+                intent.putExtra("idProxEjercicio", Integer.valueOf(String.valueOf(textProxEjercicio.getText())));
                 intent.putExtra("nombreEjercicio", String.valueOf(textNombreEjercicio.getText()));
                 intent.putExtra("nombreImagenEjercicio", String.valueOf(textImagenEjercicio.getText()));
                 intent.putExtra("explicacionEjercicio", String.valueOf(textExplicacionEjercicio.getText()));
@@ -88,6 +98,22 @@ public class cListViewAdapter extends BaseAdapter {
     }
 
     public void pasarSiguienteEjercicio(int id){
+        if(id == getCount())
+            id = 0;
+        cListViewColumns datosEjercicio = this.arrayEjercicios.get(id+1);
+        String nombreEjercicio = datosEjercicio.nombre;
+        String nombreImagenEjercicio = datosEjercicio.imagen;
+        String explicacionEjercicio = datosEjercicio.descripcion;
+        String contraindicacionesEjercicio = datosEjercicio.info;
 
+        Intent intent = new Intent(context, ActivityEjercicio.class);
+
+        intent.putExtra("nombreEjercicio", nombreEjercicio);
+        intent.putExtra("nombreImagenEjercicio", nombreImagenEjercicio);
+        intent.putExtra("explicacionEjercicio", explicacionEjercicio);
+        intent.putExtra("contraindicacionesEjercicio", contraindicacionesEjercicio);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

@@ -40,4 +40,8 @@
         android:id="@+id/text_contraindicaciones"
         android:layout_width="0dp"
         android:layout_height="0dp"/>
+    <TextView
+        android:id="@+id/text_prox_ejercicio"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
 </LinearLayout>

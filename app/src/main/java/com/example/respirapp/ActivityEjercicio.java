@@ -16,10 +16,13 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import Clases.cListViewAdapter;
+
 public class ActivityEjercicio extends AppCompatActivity implements SensorEventListener {
 
     private SensorManager mSensorManager;
     private Sensor mProximidad;
+    private int idProxEjercicio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class ActivityEjercicio extends AppCompatActivity implements SensorEventL
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
+        idProxEjercicio = extras.getInt("idProxEjercicio");
         String nombreEjercicio = extras.getString("nombreEjercicio");
         String nombreImagen = extras.getString("nombreImagenEjercicio");
         String explicacion = extras.getString("explicacionEjercicio");
@@ -49,27 +53,59 @@ public class ActivityEjercicio extends AppCompatActivity implements SensorEventL
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        iniSensores();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        pararSensores();
+    }
+
+    @Override
     public void onSensorChanged(SensorEvent event) {
-//        Log.i("Sensor:", event.sensor.getName());
-//        Log.i("Tipo:", String.valueOf(event.sensor.getType()));
-//        if(event.sensor.getType() == Sensor.TYPE_PROXIMITY){
-//            String txt = "";
-//            txt += "Proximidad:\n";
-//            txt += event.values[0] + "\n";
-//
-//            proximity.setText(txt);
-//
-//            // Si detecta 0 lo represento
-//            if( event.values[0] == 0 )
-//            {
-//                detecta.setBackgroundColor(Color.parseColor("#cf091c"));
-//                detecta.setText("Proximidad Detectada");
-//            }
-//        }
+
+        Log.i("Sensor:", event.sensor.getName());
+        Log.i("Tipo:", String.valueOf(event.sensor.getType()));
+        if(event.sensor.getType() == Sensor.TYPE_PROXIMITY){
+            if( event.values[0] == 0 & App.permitePasarEjercicio)
+            {
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            while(true) {
+                                sleep(2000);
+                                App.permitePasarEjercicio = true;
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                App.permitePasarEjercicio = false;
+                Log.i("Sensores", "Proximidad detectada");
+                App.pasarEjercicio = true;
+                App.idEjercicio = idProxEjercicio;
+                thread.start();
+                this.finish();
+            }
+        }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    protected void iniSensores(){
+        mSensorManager.registerListener(this, this.mProximidad, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    protected void pararSensores(){
+        mSensorManager.unregisterListener(this);
     }
 }
