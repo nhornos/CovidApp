@@ -36,6 +36,7 @@ public class ActivityLogin extends Activity implements View.OnClickListener, Sen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("Oncreate","ejecutado");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -125,13 +126,16 @@ public class ActivityLogin extends Activity implements View.OnClickListener, Sen
             float valorZ = Float.parseFloat(dosdecimales.format(event.values[2]));
 
             if(valorX > 8.8){
-//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                //Izquierda
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             }
             if(valorX < -8.8){
-//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                //Derecha
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
             }
             if(valorY > 8.8){
-//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                //Abajo
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
         }
 
