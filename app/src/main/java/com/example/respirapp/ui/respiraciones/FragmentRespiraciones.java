@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.respirapp.ActivityListaEjercicios;
 import com.example.respirapp.R;
 
+import Clases.cEstructuras;
+
 public class FragmentRespiraciones extends Fragment implements View.OnClickListener {
 
     private RespiracionesViewModel galleryViewModel;
@@ -35,12 +37,6 @@ public class FragmentRespiraciones extends Fragment implements View.OnClickListe
         txtCategoria1.setOnClickListener(this);
         txtCategoria2.setOnClickListener(this);
         txtCategoria3.setOnClickListener(this);
-//        galleryViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
         return root;
     }
 

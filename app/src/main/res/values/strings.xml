@@ -38,4 +38,6 @@
     <color name="colorTextoCategorias">#e2e9e9</color>
     <color name="colorTextoBienvenida">#ffd9cc</color>
     <color name="colorTextoTitulo">#767676</color>
+    <color name="colorTextoExplicacion">#424242</color>
+    <color name="colorSeparadorTexto">#4D4D4D</color>
 </resources>

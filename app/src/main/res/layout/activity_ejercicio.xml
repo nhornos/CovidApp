@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
+            <TextView
+                android:id="@+id/text_titulo_ejercicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="Titulo Ejercicio"
+                android:textAlignment="center"
+                android:textColor="@color/colorTextoTitulo"
+                android:textSize="40dp"
+                android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/img_instruccion_ejercicio"
+                android:layout_width="wrap_content"
+                android:layout_height="350dp" />
+            <TextView
+                android:id="@+id/text_titulo_instrucciones_ejercicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:padding="10dp"
+                android:text="Explicación ejercicio"
+                android:textAlignment="center"
+                android:textColor="@color/colorTextoTitulo"
+                android:textSize="35dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/text_instrucciones_ejercicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio.Instruciones del ejercicio."
+                android:textAlignment="textStart"
+                android:textColor="@color/colorTextoExplicacion"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                tools:ignore="RtlCompat" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:background="@color/colorSeparadorTexto" />
+            <TextView
+                android:id="@+id/text_titulo_contraindicaciones_ejercicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:padding="5dp"
+                android:text="Contraindicaciones:"
+                android:textAlignment="center"
+                android:textColor="@color/colorTextoTitulo"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/text_contraindicaciones_ejercicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Contraindicaciones del ejercicio.Contraindicaciones del ejercicio.Contraindicaciones del ejercicio.Contraindicaciones del ejercicio.Contraindicaciones del ejercicio.Contraindicaciones del ejercicio.Contraindicaciones del ejercicio.Contraindicaciones del ejercicio."
+                android:textAlignment="textStart"
+                android:textColor="@color/colorTextoExplicacion"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

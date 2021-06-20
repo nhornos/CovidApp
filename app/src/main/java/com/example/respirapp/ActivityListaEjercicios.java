@@ -31,7 +31,6 @@ public class ActivityListaEjercicios extends AppCompatActivity{
 
         this.listView = (ListView) findViewById(R.id.lista_ejercicios);
         configurarPantalla();
-        llenarListaEjercicios();
         Log.i("Registro", "On create");
     }
 
@@ -46,10 +45,24 @@ public class ActivityListaEjercicios extends AppCompatActivity{
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layout_ejercicios);
         int imagenID = getApplicationContext().getResources().getIdentifier("ejercicios_" + tipoEjercicio, "drawable", getApplicationContext().getPackageName());
         linearLayout.setBackgroundResource(imagenID);
+        llenarListaEjercicios(tipoEjercicio);
     }
 
-    private void llenarListaEjercicios() {
-        this.adapter = new cListViewAdapter(this.getApplicationContext(), cEstructuras.cDB.ejerciciosEnfriantes, listView);
+    private void llenarListaEjercicios(String tipoEjercicio) {
+        switch (tipoEjercicio){
+            case "enfriantes":
+                this.adapter = new cListViewAdapter(this.getApplicationContext(), cEstructuras.cDB.ejerciciosEnfriantes, listView);
+                break;
+            case "equilibrantes":
+                this.adapter = new cListViewAdapter(this.getApplicationContext(), cEstructuras.cDB.ejerciciosEquilibrantes, listView);
+                break;
+            case "calentantes":
+                this.adapter = new cListViewAdapter(this.getApplicationContext(), cEstructuras.cDB.ejerciciosCalentantes, listView);
+                break;
+            default:
+                Toast.makeText(this.getApplicationContext(), "Error en el tipo de ejercicio", Toast.LENGTH_LONG).show();
+        }
+
         this.listView.setAdapter(this.adapter);
     }
 

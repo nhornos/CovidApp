@@ -2,7 +2,13 @@ package com.example.respirapp;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,13 +23,14 @@ import java.text.DecimalFormat;
 import Clases.*;
 
 //public class ActivityLogin extends Activity implements SensorEventListener {
-public class ActivityLogin extends Activity implements View.OnClickListener {
+public class ActivityLogin extends Activity implements View.OnClickListener, SensorEventListener {
 
     private EditText inUser;
     private EditText inPassword;
     private Button btnSubmit;
     private Button btnRegistrarse;
-//    private SensorManager mSensorManager;
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
 
     DecimalFormat dosdecimales = new DecimalFormat("###.###");
 
@@ -39,7 +46,8 @@ public class ActivityLogin extends Activity implements View.OnClickListener {
         inPassword = (EditText)findViewById(R.id.inPassLogin);
 
         // Accedemos al servicio de sensores
-//        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         btnSubmit.setOnClickListener(this);
         btnRegistrarse.setOnClickListener(this);
@@ -59,7 +67,8 @@ public class ActivityLogin extends Activity implements View.OnClickListener {
     protected void onResume()
     {
         super.onResume();
-//        iniSensores();
+        iniSensores();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     private void loguear() {
@@ -86,32 +95,45 @@ public class ActivityLogin extends Activity implements View.OnClickListener {
 
     //Nuevas cosas agregadas para sensores:
 //
-//    protected void iniSensores(){
-//        mSensorManager.registerListener((SensorEventListener) this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-//    }
-//    protected void pararSensores(){
-//        mSensorManager.unregisterListener((SensorEventListener) this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
-//    }
-//
-//    // Metodo que escucha el cambio de sensibilidad de los sensores
-//    @Override
-//    public void onAccuracyChanged(Sensor sensor, int accuracy)
-//    {
-//
-//    }
+    protected void iniSensores(){
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+    protected void pararSensores(){
+        mSensorManager.unregisterListener(this);
+    }
 
-    // Metodo que escucha el cambio de los sensores
-//    @Override
-//    public void onSensorChanged(SensorEvent event) {
-//        Log.i("Sensor:", event.sensor.getName());
-//        Log.i("Tipo:", String.valueOf(event.sensor.getType()));
-//        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-//            String txt = "Acelerometro:\n";
-//            txt += "x: " + dosdecimales.format(event.values[0]) + " m/seg2 \n";
-//            txt += "y: " + dosdecimales.format(event.values[1]) + " m/seg2 \n";
-//            txt += "z: " + dosdecimales.format(event.values[2]) + " m/seg2 \n";
-//            Log.i("Datos acelerometro:", txt);
-//        }
-//
-//    }
+    // Metodo que escucha el cambio de sensibilidad de los sensores
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy)
+    {
+
+    }
+
+//     Metodo que escucha el cambio de los sensores
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        Log.i("Sensor:", event.sensor.getName());
+        Log.i("Tipo:", String.valueOf(event.sensor.getType()));
+        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+            String txt = "Acelerometro:\n";
+            txt += "x: " + dosdecimales.format(event.values[0]) + " m/seg2 \n";
+            txt += "y: " + dosdecimales.format(event.values[1]) + " m/seg2 \n";
+            txt += "z: " + dosdecimales.format(event.values[2]) + " m/seg2 \n";
+            Log.i("Datos acelerometro:", txt);
+            float valorX = Float.parseFloat(dosdecimales.format(event.values[0]));
+            float valorY = Float.parseFloat(dosdecimales.format(event.values[1]));
+            float valorZ = Float.parseFloat(dosdecimales.format(event.values[2]));
+
+            if(valorX > 8.8){
+//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+            }
+            if(valorX < -8.8){
+//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+            }
+            if(valorY > 8.8){
+//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+            }
+        }
+
+    }
 }

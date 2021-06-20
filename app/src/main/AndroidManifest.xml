@@ -18,34 +18,33 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
+        <activity android:name=".ActivityEjercicio"></activity>
         <activity
             android:name=".ActivityMenu"
             android:label="@string/title_activity_menu_2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ActivityPatternValidation"
-                  android:noHistory="true">
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ActivityPatternValidation"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityPatternCreation"></activity>
+        <activity android:name=".ActivityPatternCreation" />
         <activity
             android:name=".ActivityRegister"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ActivityLogin"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ActivityListaEjercicios"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

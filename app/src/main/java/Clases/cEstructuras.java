@@ -79,22 +79,22 @@ public class cEstructuras {
     }
 
     public static class cDB{
-//        public static String ejerciciosEnfriantes[][] = {   {"Sitali Pranayama", "descripcion", "info"},
-//                                                            {"nombre2", "descripcion", "info"},
-//                                                            {"nombre3", "descripcion", "info"}
-//                                                        };
-//        public static ArrayList<String> ejerciciosEnfriantes2 = (ArrayList<String>) Arrays.asList(ejerciciosEnfriantes);
-        public static ArrayList<cListViewColumns> ejerciciosEnfriantes = new ArrayList<cListViewColumns>() {{add(new cListViewColumns("Sitali Pranayama", "desc", "info"));
-                                                                                                            add(new cListViewColumns("Sitali dos", "desc", "info"));
-                                                                                                            add(new cListViewColumns("Sitali tres", "desc", "info"));}};
-        public static String ejerciciosEquilibrantes[][] = {   {"Respiración cuadrada", "descripcion", "info"},
-                                                                {"Respiración circular", "descripcion", "info"},
-                                                                {"Respiración equilibrada", "descripcion", "info"}
-                                                        };
-        public static String ejerciciosCalentantes[][] = {  {"nombre1", "descripcion", "info"},
-                                                            {"nombre2", "descripcion", "info"},
-                                                            {"nombre3", "descripcion", "info"}
-                                                        };
+
+        public static ArrayList<cListViewColumns> ejerciciosEnfriantes = new ArrayList<cListViewColumns>() {{add(new cListViewColumns("Sitali Pranayama", "icono", "Este ejercicio comienza sentado con la espalda recta.\n Comenzamos a respirar profundo, y luego de 15 segundos exalamos todo el aire", "Este ejercicio no es recomendado para personas con baja frecuencia cardíaca debido a su baja acción"));
+                                                                                                            add(new cListViewColumns("Sitali dos", "img_home", "desc", "info"));
+                                                                                                            add(new cListViewColumns("Sitali tres", "ejercicios_calentantes", "desc", "info"));
+                                                                                                            add(new cListViewColumns("Sitali cuatro", "icono", "desc", "info"));
+                                                                                                            add(new cListViewColumns("Sitali cinco", "icono", "desc", "info"));}};
+        public static ArrayList<cListViewColumns> ejerciciosEquilibrantes = new ArrayList<cListViewColumns>() {{add(new cListViewColumns("Respiración cuadrada", "icono", "desc", "info"));
+                                                                                                            add(new cListViewColumns("Respiración circular", "icono", "desc", "info"));
+                                                                                                            add(new cListViewColumns("Respiración equilibrada", "icono", "desc", "info"));
+                                                                                                            add(new cListViewColumns("Respiración cuatro", "icono", "desc", "info"));
+                                                                                                            add(new cListViewColumns("Respiración cinco", "icono", "desc", "info"));}};
+        public static ArrayList<cListViewColumns> ejerciciosCalentantes = new ArrayList<cListViewColumns>() {{add(new cListViewColumns("Calentante 1", "icono", "desc", "info"));
+                                                                                                            add(new cListViewColumns("Calentante 2", "icono", "desc", "info"));
+                                                                                                            add(new cListViewColumns("Calentante 3", "icono", "desc", "info"));
+                                                                                                            add(new cListViewColumns("Calentante 4", "icono", "desc", "info"));
+                                                                                                            add(new cListViewColumns("Calentante 5", "icono", "desc", "info"));}};
     }
 
 }
