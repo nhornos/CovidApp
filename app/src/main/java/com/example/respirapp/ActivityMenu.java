@@ -56,7 +56,7 @@ public class ActivityMenu extends AppCompatActivity implements SensorEventListen
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_respiracion, R.id.nav_ejercicios_del_dia,
-                R.id.nav_patron)
+                R.id.nav_patron, R.id.nav_sensores)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(ActivityMenu.this, R.id.nav_host_fragment);
