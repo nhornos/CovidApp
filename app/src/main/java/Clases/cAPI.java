@@ -80,7 +80,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
         return this.json;
     }
 
-    private synchronized JSONObject realizarPeticionServidor() throws URISyntaxException, IOException, JSONException {
+    private JSONObject realizarPeticionServidor() throws URISyntaxException, IOException, JSONException {
         URI uri = new URI("http://so-unlam.net.ar/api/api/" + this.metodo);
         URL url = new URL(uri.toURL().toString());
 

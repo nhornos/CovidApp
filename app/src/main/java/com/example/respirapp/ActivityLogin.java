@@ -123,17 +123,17 @@ public class ActivityLogin extends Activity implements View.OnClickListener, Sen
             if(valorX > 8.8){
                 //Izquierda
                 Log.i("env:", getString(R.string.env));
-                cEstructuras.cEvento.registrar(this, this.getApplicationContext(), getString(R.string.env), "rotación pantalla", "El usuario giró la pantalla a la izquierda");
+//                cEstructuras.cEvento.registrar(this, this.getApplicationContext(), getString(R.string.env), "rotación pantalla", "El usuario giró la pantalla a la izquierda");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             }
             if(valorX < -8.8){
                 //Derecha
-                cEstructuras.cEvento.registrar(this, this.getApplicationContext(), getString(R.string.env), "rotación pantalla", "El usuario giró la pantalla a la derecha");
+//                cEstructuras.cEvento.registrar(this, this.getApplicationContext(), getString(R.string.env), "rotación pantalla", "El usuario giró la pantalla a la derecha");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
             }
             if(valorY > 8.8){
                 //Abajo
-                cEstructuras.cEvento.registrar(this, this.getApplicationContext(), getString(R.string.env), "rotación pantalla", "El usuario puso la pantalla a verticalmente");
+//                cEstructuras.cEvento.registrar(this, this.getApplicationContext(), getString(R.string.env), "rotación pantalla", "El usuario puso la pantalla a verticalmente");
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
         }

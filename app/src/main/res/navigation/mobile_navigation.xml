@@ -27,4 +27,9 @@
         android:name="com.example.respirapp.ui.tools.ToolsFragment"
         android:label="@string/menu_patron"
         tools:layout="@layout/fragment_tools" />
+    <fragment
+        android:id="@+id/nav_sensores"
+        android:name="com.example.respirapp.ui.sensores.FragmentSensores"
+        android:label="@string/menu_patron"
+        tools:layout="@layout/fragment_sensores" />
 </navigation>
