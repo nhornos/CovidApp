@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_lista_ejercicios_item"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:weightSum="10"
+    android:padding="5dp">
+    <TextView
+        android:id="@+id/text_num_ejercicio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:textSize="70dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorTextoTitulo"
+        android:text="1" />
+
+    <TextView
+        android:id="@+id/text_nombre_ejercicio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:gravity="left"
+        android:text="Nombre ejercicio"
+        android:textColor="@color/colorTextoTitulo"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/text_imagen_ejercicio"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+    <TextView
+        android:id="@+id/text_explicacion"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+    <TextView
+        android:id="@+id/text_contraindicaciones"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+    <TextView
+        android:id="@+id/text_prox_ejercicio"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+</LinearLayout>

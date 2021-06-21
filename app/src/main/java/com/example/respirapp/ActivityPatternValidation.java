@@ -16,14 +16,16 @@ import com.andrognito.patternlockview.utils.PatternLockUtils;
 
 import java.util.List;
 
+import Clases.cFunciones;
 import io.paperdb.Paper;
 
-public class ActivityPatternValidation extends Activity {
+public class ActivityPatternValidation extends Activity implements PatternLockViewListener {
     String save_pattern_key = "pattern_code";
     String patternEntered;
-    PatternLockView mPatternLockView;
     String save_pattern;
     String msgLevelBattery;
+
+    PatternLockView mPatternLockView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,18 +35,19 @@ public class ActivityPatternValidation extends Activity {
 
         //Seteo el view del patron
         mPatternLockView = (PatternLockView)findViewById(R.id.pattern_lock_validation);
+        mPatternLockView.addPatternLockListener(this);
 
         Log.i("Pattron:","On create");
 
         //Inicializamos el paper donde guardamos el patron
         Paper.init(this);
         actualizarPassPatron();
-//        Paper.delete(save_pattern_key);
+    }
 
-
-
-        mPatternLockView.addPatternLockListener(patronListener);
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        actualizarPassPatron();
     }
 
     @Override
@@ -54,67 +57,12 @@ public class ActivityPatternValidation extends Activity {
         verificarPatron();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        actualizarPassPatron();
-
+    private void informarNivelBateria() {
+        msgLevelBattery = "Nivel de batería: " + String.valueOf(getBatteryPercentage(this)) + "%";
+        Toast.makeText(this, msgLevelBattery, Toast.LENGTH_LONG).show();
     }
 
-    private void actualizarPassPatron() {
-        save_pattern = Paper.book().read(save_pattern_key);
-    }
-
-    private void verificarPatron() {
-        //Me fijo si no hay patrón, y mando a crearlo
-
-        Log.i("Entro a:", "verificar Patron");
-        if(save_pattern == null || save_pattern.equals("null")) {
-            //Voy al activity de la creación del patrón
-            Intent intent = new Intent(ActivityPatternValidation.this, ActivityPatternCreation.class);
-            startActivity(intent);
-            this.finish();
-        }
-    }
-
-
-
-    private final PatternLockViewListener patronListener = new PatternLockViewListener(){
-
-        @Override
-        public void onStarted() {
-
-        }
-
-        @Override
-        public void onProgress(List<PatternLockView.Dot> progressPattern) {
-
-        }
-
-        @Override
-        public void onComplete(List<PatternLockView.Dot> pattern) {
-            Log.i("Pattron:","On complete");
-            patternEntered = PatternLockUtils.patternToString(mPatternLockView,pattern);
-            if(patternEntered.equals(save_pattern)){
-                Toast.makeText(ActivityPatternValidation.this, "Password Correcta!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(ActivityPatternValidation.this, ActivityLogin.class);
-                startActivity(intent);
-                ActivityPatternValidation.this.finish();
-            }else{
-                Toast.makeText(ActivityPatternValidation.this, "Password Incorrecta!", Toast.LENGTH_SHORT).show();
-            }
-            mPatternLockView.clearPattern();
-
-        }
-
-        @Override
-        public void onCleared() {
-
-        }
-
-    };
-
-    public static int getBatteryPercentage(Context context) {
+    private int getBatteryPercentage(Context context) {
 
         if (Build.VERSION.SDK_INT >= 21) {
 
@@ -136,8 +84,51 @@ public class ActivityPatternValidation extends Activity {
 
     }
 
-    private void informarNivelBateria() {
-        msgLevelBattery = "Nivel de batería: " + String.valueOf(getBatteryPercentage(this)) + "%";
-        Toast.makeText(this, msgLevelBattery, Toast.LENGTH_LONG).show();
+    private void actualizarPassPatron() {
+//        save_pattern = Paper.book().read(save_pattern_key);
+        save_pattern = cFunciones.getCache(getApplicationContext(), getApplicationContext().getString(R.string.patron_actual));
+    }
+
+    private void verificarPatron() {
+        //Me fijo si no hay patrón, y mando a crearlo
+
+        Log.i("Entro a:", "verificar Patron");
+        if(cFunciones.getCache(getApplicationContext(), getApplicationContext().getString(R.string.patron_actual)) == "") {
+            //Voy al activity de la creación del patrón
+            Intent intent = new Intent(ActivityPatternValidation.this, ActivityPatternCreation.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    @Override
+    public void onStarted() {
+
+    }
+
+    @Override
+    public void onProgress(List<PatternLockView.Dot> progressPattern) {
+
+    }
+
+    @Override
+    public void onCleared() {
+
+    }
+
+    @Override
+    public void onComplete(List<PatternLockView.Dot> pattern) {
+        Log.i("Pattron:","On complete");
+        patternEntered = PatternLockUtils.patternToString(mPatternLockView,pattern);
+//        if(patternEntered.equals(save_pattern)){
+        if(patternEntered.equals(cFunciones.getCache(getApplicationContext(), getApplicationContext().getString(R.string.patron_actual)))){
+            //Toast.makeText(ActivityPatternValidation.this, "Password Correcta!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ActivityPatternValidation.this, ActivityLogin.class);
+            startActivity(intent);
+            finish();
+        }else{
+            Toast.makeText(ActivityPatternValidation.this, "Password Incorrecta!", Toast.LENGTH_SHORT).show();
+        }
+        mPatternLockView.clearPattern();
     }
 }

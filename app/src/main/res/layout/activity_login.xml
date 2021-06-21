@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:gravity="center">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dip" />
+        <ImageView
+            android:src="@drawable/icono"
+            android:layout_width="500dip"
+            android:layout_height="120dip"
+            android:layout_gravity="center" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="40dip" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/inUserLogin"
+            android:maxLength="40"
+            android:textAlignment="center"
+            android:hint="Usuario"
+            android:gravity="center_horizontal" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dip" />
+        <EditText
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/inPassLogin"
+            android:maxLength="15"
+            android:textAlignment="center"
+            android:hint="Contraseña"
+            android:gravity="center_horizontal" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dip" />
+        <Button
+            android:text="Ingresar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#007fb5"
+            android:id="@+id/btnSubmit"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:gravity="center" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dip" />
+        <Button
+            android:text="Registrarse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#007fb5"
+            android:id="@+id/btnRegistro"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:gravity="center" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dip" />
+        <TextView
+            android:text="Ingrese su usuario y contraseña."
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/lbl_msg"
+            android:textAlignment="center"
+            android:gravity="center_horizontal" />
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>
