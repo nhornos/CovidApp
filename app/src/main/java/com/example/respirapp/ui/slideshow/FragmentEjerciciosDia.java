@@ -75,13 +75,13 @@ public class FragmentEjerciciosDia extends Fragment {
             //guardo en SharedPreferences los index de ejercicio
             cFunciones.setCache(this.getContext(), "ejercicio_dia_enfriante", String.valueOf(indexEnfriante));
             cFunciones.setCache(this.getContext(), "ejercicio_dia_calentante", String.valueOf(indexCalentante));
-            cFunciones.setCache(this.getContext(), "ejercicio_dia_enfriante", String.valueOf(indexEquilibrante));
+            cFunciones.setCache(this.getContext(), "ejercicio_dia_equilibrante", String.valueOf(indexEquilibrante));
 
         }else{
             //tomo los index guardados
             indexEnfriante = Integer.parseInt(cFunciones.getCache(this.getContext(),"ejercicio_dia_enfriante"));
             indexCalentante = Integer.parseInt(cFunciones.getCache(this.getContext(),"ejercicio_dia_calentante"));
-            indexEquilibrante = Integer.parseInt(cFunciones.getCache(this.getContext(),"ejercicio_dia_enfriante"));
+            indexEquilibrante = Integer.parseInt(cFunciones.getCache(this.getContext(),"ejercicio_dia_equilibrante"));
 
         }
 
