@@ -54,7 +54,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
 
     @Override
     protected void onPreExecute() {
-        if(this.metodo == "login" || this.metodo == "register"){
+        if(this.metodo.equals("login") || this.metodo.equals("register")){
             showBar("Por favor espere");
         }
     }
@@ -144,7 +144,9 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
             else
                 switchBetweenMethods(this.metodo);
         } catch (JSONException e) {
-            Log.i("onPostExecute", e.getMessage());
+//            Log.i("onPostExecute", e.getMessage());
+            hideBar();
+            Toast.makeText(this.context, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -183,7 +185,7 @@ public class cAPI extends AsyncTask<String, String, JSONObject> {
     }
 
     private void registerEvent(String method, String description) throws JSONException {
-        if(this.json.getBoolean("success")){
+        if(this.estado == 200){
             cEstructuras.cEvento.registrar(null, this.context, this.context.getString(R.string.env), method, description);
         }
     }

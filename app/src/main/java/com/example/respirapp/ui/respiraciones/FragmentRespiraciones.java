@@ -15,8 +15,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.respirapp.ActivityListaEjercicios;
 import com.example.respirapp.R;
 
-import Clases.cEstructuras;
-
 public class FragmentRespiraciones extends Fragment implements View.OnClickListener {
 
     private RespiracionesViewModel galleryViewModel;
@@ -37,12 +35,13 @@ public class FragmentRespiraciones extends Fragment implements View.OnClickListe
         txtCategoria1.setOnClickListener(this);
         txtCategoria2.setOnClickListener(this);
         txtCategoria3.setOnClickListener(this);
+
         return root;
     }
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(getActivity().getApplicationContext(), ActivityListaEjercicios.class);
+        Intent intent = new Intent(this.getContext(), ActivityListaEjercicios.class);
 
         switch (v.getId()) {
             case R.id.textCategoria1:
@@ -55,7 +54,7 @@ public class FragmentRespiraciones extends Fragment implements View.OnClickListe
                 intent.putExtra("tipoEjercicio", "calentantes");
                 break;
             default:
-                Toast.makeText(getActivity().getApplicationContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
                 break;
         }
         startActivity(intent);

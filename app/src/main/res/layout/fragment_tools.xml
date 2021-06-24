@@ -1,62 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout tools:context="com.example.respirapp.ActivityPatternCreation"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:gravity="center"
-    tools:context="com.example.respirapp.ActivityPatternCreation">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    android:weightSum="10">
+    <LinearLayout
         android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:gravity="center">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:textColor="@color/colorFuenteBlanco"
-                android:text="Modifique el patrón de inicio"
-                android:gravity="center_horizontal"
-                android:layout_gravity="center_horizontal"/>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-
-            <com.andrognito.patternlockview.PatternLockView
-                android:id="@+id/pattern_lock_modify"
-                android:layout_width="280dp"
-                android:layout_height="280dp"
-                android:layout_gravity="center"
-                android:layout_centerInParent="true"/>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Guardar Patron"
-                android:id="@+id/btnSetearPatron"
-                android:layout_below="@+id/pattern_lock_modify"
-                android:layout_centerHorizontal="true"/>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-        </LinearLayout>
-    </ScrollView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorFuenteBlanco"
+            android:text="Dibuje el patrón de inicio"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:gravity="center">
+        <com.andrognito.patternlockview.PatternLockView
+            android:id="@+id/pattern_lock_modify"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="center">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Guardar Patron"
+            android:id="@+id/btnSetearPatron" />
+    </LinearLayout>
 </LinearLayout>

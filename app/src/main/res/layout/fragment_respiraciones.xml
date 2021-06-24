@@ -10,9 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/categoria1"
         android:gravity="center">
-
         <TextView
             android:id="@+id/textCategoria1"
             android:layout_width="match_parent"
@@ -26,7 +24,6 @@
             android:textAlignment="center"
             android:background="#5000"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
@@ -37,7 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/categoria2"
         android:gravity="center">
         <TextView
             android:id="@+id/textCategoria2"
@@ -52,7 +48,6 @@
             android:textAlignment="center"
             android:background="#5000"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
@@ -63,7 +58,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/categoria3"
         android:gravity="center">
         <TextView
             android:id="@+id/textCategoria3"
@@ -78,6 +72,5 @@
             android:textAlignment="center"
             android:background="#5000"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
     </RelativeLayout>
 </LinearLayout>
