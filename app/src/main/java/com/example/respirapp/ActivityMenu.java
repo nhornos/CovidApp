@@ -1,6 +1,8 @@
 package com.example.respirapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
@@ -21,6 +23,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -34,7 +37,7 @@ import java.text.DecimalFormat;
 import Clases.cEstructuras;
 import Clases.cFunciones;
 
-public class ActivityMenu extends AppCompatActivity{ //} implements SensorEventListener {
+public class ActivityMenu extends AppCompatActivity { //implements NavigationView.OnNavigationItemSelectedListener{ //} implements SensorEventListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private TextView navEmail;
@@ -51,10 +54,11 @@ public class ActivityMenu extends AppCompatActivity{ //} implements SensorEventL
         getOnBackPressedDispatcher().addCallback(this, callback);
 
         setContentView(R.layout.activity_menu_2);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -74,6 +78,8 @@ public class ActivityMenu extends AppCompatActivity{ //} implements SensorEventL
         String nombre = getNombreEmail(cFunciones.getCache(getApplicationContext(), "usuario_email"));
         navTitle.setText("Hola " + nombre + "!");
 
+//        navigationView.setNavigationItemSelectedListener(this);
+
         //Inicializo boton cerrar sesion
 //        TextView cerrarSesion = (TextView) findViewById(R.id.cerrar_sesion);
 //        cerrarSesion.setOnClickListener(botonesListeners);
@@ -82,6 +88,7 @@ public class ActivityMenu extends AppCompatActivity{ //} implements SensorEventL
 //        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 //        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
+
 
 //    @Override
 //    protected void onPause()
@@ -106,28 +113,28 @@ public class ActivityMenu extends AppCompatActivity{ //} implements SensorEventL
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_menu_2_drawer, menu);
+        inflater.inflate(R.menu.menu_cerrar_sesion, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.nav_cerrar_sesion){
-            Intent intent = new Intent(getApplicationContext(), ActivityLogin.class);
-            startActivity(intent);
-            finish();
+            new AlertDialog.Builder(ActivityMenu.this)
+                    .setTitle("Alerta")
+                    .setMessage("Desea cerrar sesión?")
+                    .setNegativeButton(R.string.msgDenegar, new DialogInterface.OnClickListener() { public void onClick(DialogInterface dialog, int which) { } })
+                    .setPositiveButton(R.string.msgAceptar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(getApplicationContext(), ActivityLogin.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.nav_cerrar_sesion){
-            Intent intent = new Intent(getApplicationContext(), ActivityLogin.class);
-            startActivity(intent);
-            finish();
-        }
-        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -169,6 +176,22 @@ public class ActivityMenu extends AppCompatActivity{ //} implements SensorEventL
             }.start();
         }
     };
+
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//        switch (menuItem.getItemId()) {
+//            case R.id.nav_cerrar_sesion: {
+//                Intent intent = new Intent(getApplicationContext(), ActivityLogin.class);
+//                startActivity(intent);
+//                finish();
+//                break;
+//            }
+//        }
+//        menuItem
+//        //close navigation drawer
+//        drawer.closeDrawer(GravityCompat.START);
+//        return super.onOptionsItemSelected(menuItem);
+//    }
 
 //    private final View.OnClickListener botonesListeners = new View.OnClickListener() {
 //
