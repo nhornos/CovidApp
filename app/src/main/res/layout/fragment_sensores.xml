@@ -1,34 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:weightSum="10"
     android:padding="5dp">
-    <TextView
-        android:id="@+id/text_titulo_ejercicio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:padding="20dp"
-        android:text="Sensores - Eventos"
-        android:textAlignment="center"
-        android:textColor="@color/colorTextoTitulo"
-        android:textSize="40dp"
-        android:textStyle="bold" />
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/text_titulo_ejercicio"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="Sensores - Eventos"
+            android:textColor="@color/colorTextoTitulo"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="2dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#000000"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:gravity="center">
                 <LinearLayout
                     android:orientation="horizontal"
@@ -39,9 +54,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4.5"
-                        android:text="Valores sensor"
+                        android:text="Evento"
                         android:textColor="@color/colorTextoTitulo"
-                        android:textSize="20dp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
                     <Space
                         android:layout_width="0dp"
@@ -51,9 +66,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4.5"
-                        android:text="Evento"
+                        android:text="Valores sensor"
                         android:textColor="@color/colorTextoTitulo"
-                        android:textSize="20dp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <Space
@@ -61,7 +76,7 @@
                     android:layout_height="10dp" />
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="5dp"
+                    android:layout_height="3dp"
                     android:background="#000000"/>
                 <Space
                     android:layout_width="match_parent"
@@ -77,9 +92,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4.5"
-                        android:id="@+id/valor_acel_izq"
+                        android:text="Orientacion izquierda detectada"
                         android:textColor="@color/colorTextoTitulo"
-                        android:textSize="20dp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
                     <Space
                         android:layout_width="0dp"
@@ -89,9 +104,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4.5"
-                        android:text="Orientacion izquierda detectada"
+                        android:id="@+id/valor_acel_izq"
                         android:textColor="@color/colorTextoTitulo"
-                        android:textSize="20dp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <Space
@@ -104,25 +119,25 @@
                     android:minHeight="60dp"
                     android:gravity="center"
                     android:weightSum="10">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="4.5"
-                        android:id="@+id/valor_acel_vert"
-                        android:textColor="@color/colorTextoTitulo"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4.5"
                         android:text="Orientacion vertical detectada"
                         android:textColor="@color/colorTextoTitulo"
-                        android:textSize="20dp"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4.5"
+                        android:id="@+id/valor_acel_vert"
+                        android:textColor="@color/colorTextoTitulo"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <Space
@@ -135,25 +150,25 @@
                     android:minHeight="60dp"
                     android:gravity="center"
                     android:weightSum="10">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="4.5"
-                        android:id="@+id/valor_acel_der"
-                        android:textColor="@color/colorTextoTitulo"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4.5"
                         android:text="Orientacion derecha detectada"
                         android:textColor="@color/colorTextoTitulo"
-                        android:textSize="20dp"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4.5"
+                        android:id="@+id/valor_acel_der"
+                        android:textColor="@color/colorTextoTitulo"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <Space
@@ -170,9 +185,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4.5"
-                        android:id="@+id/valor_presencia"
+                        android:text="Presencia detectada"
                         android:textColor="@color/colorTextoTitulo"
-                        android:textSize="20dp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
                     <Space
                         android:layout_width="0dp"
@@ -182,40 +197,61 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="4.5"
-                        android:text="Presencia detectada"
+                        android:id="@+id/valor_presencia"
                         android:textColor="@color/colorTextoTitulo"
-                        android:textSize="20dp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-        <LinearLayout
-            android:orientation="horizontal"
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_alignParentBottom= "true"
-            android:weightSum="10">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4.5"
-                android:text="Último evento detectado"
-                android:textColor="@color/colorTextoTitulo"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4.5"
-                android:id="@+id/ult_evento_detectado"
-                android:textColor="@color/colorTextoTitulo"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </RelativeLayout>
+            android:layout_height="2dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#000000"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:weightSum="10">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4.5"
+                    android:text="Último evento detectado"
+                    android:textColor="@color/colorTextoTitulo"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4.5"
+                    android:id="@+id/ult_evento_detectado"
+                    android:textColor="@color/colorTextoTitulo"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </LinearLayout>

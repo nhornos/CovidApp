@@ -68,6 +68,12 @@ public class ActivityListaEjercicios extends AppCompatActivity implements Sensor
         pararSensores();
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
+
     private void configurarPantalla(){
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -77,8 +83,9 @@ public class ActivityListaEjercicios extends AppCompatActivity implements Sensor
         int tituloID = getApplicationContext().getResources().getIdentifier("titulo_ejercicios_" + tipoEjercicio, "string", getApplicationContext().getPackageName());
         titulo.setText(getApplicationContext().getString(tituloID));
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layout_ejercicios);
-        int imagenID = getApplicationContext().getResources().getIdentifier("ejercicios_" + tipoEjercicio, "drawable", getApplicationContext().getPackageName());
-        linearLayout.setBackgroundResource(imagenID);
+        //int imagenID = getApplicationContext().getResources().getColor("ejercicios_" + tipoEjercicio, "drawable", getApplicationContext().getPackageName());
+        int colorID = getApplicationContext().getResources().getIdentifier("ejercicios_" + tipoEjercicio, "color", getPackageName());
+        linearLayout.setBackgroundResource(colorID);
         llenarListaEjercicios(tipoEjercicio);
     }
 
@@ -120,9 +127,9 @@ public class ActivityListaEjercicios extends AppCompatActivity implements Sensor
         Log.i("Sensor:", event.sensor.getName());
         Log.i("Tipo:", String.valueOf(event.sensor.getType()));
         if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            float valorX = Float.parseFloat(dosdecimales.format(event.values[0]));
-            float valorY = Float.parseFloat(dosdecimales.format(event.values[1]));
-            float valorZ = Float.parseFloat(dosdecimales.format(event.values[2]));
+            float valorX = event.values[0];
+            float valorY = event.values[1];
+            float valorZ = event.values[2];
 
             if(valorX > 8.8 && getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
                 //Izquierda

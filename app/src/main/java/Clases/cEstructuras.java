@@ -96,7 +96,7 @@ public class cEstructuras {
 //                                                                                                            add(new cListViewColumns("Calentante 3", "icono", "desc", "info"));
 //                                                                                                            add(new cListViewColumns("Calentante 4", "icono", "desc", "info"));
 //                                                                                                            add(new cListViewColumns("Calentante 5", "icono", "desc", "info"));}};
-public static ArrayList<cListViewColumns> ejerciciosEnfriantes = new ArrayList<cListViewColumns>() {{add(new cListViewColumns("Chandra Bedhana", "0", "Nos sentamos de piernas cruzadas en una posición cómoda o sobre una silla, con la columna erguida.\n" +
+public static ArrayList<cListViewColumns> ejerciciosEnfriantes = new ArrayList<cListViewColumns>() {{add(new cListViewColumns("Chandra Bedhana", "imagen1", "Nos sentamos de piernas cruzadas en una posición cómoda o sobre una silla, con la columna erguida.\n" +
         "Mano izquierda: la colocamos sobre la rodilla con la palma hacia arriba. Dedo índice y pulgar tocándose entre sí.\n" +
         "Mano derecha: colocamos el dedo índice y mayor en la palma de la mano o sobre la frente en el entrecejo. Dedo pulgar en el orificio nasal derecho y dedo anular sobre el orificio nasal izquierdo.\n" +
         "Presionamos el orificio nasal derecho, se inhala por el izquierdo, se tapa el izquierdo y se exhala por el derecho.\n" +

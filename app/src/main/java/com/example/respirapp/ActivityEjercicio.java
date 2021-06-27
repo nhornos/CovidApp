@@ -95,7 +95,7 @@ public class ActivityEjercicio extends AppCompatActivity implements SensorEventL
 
             switch (event.sensor.getType()) {
                 case Sensor.TYPE_PROXIMITY:
-                    if (event.values[0] == 0 & App.permitePasarEjercicio) {
+                    if (event.values[0] == 0 && App.permitePasarEjercicio) {
                         ultEventoDetectado = "Presencia detectada";
                         Thread thread = new Thread() {
                             @Override
@@ -111,7 +111,7 @@ public class ActivityEjercicio extends AppCompatActivity implements SensorEventL
                         App.permitePasarEjercicio = false;
                         fecha = GregorianCalendar.getInstance();
                         String timeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date());
-                        cFunciones.setCache(this.getApplicationContext(), "proximidad", "Detectada " + timeStamp);
+                        cFunciones.setCache(this.getApplicationContext(), "proximidad", timeStamp);
                         App.pasarEjercicio = true;
                         App.idEjercicio = idProxEjercicio;
 
@@ -123,9 +123,9 @@ public class ActivityEjercicio extends AppCompatActivity implements SensorEventL
                     }
                     break;
                 case Sensor.TYPE_ACCELEROMETER:
-                    float valorX = Float.parseFloat(dosdecimales.format(event.values[0]));
-                    float valorY = Float.parseFloat(dosdecimales.format(event.values[1]));
-                    float valorZ = Float.parseFloat(dosdecimales.format(event.values[2]));
+                    float valorX = event.values[0];
+                    float valorY = event.values[1];
+                    float valorZ = event.values[2];
                     if(valorX > 8.8 && getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
                         //Izquierda
                         Log.i("env:", getString(R.string.env));

@@ -50,7 +50,7 @@
                     android:text="@string/bienvenida"
                     android:textAlignment="center"
                     android:textColor="@color/colorTextoBienvenida"
-                    android:textSize="35dp"
+                    android:textSize="30dp"
                     android:textStyle="bold|italic"
                     app:fontFamily="casual" />
             </LinearLayout>

@@ -93,7 +93,7 @@ public class ActivityPatternValidation extends Activity implements PatternLockVi
         //Me fijo si no hay patrón, y mando a crearlo
 
         Log.i("Entro a:", "verificar Patron");
-        if(cFunciones.getCache(getApplicationContext(), getApplicationContext().getString(R.string.patron_actual)) == "") {
+        if(cFunciones.getCache(getApplicationContext(), getApplicationContext().getString(R.string.patron_actual)).equals("")) {
             //Voy al activity de la creación del patrón
             Intent intent = new Intent(ActivityPatternValidation.this, ActivityPatternCreation.class);
             startActivity(intent);

@@ -56,7 +56,7 @@ public class ActivityLogin extends Activity implements View.OnClickListener, Sen
         inUser.setText(cFunciones.getCache(this.getApplicationContext(), "usuario_email"));
         inPassword.setText(cFunciones.getCache(this.getApplicationContext(), "usuario_password"));
     }
-
+//
     @Override
     protected void onPause()
     {
@@ -116,9 +116,9 @@ public class ActivityLogin extends Activity implements View.OnClickListener, Sen
         Log.i("Sensor:", event.sensor.getName());
         Log.i("Tipo:", String.valueOf(event.sensor.getType()));
         if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            float valorX = Float.parseFloat(dosdecimales.format(event.values[0]));
-            float valorY = Float.parseFloat(dosdecimales.format(event.values[1]));
-            float valorZ = Float.parseFloat(dosdecimales.format(event.values[2]));
+            float valorX = event.values[0];
+            float valorY = event.values[1];
+            float valorZ = event.values[2];
 
             if(valorX > 8.8){
                 //Izquierda
