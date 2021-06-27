@@ -33,10 +33,20 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/respirapp/ActivityLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/respirapp/ActivityLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/respirapp/ActivityMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/respirapp/ActivityMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/logout.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/activity_menu_2_drawer.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/activity_menu_2_drawer.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/respirapp/ActivityListaEjercicios.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/respirapp/ActivityListaEjercicios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v24/categoria1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v24/categoria2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v24/categoria3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v24/ejercicios_calentantes.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v24/ejercicios_enfriantes.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v24/ejercicios_equilibrantes.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_lista_ejercicios.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_lista_ejercicios.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_ejercicios_dia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_ejercicios_dia.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_respiraciones.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_respiraciones.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_sensores.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_sensores.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_lista_ejercicios_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_lista_ejercicios_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +57,7 @@
     <option name="testRunner" value="GRADLE" />
     <option name="delegatedBuild" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[LG_Q6_API_25]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -85,11 +95,11 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.example.respirapp" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Matias\Desktop\CovidApp\app\src\main\res\drawable" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.example.respirapp" />
     </key>
   </component>
   <component name="RunManager">
@@ -188,10 +198,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1085" y="406" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1624596915136" />
-    <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1624598899014">
+    <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1624807849010">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1624598899014" />
+    <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1624807849010" />
     <state x="100" y="100" width="2360" height="1207" key="AVDManager" timestamp="1624553755923">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -208,46 +218,57 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1060" y="458" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1624551276747" />
-    <state width="2500" height="397" key="GridCell.Tab.0.bottom" timestamp="1624599021861">
+    <state width="2500" height="397" key="GridCell.Tab.0.bottom" timestamp="1624812350034">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2500" height="397" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1624599021861" />
-    <state width="2500" height="397" key="GridCell.Tab.0.center" timestamp="1624599021861">
+    <state width="2500" height="397" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1624812350034" />
+    <state width="2500" height="397" key="GridCell.Tab.0.center" timestamp="1624812350034">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2500" height="397" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1624599021861" />
-    <state width="2500" height="397" key="GridCell.Tab.0.left" timestamp="1624599021861">
+    <state width="2500" height="397" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1624812350034" />
+    <state width="2500" height="397" key="GridCell.Tab.0.left" timestamp="1624812350033">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2500" height="397" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1624599021861" />
-    <state width="2500" height="397" key="GridCell.Tab.0.right" timestamp="1624599021861">
+    <state width="2500" height="397" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1624812350033" />
+    <state width="2500" height="397" key="GridCell.Tab.0.right" timestamp="1624812350034">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2500" height="397" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1624599021861" />
-    <state width="2500" height="397" key="GridCell.Tab.1.bottom" timestamp="1624599021861">
+    <state width="2500" height="397" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1624812350034" />
+    <state width="2500" height="397" key="GridCell.Tab.1.bottom" timestamp="1624812350034">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2500" height="397" key="GridCell.Tab.1.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1624599021861" />
-    <state width="2500" height="397" key="GridCell.Tab.1.center" timestamp="1624599021861">
+    <state width="2500" height="397" key="GridCell.Tab.1.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1624812350034" />
+    <state width="2500" height="397" key="GridCell.Tab.1.center" timestamp="1624812350034">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2500" height="397" key="GridCell.Tab.1.center/0.0.2560.1400@0.0.2560.1400" timestamp="1624599021861" />
-    <state width="2500" height="397" key="GridCell.Tab.1.left" timestamp="1624599021861">
+    <state width="2500" height="397" key="GridCell.Tab.1.center/0.0.2560.1400@0.0.2560.1400" timestamp="1624812350034" />
+    <state width="2500" height="397" key="GridCell.Tab.1.left" timestamp="1624812350034">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2500" height="397" key="GridCell.Tab.1.left/0.0.2560.1400@0.0.2560.1400" timestamp="1624599021861" />
-    <state width="2500" height="397" key="GridCell.Tab.1.right" timestamp="1624599021861">
+    <state width="2500" height="397" key="GridCell.Tab.1.left/0.0.2560.1400@0.0.2560.1400" timestamp="1624812350034" />
+    <state width="2500" height="397" key="GridCell.Tab.1.right" timestamp="1624812350034">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2500" height="397" key="GridCell.Tab.1.right/0.0.2560.1400@0.0.2560.1400" timestamp="1624599021861" />
+    <state width="2500" height="397" key="GridCell.Tab.1.right/0.0.2560.1400@0.0.2560.1400" timestamp="1624812350034" />
     <state x="781" y="345" key="SettingsEditor" timestamp="1624379192268">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="781" y="345" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1624379192268" />
-    <state x="987" y="433" width="585" height="534" key="find.popup" timestamp="1624595818033">
+    <state x="987" y="433" width="585" height="534" key="find.popup" timestamp="1624809064097">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="987" y="433" width="585" height="534" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1624595818033" />
+    <state x="987" y="433" width="585" height="534" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1624809064097" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/respirapp/ActivityListaEjercicios.java</url>
+          <line>86</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="masterDetails">
     <states>

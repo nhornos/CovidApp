@@ -14,7 +14,7 @@
         android:padding="20dp"
         android:text="Titulo Ejercicios"
         android:textAlignment="center"
-        android:textColor="@color/colorTextoTitulo"
+        android:textColor="#FFFFFF"
         android:textSize="35dp"
         android:textStyle="bold" />
 

@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="#aa88c9"
         android:gravity="center">
         <TextView
             android:id="@+id/textCategoria1"
@@ -34,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="#ee88c9"
         android:gravity="center">
         <TextView
             android:id="@+id/textCategoria2"
@@ -58,6 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="#ee4444"
         android:gravity="center">
         <TextView
             android:id="@+id/textCategoria3"

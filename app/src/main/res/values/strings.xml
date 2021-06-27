@@ -15,7 +15,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Inicio</string>
-    <string name="menu_respiracion">Ejercicios de respiración</string>
+    <string name="menu_respiracion">Ejercicios de resp</string>
     <string name="menu_ejercicios_del_dia">Ejercicios del día</string>
     <string name="menu_patron">Modificar patron</string>
     <string name="menu_sensores">Listado sensores</string>
